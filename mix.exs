@@ -31,9 +31,9 @@ defmodule Leuchtturm.MixProject do
   defp deps do
     [
       # Web
-      {:bandit, "~> 0.6"},
       {:finch, "~> 0.13"},
       {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.6"},
       # TODO: Remove this override once Phoenix 1.7 is released
       {:phoenix, "~> 1.7.0-rc.0", override: true},
       {:phoenix_html, "~> 3.0"},
@@ -50,6 +50,7 @@ defmodule Leuchtturm.MixProject do
       {:opentelemetry, "~> 1.1"},
       {:opentelemetry_api, "~> 1.1"},
       {:opentelemetry_phoenix, "~> 1.0"},
+      {:opentelemetry_liveview, "~> 1.0.0-rc"},
       {:opentelemetry_ecto, "~> 1.0"},
       # Mail
       {:swoosh, "~> 1.3"},

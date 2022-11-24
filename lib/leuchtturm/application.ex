@@ -7,6 +7,7 @@ defmodule Leuchtturm.Application do
   def start(_type, _args) do
     # Telemetry
     OpentelemetryPhoenix.setup()
+    OpentelemetryLiveView.setup()
     OpentelemetryEcto.setup([:leuchtturm, :repo])
 
     children = [

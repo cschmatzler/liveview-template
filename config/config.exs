@@ -1,16 +1,9 @@
 import Config
 
-# --------
-# Database
-# --------
-config :leuchtturm,
-  ecto_repos: [Leuchtturm.Repo]
-
 # ---
 # Web
 # ---
 config :leuchtturm, Leuchtturm.Web.Endpoint,
-  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
     formats: [html: Leuchtturm.Web.ErrorHTML, json: Leuchtturm.Web.ErrorJSON],
@@ -18,6 +11,12 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
   ],
   pubsub_server: Leuchtturm.PubSub,
   live_view: [signing_salt: "17k0tPiq"]
+
+# --------
+# Database
+# --------
+config :leuchtturm,
+  ecto_repos: [Leuchtturm.Repo]
 
 # ------
 # Web Assets
