@@ -15,17 +15,14 @@ config :opentelemetry, :resource,
   env: telemetry_namespace
 
 config :opentelemetry,
+  span_processor: :batch,
   traces_exporter: :otlp
 
-config :opentelemetry, :processors,
-  otel_batch_processor: %{
-    exporter:
-      {:opentelemetry_exporter,
-       %{
-         endpoints: ["https://ingest.lightstep.com:443"],
-         headers: [{"lightstep-access-token", lightstep_access_token}]
-       }}
-  }
+config :opentelemetry_exporter,
+  otlp_protocol: :grpc,
+  otlp_compression: :gzip,
+  otlp_endpoint: "https://ingest.lightstep.com:443",
+  otlp_headers: [{"lightstep-access-token", lightstep_access_token}]
 
 # ---------
 # Production
