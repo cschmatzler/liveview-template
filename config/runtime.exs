@@ -11,43 +11,27 @@ if config_env() == :prod do
   # ---------
   # Telemetry
   # ---------
-  namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
+  telemetry_namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
   lightstep_access_token = System.fetch_env!("LIGHTSTEP_ACCESS_TOKEN")
 
   config :opentelemetry, :resource,
     service: %{
       name: "leuchtturm.io",
-      namespace: namespace
+      namespace: telemetry_namespace
     },
-    env: namespace
+    env: telemetry_namespace
 
   config :opentelemetry,
     span_processor: :batch,
     traces_exporter: :otlp
 
-  config :opentelemetry, :processors,
-    otel_batch_processor: %{
-      exporter: {
-        :opentelemetry_exporter,
-        %{
-          endpoints: [
-            {:https, "ingest.lightstep.com", 443,
-             [
-               verify: :verify_peer,
-               cacertfile: :certifi.cacertfile(),
-               depth: 3,
-               customize_hostname_check: [
-                 match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-               ]
-             ]}
-          ],
-          headers: [
-            {"lightstep-access-token", lightstep_access_token},
-          ],
-          protocol: :grpc
-        }
-      }
-    }
+  config :opentelemetry_exporter,
+    otlp_protocol: :http_protobuf,
+    otlp_traces_endpoint: "https://ingest.lightstep.com:443/traces/otlp/v0.9",
+    otlp_compression: :gzip,
+    otlp_headers: [
+      {"lightstep-access-token", lightstep_access_token}
+    ]
 
   # --------
   # Database
