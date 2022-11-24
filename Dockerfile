@@ -49,7 +49,9 @@ WORKDIR /app
 RUN chown nobody /app
 
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/leuchtturm ./
+COPY migrate-and-start.sh ./
+RUN chmod +x migrate-and-start.sh
 
 USER nobody
 
-CMD ["/app/bin/server"]
+CMD ["/app/migrate-and-start.sh"]
