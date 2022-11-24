@@ -44,6 +44,7 @@ defmodule Leuchtturm.MixProject do
       {:postgrex, "~> 0.16"},
       {:phoenix_ecto, "~> 4.4"},
       # Telemetry
+      {:certifi, "~> 2.10"},
       # This needs to be above the other OpenTelemetry dependencies
       {:opentelemetry_exporter, "~> 1.1"},
       {:opentelemetry, "~> 1.1"},

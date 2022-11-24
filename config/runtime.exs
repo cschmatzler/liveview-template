@@ -8,15 +8,55 @@ end
 # Production
 # ---------
 if config_env() == :prod do
+  # ---------
+  # Telemetry
+  # ---------
+  namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
+  lightstep_access_token = System.fetch_env!("LIGHTSTEP_ACCESS_TOKEN")
+
+  config :opentelemetry, :resource,
+    service: %{
+      name: "leuchtturm.io",
+      namespace: namespace
+    },
+    env: namespace
+
+  config :opentelemetry,
+    span_processor: :batch,
+    traces_exporter: :otlp
+
+  config :opentelemetry, :processors,
+    otel_batch_processor: %{
+      exporter: {
+        :opentelemetry_exporter,
+        %{
+          endpoints: [
+            {:https, "ingest.lightstep.com", 443,
+             [
+               verify: :verify_peer,
+               cacertfile: :certifi.cacertfile(),
+               depth: 3,
+               customize_hostname_check: [
+                 match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+               ]
+             ]}
+          ],
+          headers: [
+            {"lightstep-access-token", lightstep_access_token},
+          ],
+          protocol: :grpc
+        }
+      }
+    }
+
   # --------
   # Database
   # --------
   database_url = System.fetch_env!("DATABASE_URL")
 
-  config(:leuchtturm, Leuchtturm.Repo,
+  config :leuchtturm, Leuchtturm.Repo,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
-  )
 
   # ---
   # Web

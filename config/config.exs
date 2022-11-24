@@ -23,7 +23,7 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
 # Web Assets
 # ------
 config :esbuild,
-  version: "0.14.41",
+  version: "0.15.15",
   default: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
@@ -32,7 +32,7 @@ config :esbuild,
   ]
 
 config :tailwind,
-  version: "3.1.8",
+  version: "3.2.4",
   default: [
     args: ~w(
       --config=tailwind.config.js
