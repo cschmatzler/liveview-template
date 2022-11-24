@@ -8,6 +8,8 @@ end
 # Production
 # ---------
 if config_env() == :prod do
+  version = System.get_env("RENDER_GIT_COMMIT") || "dev"
+
   # ---------
   # Telemetry
   # ---------
@@ -17,7 +19,7 @@ if config_env() == :prod do
   config :opentelemetry, :resource,
     service: %{
       name: "leuchtturm.io",
-      namespace: telemetry_namespace
+      version: version
     },
     env: telemetry_namespace
 
@@ -43,7 +45,7 @@ if config_env() == :prod do
   # ---
   # Web
   # ---
-  host = System.get_env("HOST") || "leuchtturm.io"
+  host = System.get_env("HOST") || System.get_env("RENDER_EXTERNAL_HOSTNAME") || "leuchtturm.io"
   port = String.to_integer(System.get_env("PORT") || "4000")
   secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 
