@@ -61,8 +61,8 @@ defmodule Leuchtturm.MixProject do
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       # Build tools
-      {:esbuild, "~> 0.5", only: :dev, runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.1", only: :dev, runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.5", only: [:dev, :prod], runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.1", only: [:dev, :prod], runtime: Mix.env() == :dev},
       # Test helpers
       {:floki, "~> 0.34", only: :test}
     ]
