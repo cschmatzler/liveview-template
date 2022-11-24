@@ -7,7 +7,7 @@ defmodule Leuchtturm.Web.Components.GridPattern do
       |> Map.merge(assigns)
 
     ~H"""
-    <svg aria-hidden="true" class="absolute inset-0 h-full w-full">
+    <svg aria-hidden="true" class="absolute inset-0 w-full h-full">
       <defs>
         <pattern id={@pattern_id} width="128" height="128" patternUnits="userSpaceOnUse" {assigns}>
           <path d="M0 128V.5H128" fill="none" stroke="currentColor" />

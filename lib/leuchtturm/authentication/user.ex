@@ -1,5 +1,8 @@
 defmodule Leuchtturm.Authentication.User do
+  alias Uniq.UUID
+  alias Ecto.Changeset
   alias Leuchtturm.Ecto.UUIDv6
+  alias Leuchtturm.Authentication.User
 
   use Ecto.Schema
 
@@ -17,6 +20,14 @@ defmodule Leuchtturm.Authentication.User do
     timestamps()
   end
 
+  @type t :: %User{
+          id: UUID.t(),
+          email: String.t(),
+          password: String.t(),
+          hashed_password: String.t(),
+          confirmed_at: DateTime.t() | nil
+        }
+
   @doc """
   A user changeset for registration.
 
@@ -29,6 +40,7 @@ defmodule Leuchtturm.Authentication.User do
       validations on a LiveView form), this option can be set to `false`.
       Defaults to `true`.
   """
+  @spec registration_changeset(User.t(), map(), keyword()) :: Changeset.t()
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:email, :password])
@@ -41,6 +53,7 @@ defmodule Leuchtturm.Authentication.User do
 
   It requires the email to change otherwise an error is added.
   """
+  @spec email_changeset(User.t(), map()) :: Changeset.t()
   def email_changeset(user, attrs) do
     user
     |> cast(attrs, [:email])
