@@ -4,26 +4,6 @@ if System.get_env("ENABLE_SERVER") do
   config :leuchtturm, Leuchtturm.Web.Endpoint, server: true
 end
 
-telemetry_namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
-lightstep_access_token = System.fetch_env!("LIGHTSTEP_ACCESS_TOKEN")
-
-config :opentelemetry, :resource,
-  service: %{
-    name: "leuchtturm.io",
-    namespace: telemetry_namespace
-  },
-  env: telemetry_namespace
-
-config :opentelemetry,
-  span_processor: :batch,
-  traces_exporter: :otlp
-
-config :opentelemetry_exporter,
-  otlp_protocol: :grpc,
-  otlp_compression: :gzip,
-  otlp_endpoint: "https://ingest.lightstep.com:443",
-  otlp_headers: [{"lightstep-access-token", lightstep_access_token}]
-
 # ---------
 # Production
 # ---------
@@ -31,6 +11,25 @@ if config_env() == :prod do
   # ---------
   # Telemetry
   # ---------
+  telemetry_namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
+  lightstep_access_token = System.fetch_env!("LIGHTSTEP_ACCESS_TOKEN")
+
+  config :opentelemetry, :resource,
+    service: %{
+      name: "leuchtturm.io",
+      namespace: telemetry_namespace
+    },
+    env: telemetry_namespace
+
+  config :opentelemetry,
+    span_processor: :batch,
+    traces_exporter: :otlp
+
+  config :opentelemetry_exporter,
+    otlp_protocol: :grpc,
+    otlp_compression: :gzip,
+    otlp_endpoint: "https://ingest.lightstep.com:443",
+    otlp_headers: [{"lightstep-access-token", lightstep_access_token}]
 
   # --------
   # Database
