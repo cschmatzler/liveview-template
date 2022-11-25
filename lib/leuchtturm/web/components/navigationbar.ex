@@ -56,7 +56,7 @@ defmodule Leuchtturm.Web.Components.NavigationBar do
       role="menu"
       class="flex absolute z-10 py-1 mt-36 w-96 bg-gradient-to-br from-rose-700 to-pink-500 rounded-md ring-1 ring-black ring-opacity-5 shadow-lg focus:outline-none 2"
     >
-      <div class="px-4 py-6 text-white">
+      <div class="py-6 px-4 text-white">
         Hi
       </div>
     </div>
