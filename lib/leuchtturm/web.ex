@@ -8,6 +8,19 @@ defmodule Leuchtturm.Web do
     apply(__MODULE__, which, [])
   end
 
+  def controller do
+    quote do
+      use Phoenix.Controller,
+        namespace: Leuchtturm.Web,
+        formats: [:html, :json],
+        layouts: [html: Leuchtturm.Web.Layouts]
+
+      import Plug.Conn
+
+      unquote(verified_routes())
+    end
+  end
+
   def html do
     quote do
       use Phoenix.Component
@@ -22,7 +35,8 @@ defmodule Leuchtturm.Web do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {Leuchtturm.Web.Layouts, :app}
+        layout: {Leuchtturm.Web.Layouts, :app},
+        container: {:div, class: "h-full"}
 
       unquote(html_helpers())
     end

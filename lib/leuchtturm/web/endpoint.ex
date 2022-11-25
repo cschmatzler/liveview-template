@@ -5,12 +5,17 @@ defmodule Leuchtturm.Web.Endpoint do
 
   @session_options [
     store: :cookie,
-    key: "_leuchtturm_key",
+    key: "_session",
     signing_salt: "S8DoleIF",
-    same_site: "Strict"
+    same_site: "Lax"
   ]
 
-  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [
+      connect_info: [
+        session: @session_options
+      ]
+    ]
 
   plug Plug.Static,
     at: "/",
