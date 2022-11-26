@@ -42,6 +42,15 @@ config :tailwind,
   ]
 
 # ----
+# Jobs
+# ----
+config :leuchtturm, Oban,
+  repo: Leuchtturm.Repo,
+  prefix: "jobs",
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 10, mail: 10]
+
+# ----
 # Mail
 # ----
 config :leuchtturm, Leuchtturm.Mailer, adapter: Swoosh.Adapters.Local

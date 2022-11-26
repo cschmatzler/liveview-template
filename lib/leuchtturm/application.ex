@@ -5,14 +5,13 @@ defmodule Leuchtturm.Application do
 
   @impl true
   def start(_type, _args) do
-    # Telemetry
-    OpentelemetryPhoenix.setup()
-    OpentelemetryLiveView.setup()
-    OpentelemetryEcto.setup([:leuchtturm, :repo])
+    start_telemetry()
 
     children = [
       {Phoenix.PubSub, name: Leuchtturm.PubSub},
       {Finch, name: Leuchtturm.Finch},
+      Leuchtturm.Repo,
+      {Oban, Application.fetch_env!(:leuchtturm, Oban)},
       Leuchtturm.Web.Endpoint
     ]
 
@@ -24,5 +23,12 @@ defmodule Leuchtturm.Application do
   def config_change(changed, _new, removed) do
     Leuchtturm.Web.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp start_telemetry do
+    OpentelemetryPhoenix.setup()
+    OpentelemetryLiveView.setup()
+    OpentelemetryEcto.setup([:leuchtturm, :repo])
+    OpentelemetryOban.setup()
   end
 end
