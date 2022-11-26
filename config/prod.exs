@@ -19,4 +19,4 @@ config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Leuchtturm.Finch
 # -----
 # Other
 # -----
-config :argon2_elixir, t_cost: 16, m_cost: 65536
+config :argon2_elixir, t_cost: 16, m_cost: 16
