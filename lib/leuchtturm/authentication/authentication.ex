@@ -16,6 +16,11 @@ defmodule Leuchtturm.Authentication do
     if User.valid_password?(user, password), do: user
   end
 
+  def get_user_by_session_token(token) do
+    Token.verify_session_token_query(token)
+    |> Repo.one()
+  end
+
   @spec registration_changeset(User.t(), map()) :: Ecto.Changeset.t()
   def registration_changeset(%User{} = user, attrs \\ %{}) do
     User.registration_changeset(user, attrs, hash_password: false)
