@@ -25,7 +25,6 @@ defmodule Leuchtturm.Web.Router do
     live_session :redirect_if_user_is_authenticated do
     #   on_mount: [{anthillweb.userauth, :redirect_if_user_is_authenticated}] do
         live "/register/", RegistrationLive, :new
-        live "/register/:step", RegistrationLive, :new
     #   live "/users/log_in", userloginlive, :new
     #   live "/users/reset_password", userforgotpasswordlive, :new
     #   live "/users/reset_password/:token", userresetpasswordlive, :edit

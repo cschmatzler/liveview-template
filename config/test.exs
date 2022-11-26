@@ -25,6 +25,11 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
   server: false
 
 # ----
+# Jobs
+# ----
+config :leuchtturm, Oban, testing: :inline
+
+# ----
 # Mail
 # ----
 config :leuchtturm, Leuchtturm.Mailer, adapter: Swoosh.Adapters.Test

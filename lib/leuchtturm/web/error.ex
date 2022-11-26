@@ -1,4 +1,5 @@
 defmodule Leuchtturm.Web.ErrorHTML do
+  # TODO: put this in the right spot, wherever that is
   @moduledoc false
 
   use Leuchtturm.Web, :html

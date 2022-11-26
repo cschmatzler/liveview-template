@@ -1,7 +1,30 @@
-defmodule Leuchtturm.Authentication.UserNotifier do
+defmodule Leuchtturm.Authentication.Mailer do
+  alias Oban.Job
+
+  alias Leuchtturm.Authentication
+  alias Leuchtturm.Mailer
+
+  use Oban.Worker, queue: :mail
+
   import Swoosh.Email
 
-  alias Leuchtturm.Mailer
+  @email_from {"Leuchtturm.io", "hello@leuchtturm.io"}
+  @email_confirmation_template_id 29_918_482
+
+  @impl Oban.Worker
+  def perform(%Job{args: %{"mail_id" => "email_confirmation"} = args}) do
+    user = Authentication.get_user(args["user_id"])
+
+    new()
+    |> from(@email_from)
+    |> to({user.name, user.email})
+    |> put_provider_option(:template_id, @email_confirmation_template_id)
+    |> put_provider_option(:template_model, %{
+      name: user.name,
+      email_confirmation_url: "https://leuchtturm.io/confirm/#{args["confirmation_token"]}"
+    })
+    |> Leuchtturm.Mailer.deliver()
+  end
 
   @doc """
   Deliver instructions to confirm account.
@@ -75,5 +98,4 @@ defmodule Leuchtturm.Authentication.UserNotifier do
       {:ok, email}
     end
   end
-
 end

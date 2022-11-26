@@ -21,8 +21,9 @@ defmodule Leuchtturm.Web.Plugs.Authentication do
   def fetch_logged_in_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
     # TODO: Authentication does not exist yet
-    user = user_token && Authentication.get_user_by_session_token(user_token)
-    assign(conn, :user, user)
+    # user = user_token && Authentication.get_user_by_session_token(user_token)
+    # assign(conn, :user, user)
+    conn
   end
 
   defp ensure_user_token(conn) do

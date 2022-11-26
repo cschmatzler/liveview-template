@@ -1,6 +1,7 @@
 defmodule Leuchtturm.Authentication.User do
-  alias Uniq.UUID
   alias Ecto.Changeset
+  alias Uniq.UUID
+
   alias Leuchtturm.Ecto.UUIDv6
   alias Leuchtturm.Authentication.User
 
@@ -15,16 +16,18 @@ defmodule Leuchtturm.Authentication.User do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
+    field :name, :string
     field :confirmed_at, :utc_datetime
 
     timestamps()
   end
 
   @type t :: %User{
-          id: UUID.t(),
-          email: String.t(),
-          password: String.t(),
-          hashed_password: String.t(),
+          id: UUID.t() | nil,
+          email: String.t() | nil,
+          password: String.t() | nil,
+          hashed_password: String.t() | nil,
+          name: String.t() | nil,
           confirmed_at: DateTime.t() | nil
         }
 
@@ -41,50 +44,18 @@ defmodule Leuchtturm.Authentication.User do
       Defaults to `true`.
   """
   @spec registration_changeset(User.t(), map(), keyword()) :: Changeset.t()
-  def registration_changeset(user, attrs, opts \\ []) do
+  def registration_changeset(%User{} = user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, ~w/email password name/a)
+    |> validate_required(~w/name/a)
     |> validate_email()
-    |> validate_password(opts)
-  end
-
-  @doc """
-  A user changeset for changing the email.
-
-  It requires the email to change otherwise an error is added.
-  """
-  @spec email_changeset(User.t(), map()) :: Changeset.t()
-  def email_changeset(user, attrs) do
-    user
-    |> cast(attrs, [:email])
-    |> validate_email()
-    |> case do
-      %{changes: %{email: _}} = changeset -> changeset
-      %{} = changeset -> add_error(changeset, :email, "did not change")
-    end
-  end
-
-  @doc """
-  A user changeset for changing the password.
-
-  ## Options
-
-    * `:hash_password` - Hashes the password so it can be stored securely
-      in the database and ensures the password field is cleared to prevent
-      leaks in the logs. If password hashing is not needed and clearing the
-      password field is not desired (like when using this changeset for
-      validations on a LiveView form), this option can be set to `false`.
-      Defaults to `true`.
-  """
-  def password_changeset(user, attrs, opts \\ []) do
-    user
-    |> cast(attrs, [:password])
     |> validate_password(opts)
   end
 
   @doc """
   Confirms the account by setting `confirmed_at`.
   """
+  @spec confirm_changeset(User.t()) :: Ecto.Changeset.t()
   def confirm_changeset(user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     change(user, confirmed_at: now)
@@ -108,7 +79,7 @@ defmodule Leuchtturm.Authentication.User do
 
   defp validate_email(changeset) do
     changeset
-    |> validate_required([:email])
+    |> validate_required(~w/email/a)
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "Invalid e-mail address.")
     |> validate_length(:email, max: 160)
     |> unsafe_validate_unique(:email, Leuchtturm.Repo)
@@ -117,7 +88,7 @@ defmodule Leuchtturm.Authentication.User do
 
   defp validate_password(changeset, opts) do
     changeset
-    |> validate_required([:password])
+    |> validate_required(~w/password/a)
     |> validate_length(:password, min: 12, max: 72)
     |> maybe_hash_password(opts)
   end

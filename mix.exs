@@ -52,6 +52,9 @@ defmodule Leuchtturm.MixProject do
       {:opentelemetry_phoenix, "~> 1.0"},
       {:opentelemetry_liveview, "~> 1.0.0-rc"},
       {:opentelemetry_ecto, "~> 1.0"},
+      {:opentelemetry_oban, "~> 1.0"},
+      # Job processing
+      {:oban, "~> 2.13"},
       # Mail
       {:swoosh, "~> 1.3"},
       # Other (production)
