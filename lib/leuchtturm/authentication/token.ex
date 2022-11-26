@@ -27,6 +27,13 @@ defmodule Leuchtturm.Authentication.Token do
     timestamps(updated_at: false)
   end
 
+  def verify_session_token_query(token) do
+    from token in token_and_purpose_query(token, "session"),
+      join: user in assoc(token, :user),
+      where: token.inserted_at > ago(@session_validity_in_days, "day"),
+      select: user
+  end
+
   @doc """
   Generates a token that will be stored in a signed place,
   such as session or cookie. As they are signed, those
@@ -55,6 +62,10 @@ defmodule Leuchtturm.Authentication.Token do
 
   def build_email_token(user, purpose) do
     build_hashed_token(user, purpose, user.email)
+  end
+
+  def token_and_purpose_query(token, purpose) do
+    from Token, where: [token: ^token, purpose: ^purpose]
   end
 
   defp build_hashed_token(user, purpose, sent_to) do

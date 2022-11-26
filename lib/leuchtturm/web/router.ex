@@ -1,5 +1,6 @@
 defmodule Leuchtturm.Web.Router do
   @moduledoc false
+  alias Leuchtturm.Web.Utilities.Authentication
 
   use Phoenix.Router, helpers: false
 
@@ -7,7 +8,7 @@ defmodule Leuchtturm.Web.Router do
   import Phoenix.Controller
   import Phoenix.LiveView.Router
 
-  import Leuchtturm.Web.Plugs.Authentication
+  import Authentication
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -22,12 +23,9 @@ defmodule Leuchtturm.Web.Router do
   scope "/", Leuchtturm.Web do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
-    live_session :redirect_if_user_is_authenticated do
-    #   on_mount: [{anthillweb.userauth, :redirect_if_user_is_authenticated}] do
-        live "/register/", RegistrationLive, :new
-    #   live "/users/log_in", userloginlive, :new
-    #   live "/users/reset_password", userforgotpasswordlive, :new
-    #   live "/users/reset_password/:token", userresetpasswordlive, :edit
+    live_session :redirect_if_user_is_authenticated,
+      on_mount: [{Authentication, :redirect_if_user_is_authenticated}] do
+      live "/register/", RegistrationLive, :new
     end
 
     post "/login", SessionController, :create

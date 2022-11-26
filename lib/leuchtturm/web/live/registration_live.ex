@@ -8,6 +8,7 @@ defmodule Leuchtturm.Web.RegistrationLive do
 
   import Leuchtturm.Web.Components.{Form, Icons}
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="min-h-full bg-ash">
@@ -23,6 +24,23 @@ defmodule Leuchtturm.Web.RegistrationLive do
           Create your account
         </h2>
         <div class="mt-6 px-6 sm:mx-auto sm:w-full sm:max-w-sm">
+          <%= if error = Phoenix.Flash.get(@flash, :error) do %>
+            <div class="rounded-md bg-red-50 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <Heroicons.exclamation_triangle class="h-5 w-6 text-red-400" />
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-red-800">Error while registering</h3>
+                  <div class="mt-2 text-sm text-red-700">
+                    <p>
+                      <%= error %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
           <.form
             :let={f}
             for={@registration_changeset}
@@ -117,7 +135,8 @@ defmodule Leuchtturm.Web.RegistrationLive do
         {:noreply, socket}
 
       :error ->
-        # TODO: handle server errors
+        socket = put_flash(socket, :error, "Unknown error, please try again later.")
+
         {:noreply, socket}
     end
   end
