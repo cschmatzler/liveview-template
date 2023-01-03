@@ -4,6 +4,7 @@ import Config
 # Web
 # ---
 config :leuchtturm, Leuchtturm.Web.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
     formats: [html: Leuchtturm.Web.ErrorHTML, json: Leuchtturm.Web.ErrorJSON],

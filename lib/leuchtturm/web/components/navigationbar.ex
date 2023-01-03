@@ -1,5 +1,5 @@
 defmodule Leuchtturm.Web.Components.NavigationBar do
-  use Phoenix.LiveComponent
+  use Leuchtturm.Web, :live_component
 
   import Leuchtturm.Web.Components.Icons
 
@@ -81,15 +81,15 @@ defmodule Leuchtturm.Web.Components.NavigationBar do
       >
         Settings
       </a>
-      <a
-        href="#"
+      <.link
+        href={~p"/logout"}
+        method="delete"
         class="block py-2 px-4 text-sm text-gray-700"
         role="menuitem"
         tabindex="-1"
-        id="user-menu-item-2"
       >
-        Sign out
-      </a>
+        Logout
+      </.link>
     </div>
     """
   end

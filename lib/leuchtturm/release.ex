@@ -3,7 +3,6 @@ defmodule Leuchtturm.Release do
   Used for executing DB release tasks when run in production without Mix
   installed.
   """
-  @app :leuchtturm
 
   def migrate do
     load_app()
@@ -19,10 +18,10 @@ defmodule Leuchtturm.Release do
   end
 
   defp repos do
-    Application.fetch_env!(@app, :ecto_repos)
+    Application.fetch_env!(:leuchtturm, :ecto_repos)
   end
 
   defp load_app do
-    Application.load(@app)
+    Application.load(:leuchtturm)
   end
 end

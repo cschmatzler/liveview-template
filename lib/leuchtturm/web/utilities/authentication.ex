@@ -6,14 +6,14 @@ defmodule Leuchtturm.Web.Utilities.Authentication do
   import Plug.Conn
   import Phoenix.Controller
 
-  @max_age 60 * 60 * 24 * 60
   @remember_session_cookie "_remember_session"
+  @max_age 60 * 60 * 24 * 60
   @remember_session_options [sign: true, max_age: @max_age, same_site: "Lax"]
 
   # ------------
   # Route helpers
   # ------------
-  def fetch_logged_in_user(conn, _opts) do
+  def fetch_user(conn, _opts) do
     {session_token, conn} = ensure_session_token(conn)
     user = session_token && Authentication.get_user_by_session_token(session_token)
 
@@ -30,7 +30,6 @@ defmodule Leuchtturm.Web.Utilities.Authentication do
     end
   end
 
-  # LiveView helpers
   def on_mount(:redirect_if_user_is_authenticated, _params, session, socket) do
     socket = mount_current_user(session, socket)
 
@@ -45,13 +44,27 @@ defmodule Leuchtturm.Web.Utilities.Authentication do
   # User actions
   # ------------
   def login(conn, user, params \\ %{}) do
-    token = Authentication.generate_user_session_token(user)
+    token = Authentication.create_session_token(user)
 
     conn
     |> renew_session()
     |> put_token_in_session(token)
     |> maybe_write_remember_me_cookie(token, params)
     |> redirect(to: signed_in_path(conn))
+  end
+
+  def logout(conn) do
+    session_token = get_session(conn, :session_token)
+    session_token && Authentication.delete_session_token(session_token)
+
+    if live_socket_id = get_session(conn, :live_socket_id) do
+      Leuchtturm.Web.Endpoint.broadcast(live_socket_id, "disconnect", %{})
+    end
+
+    conn
+    |> renew_session()
+    |> delete_resp_cookie(@remember_session_cookie)
+    |> redirect(to: "/")
   end
 
   defp signed_in_path(_conn), do: ~p"/"

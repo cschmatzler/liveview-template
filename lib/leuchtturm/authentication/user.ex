@@ -1,4 +1,8 @@
 defmodule Leuchtturm.Authentication.User do
+  @moduledoc """
+
+  """
+
   alias Ecto.Changeset
   alias Uniq.UUID
 
@@ -14,9 +18,9 @@ defmodule Leuchtturm.Authentication.User do
   @timestamps_opts [type: :utc_datetime]
   schema "users" do
     field :email, :string
+    field :name, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
-    field :name, :string
     field :confirmed_at, :utc_datetime
 
     timestamps()
@@ -25,9 +29,9 @@ defmodule Leuchtturm.Authentication.User do
   @type t :: %User{
           id: UUID.t() | nil,
           email: String.t() | nil,
+          name: String.t() | nil,
           password: String.t() | nil,
           hashed_password: String.t() | nil,
-          name: String.t() | nil,
           confirmed_at: DateTime.t() | nil
         }
 
@@ -67,7 +71,8 @@ defmodule Leuchtturm.Authentication.User do
   If there is no user or the user doesn't have a password, we call
   `Argon2.no_user_verify/0` to avoid timing attacks.
   """
-  def valid_password?(%__MODULE__{hashed_password: hashed_password}, password)
+  @spec valid_password?(User.t(), String.t()) :: boolean()
+  def valid_password?(%User{hashed_password: hashed_password}, password)
       when is_binary(hashed_password) and byte_size(password) > 0 do
     Argon2.verify_pass(password, hashed_password)
   end

@@ -1,6 +1,8 @@
 defmodule Leuchtturm.Authentication.Token do
+  alias Uniq.UUID
+
+  alias Leuchtturm.Authentication.{Token, User}
   alias Leuchtturm.Ecto.UUIDv6
-  alias Leuchtturm.Authentication.Token
 
   use Ecto.Schema
 
@@ -27,47 +29,46 @@ defmodule Leuchtturm.Authentication.Token do
     timestamps(updated_at: false)
   end
 
-  def verify_session_token_query(token) do
+  @type t :: %Token{
+          id: UUID.t() | nil,
+          token: binary(),
+          purpose: String.t(),
+          sent_to: String.t() | nil,
+          user: User.t() | Ecto.Association.NotLoaded.t(),
+          inserted_at: DateTime.t() | nil
+        }
+
+  @spec user_from_session_token_query(binary()) :: Ecto.Query.t()
+  def user_from_session_token_query(token) do
     from token in token_and_purpose_query(token, "session"),
       join: user in assoc(token, :user),
       where: token.inserted_at > ago(@session_validity_in_days, "day"),
       select: user
   end
 
-  @doc """
-  Generates a token that will be stored in a signed place,
-  such as session or cookie. As they are signed, those
-  tokens do not need to be hashed.
-
-  The reason why we store session tokens in the database, even
-  though Phoenix already provides a session cookie, is because
-  Phoenix' default session cookies are not persisted, they are
-  simply signed and potentially encrypted. This means they are
-  valid indefinitely, unless you change the signing/encryption
-  salt.
-
-  Therefore, storing them allows individual user
-  sessions to be expired. The token system can also be extended
-  to store additional data, such as the device used for logging in.
-  You could then use this information to display all valid sessions
-  and devices in the UI and allow users to explicitly expire any
-  session they deem invalid.
-  """
-
-  def build_session_token(user) do
-    token = :crypto.strong_rand_bytes(@rand_size)
-
-    {token, %Token{token: token, purpose: "session", user_id: user.id}}
-  end
-
-  def build_email_token(user, purpose) do
-    build_hashed_token(user, purpose, user.email)
-  end
-
+  @spec token_and_purpose_query(binary(), String.t()) :: Ecto.Query.t()
   def token_and_purpose_query(token, purpose) do
     from Token, where: [token: ^token, purpose: ^purpose]
   end
 
+  @doc """
+  Generates a token that will be stored in a signed place,
+  such as session or cookie. As they are signed, those
+  tokens do not need to be hashed.
+  """
+  @spec build_session_token(binary()) :: Token.t()
+  def build_session_token(user_id) do
+    token = :crypto.strong_rand_bytes(@rand_size)
+
+    %Token{token: token, purpose: "session", user_id: user_id}
+  end
+
+  @spec build_email_token(User.t(), String.t()) :: {binary(), Token.t()}
+  def build_email_token(user, purpose) do
+    build_hashed_token(user, purpose, user.email)
+  end
+
+  @spec build_hashed_token(User.t(), String.t(), String.t()) :: {binary(), Token.t()}
   defp build_hashed_token(user, purpose, sent_to) do
     token = :crypto.strong_rand_bytes(@rand_size)
     hashed_token = :crypto.hash(@hash_algorithm, token)

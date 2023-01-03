@@ -27,4 +27,8 @@ defmodule Leuchtturm.Web.SessionController do
       |> redirect(to: ~p"/login")
     end
   end
+
+  def delete(conn, _params) do
+    WebAuthentication.logout(conn)
+  end
 end
