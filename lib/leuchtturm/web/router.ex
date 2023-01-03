@@ -17,7 +17,7 @@ defmodule Leuchtturm.Web.Router do
     plug :put_root_layout, {Leuchtturm.Web.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_logged_in_user
+    plug :fetch_user
   end
 
   scope "/", Leuchtturm.Web do
@@ -25,7 +25,10 @@ defmodule Leuchtturm.Web.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{Authentication, :redirect_if_user_is_authenticated}] do
-      live "/register/", RegistrationLive, :new
+      live "/register", RegisterLive, :new
+      live "/login", LoginLive, :new
+      live "/forgot_password", ForgotPasswordLive, :new
+      live "/forgot_password/token", ForgotPasswordLive, :edit
     end
 
     post "/login", SessionController, :create
@@ -33,6 +36,8 @@ defmodule Leuchtturm.Web.Router do
 
   scope "/", Leuchtturm.Web do
     pipe_through :browser
+
+    delete "/logout", SessionController, :delete
 
     live "/", PageLive, :index
   end

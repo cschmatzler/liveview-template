@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Web.RegistrationLive do
+defmodule Leuchtturm.Web.RegisterLive do
   alias Leuchtturm.Authentication
   alias Leuchtturm.Authentication.User
 
@@ -24,23 +24,6 @@ defmodule Leuchtturm.Web.RegistrationLive do
           Create your account
         </h2>
         <div class="mt-6 px-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <%= if error = Phoenix.Flash.get(@flash, :error) do %>
-            <div class="rounded-md bg-red-50 p-4">
-              <div class="flex">
-                <div class="flex-shrink-0">
-                  <Heroicons.exclamation_triangle class="h-5 w-6 text-red-400" />
-                </div>
-                <div class="ml-3">
-                  <h3 class="text-sm font-medium text-red-800">Error while registering</h3>
-                  <div class="mt-2 text-sm text-red-700">
-                    <p>
-                      <%= error %>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
           <.form
             :let={f}
             for={@registration_changeset}
@@ -67,7 +50,7 @@ defmodule Leuchtturm.Web.RegistrationLive do
               <%= label(f, :email, "Email", class: "block text-sm font-medium text-gray-600") %>
               <div class="mt-1">
                 <%= email_input(f, :email,
-                  placeholder: "you@leuchtturm.io",
+                  placeholder: "robert@leuchtturm.io",
                   class:
                     "block w-full appearance-none text-gray-900 rounded-md border border-gray-600 px-3 py-2 placeholder-gray-500 shadow-sm bg-transparent focus:border-rose focus:outline-none text-lg focus:ring-rose"
                 ) %>
@@ -79,6 +62,7 @@ defmodule Leuchtturm.Web.RegistrationLive do
               <div class="mt-1">
                 <%= password_input(f, :password,
                   placeholder: "employed food affirm",
+                  value: input_value(f, :password),
                   class:
                     "block w-full appearance-none text-gray-900 rounded-md border border-gray-600 px-3 py-2 placeholder-gray-500 shadow-sm bg-transparent focus:border-rose focus:outline-none text-lg focus:ring-rose"
                 ) %>
@@ -135,8 +119,6 @@ defmodule Leuchtturm.Web.RegistrationLive do
         {:noreply, socket}
 
       :error ->
-        socket = put_flash(socket, :error, "Unknown error, please try again later.")
-
         {:noreply, socket}
     end
   end
