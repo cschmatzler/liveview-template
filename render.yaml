@@ -5,7 +5,7 @@ services:
     region: frankfurt
     envVars:
       - key: DATABASE_URL
-        fromService:
+        fromDatabase:
           name: leuchtturm-staging
           property: connectionString
 
