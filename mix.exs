@@ -31,11 +31,11 @@ defmodule Leuchtturm.MixProject do
   defp deps do
     [
       # Web
-      {:finch, "~> 0.13"},
-      {:jason, "~> 1.2"},
-      {:bandit, "~> 0.6"},
+      {:finch, "~> 0.15"},
+      {:jason, "~> 1.4"},
+      {:bandit, "~> 0.7"},
       {:phoenix, "~> 1.7"},
-      {:phoenix_html, "~> 3.0"},
+      {:phoenix_html, "~> 3.3"},
       {:phoenix_live_view, "~> 0.18"},
       {:heroicons, "~> 0.5"},
       # Database
@@ -47,26 +47,25 @@ defmodule Leuchtturm.MixProject do
       # This needs to be above the other OpenTelemetry dependencies
       {:opentelemetry_exporter, "~> 1.2"},
       {:opentelemetry, "~> 1.3"},
-      {:opentelemetry_api, "~> 1.1"},
-      {:opentelemetry_phoenix, "~> 1.0"},
+      {:opentelemetry_api, "~> 1.2"},
+      {:opentelemetry_phoenix, "~> 1.1"},
       {:opentelemetry_liveview, "~> 1.0.0-rc"},
-      {:opentelemetry_ecto, "~> 1.0"},
+      {:opentelemetry_ecto, "~> 1.1"},
       {:opentelemetry_oban, "~> 1.0"},
       # Job processing
-      {:oban, "~> 2.13"},
+      {:oban, "~> 2.14"},
       # Mail
-      {:swoosh, "~> 1.3"},
+      {:swoosh, "~> 1.9"},
       # Other (production)
-      {:argon2_elixir, "~> 3.0"},
-      {:gettext, "~> 0.20"},
-      {:uniq, "~> 0.5"},
+      {:argon2_elixir, "~> 3.1"},
+      {:gettext, "~> 0.22"},
       # Development helpers
-      {:credo, "~> 1.6", only: :dev, runtime: false},
+      {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
       # Build tools
-      {:esbuild, "~> 0.5", only: [:dev, :prod], runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.1", only: [:dev, :prod], runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.7"},
+      {:tailwind, "~> 0.2"},
       # Test helpers
       {:floki, "~> 0.34", only: :test}
     ]
