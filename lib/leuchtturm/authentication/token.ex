@@ -1,8 +1,5 @@
 defmodule Leuchtturm.Authentication.Token do
-  alias Uniq.UUID
-
   alias Leuchtturm.Authentication.{Token, User}
-  alias Leuchtturm.Ecto.UUIDv6
 
   use Ecto.Schema
 
@@ -17,7 +14,7 @@ defmodule Leuchtturm.Authentication.Token do
   @session_validity_in_days 60
 
   @schema_prefix "authentication"
-  @primary_key {:id, UUIDv6, autogenerate: true}
+  @primary_key {:id, :binary_id, autogenerate: true}
   @timestamps_opts [type: :utc_datetime]
   schema "tokens" do
     field :token, :binary

@@ -4,9 +4,7 @@ defmodule Leuchtturm.Authentication.User do
   """
 
   alias Ecto.Changeset
-  alias Uniq.UUID
 
-  alias Leuchtturm.Ecto.UUIDv6
   alias Leuchtturm.Authentication.User
 
   use Ecto.Schema
@@ -14,7 +12,7 @@ defmodule Leuchtturm.Authentication.User do
   import Ecto.Changeset
 
   @schema_prefix "authentication"
-  @primary_key {:id, UUIDv6, autogenerate: true}
+  @primary_key {:id, :binary_id, autogenerate: true}
   @timestamps_opts [type: :utc_datetime]
   schema "users" do
     field :email, :string
