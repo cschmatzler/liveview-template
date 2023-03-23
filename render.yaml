@@ -11,6 +11,7 @@ services:
 
 databases:
   - name: leuchtturm-staging
+    region: frankfurt
     postgresMajorVersion: 15
     user: leuchtturm
     databaseName: leuchtturm
