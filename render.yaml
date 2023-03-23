@@ -6,7 +6,6 @@ services:
     envVars:
       - key: DATABASE_URL
         fromService:
-          type: postgres
           name: leuchtturm-staging
           property: connectionString
 
