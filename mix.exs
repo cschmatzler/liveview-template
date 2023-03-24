@@ -42,6 +42,7 @@ defmodule Leuchtturm.MixProject do
       {:ecto_sql, "~> 3.9"},
       {:postgrex, "~> 0.16"},
       {:phoenix_ecto, "~> 4.4"},
+      {:carbonite, "~> 0.7"},
       # Telemetry
       {:certifi, "~> 2.10"},
       # This needs to be above the other OpenTelemetry dependencies
@@ -56,17 +57,17 @@ defmodule Leuchtturm.MixProject do
       {:oban, "~> 2.14"},
       # Mail
       {:swoosh, "~> 1.9"},
-      # Other (production)
+      # Other
       {:argon2_elixir, "~> 3.1"},
       {:gettext, "~> 0.22"},
+      # Build tools
+      {:esbuild, "~> 0.7"},
+      {:tailwind, "~> 0.2"},
       # Development helpers
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
-      # Build tools
-      {:esbuild, "~> 0.7"},
-      {:tailwind, "~> 0.2"},
-      # Test helpers
+      {:ecto_dbg, "~> 0.2", only: [:dev, :test]},
       {:floki, "~> 0.34", only: :test}
     ]
   end
