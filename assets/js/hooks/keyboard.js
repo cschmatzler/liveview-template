@@ -50,7 +50,6 @@ const Keyboard = {
         return;
       }
 
-    console.log(event)
       const { key } = event;
       this.pushEventTo(this.props.target, "keydown", { key });
     }

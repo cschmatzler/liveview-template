@@ -9,7 +9,8 @@ let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-    params: { _csrf_token: csrfToken }, hooks: hooks
+  params: { _csrf_token: csrfToken },
+  hooks: hooks,
 });
 
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
