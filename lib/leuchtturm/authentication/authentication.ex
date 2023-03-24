@@ -62,7 +62,7 @@ defmodule Leuchtturm.Authentication do
     {token_string, token} = Token.build_email_token(user, "email_confirmation")
     Repo.insert!(token)
 
-    token_string
+    {:ok, token_string}
   end
 
   @spec create_confirmation_job(User.t(), String.t()) :: Oban.Job.t()
@@ -72,7 +72,7 @@ defmodule Leuchtturm.Authentication do
       user_id: user.id,
       confirmation_token: confirmation_token
     })
-    |> Oban.insert!()
+    |> Oban.insert()
   end
 
   def send_password_reset_token(email) do
@@ -104,12 +104,13 @@ defmodule Leuchtturm.Authentication do
 
   @spec create_password_reset_job(User.t(), String.t()) :: {:ok, Oban.Job.t()}
   defp create_password_reset_job(user, password_reset_token) do
-    job = Mailer.new(%{
-      mail_id: "password_reset",
-      user_id: user.id,
-      password_reset_token: password_reset_token
-    })
-    |> Oban.insert!()
+    job =
+      Mailer.new(%{
+        mail_id: "password_reset",
+        user_id: user.id,
+        password_reset_token: password_reset_token
+      })
+      |> Oban.insert!()
 
     {:ok, job}
   end

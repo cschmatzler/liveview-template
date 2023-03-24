@@ -53,7 +53,7 @@ defmodule Leuchtturm.Authentication.Token do
   such as session or cookie. As they are signed, those
   tokens do not need to be hashed.
   """
-  @spec build_session_token(binary()) :: Token.t()
+  @spec build_session_token(Ecto.UUID.t()) :: Token.t()
   def build_session_token(user_id) do
     token = :crypto.strong_rand_bytes(@rand_size)
 
