@@ -2,7 +2,6 @@ defmodule Leuchtturm.Authentication.Mailer do
   alias Oban.Job
 
   alias Leuchtturm.Authentication
-  alias Leuchtturm.Authentication.Mailer.Confirmation
 
   use Oban.Worker, queue: :mail
 
