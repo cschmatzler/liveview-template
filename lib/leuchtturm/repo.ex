@@ -4,4 +4,6 @@ defmodule Leuchtturm.Repo do
   use Ecto.Repo,
     otp_app: :leuchtturm,
     adapter: Ecto.Adapters.Postgres
+
+  use EctoDbg
 end
