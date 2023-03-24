@@ -10,7 +10,7 @@ module.exports = {
         wine: "#5d001e",
         rose: "#e3afbc",
         magenta: "#9a1750",
-        pink: "#ee4c7c"
+        pink: "#ee4c7c",
       },
     },
   },
