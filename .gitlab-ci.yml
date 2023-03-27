@@ -38,3 +38,14 @@ test:
     POSTGRES_HOST_AUTH_METHOD: trust
   script:
     - mix test
+
+lint:
+  stage: test
+  needs:
+    - job: deps
+      artifacts: true
+  variables:
+    MIX_ENV: test
+  script:
+    - mix format --check-formatted
+    - mix credo
