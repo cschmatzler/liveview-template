@@ -1,5 +1,25 @@
 import Config
 
+# -------------
+# Feature Flags
+# -------------
+config :leuchtturm, ConfigCat, data_governance: :eu_only
+
+# --------
+# Database
+# --------
+config :leuchtturm,
+  ecto_repos: [Leuchtturm.Repo]
+
+# ----
+# Jobs
+# ----
+config :leuchtturm, Oban,
+  repo: Leuchtturm.Repo,
+  prefix: "jobs",
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 10, mail: 10]
+
 # ---
 # Web
 # ---
@@ -12,12 +32,6 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
   ],
   pubsub_server: Leuchtturm.PubSub,
   live_view: [signing_salt: "17k0tPiq"]
-
-# --------
-# Database
-# --------
-config :leuchtturm,
-  ecto_repos: [Leuchtturm.Repo]
 
 # ------
 # Web Assets
@@ -41,15 +55,6 @@ config :tailwind,
     ),
     cd: Path.expand("../assets", __DIR__)
   ]
-
-# ----
-# Jobs
-# ----
-config :leuchtturm, Oban,
-  repo: Leuchtturm.Repo,
-  prefix: "jobs",
-  plugins: [Oban.Plugins.Pruner],
-  queues: [default: 10, mail: 10]
 
 # ----
 # Mail

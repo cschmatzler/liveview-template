@@ -5,6 +5,11 @@ import Config
 # -------
 config :logger, :console, format: "[$level] $message\n", level: :debug
 
+# -------------
+# Feature Flags
+# -------------
+config :leuchtturm, ConfigCat, enabled?: false
+
 # --------
 # Database
 # --------
