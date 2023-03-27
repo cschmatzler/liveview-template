@@ -4,6 +4,8 @@ defmodule Leuchtturm.Web do
   Provides a `use` macro taking one parameter specifying what the module is/needs.
   """
 
+  use Boundary, deps: [], exports: [Endpoint], top_level?: true
+
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
@@ -21,7 +23,7 @@ defmodule Leuchtturm.Web do
     end
   end
 
-  def html do
+  def component do
     quote do
       use Phoenix.Component
 

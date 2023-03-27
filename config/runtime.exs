@@ -45,7 +45,7 @@ if config_env() == :prod do
   # ---
   # Web
   # ---
-  host = System.get_env("HOST") || System.get_env("RENDER_EXTERNAL_HOSTNAME") || "leuchtturm.io"
+  host = System.get_env("RENDER_EXTERNAL_HOSTNAME") || System.get_env("HOST") || "leuchtturm.io"
   port = String.to_integer(System.get_env("PORT") || "4000")
   secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 

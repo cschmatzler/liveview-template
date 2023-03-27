@@ -1,0 +1,36 @@
+image: hexpm/elixir:1.14.3-erlang-25.3-ubuntu-jammy-20230126
+
+deps:
+  stage: build
+  cache:
+    - key:
+        files:
+          - mix.lock
+      paths:
+        - deps/
+  artifacts:
+    paths:
+      - deps/
+      - _build/
+  variables:
+    MIX_ENV: test
+  script:
+    - mix local.rebar --force
+    - mix local.hex --force
+    - mix deps.get
+    - mix deps.compile
+
+test:
+  stage: test
+  needs:
+    - job: deps
+      artifacts: true
+  services:
+    - postgres:15.2
+  variables:
+    MIX_ENV: test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_HOST_AUTH_METHOD: trust
+  script:
+    - mix test

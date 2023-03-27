@@ -1,6 +1,7 @@
 defmodule Leuchtturm.Application do
   @moduledoc false
 
+  use Boundary, deps: [Leuchtturm.Web], exports: []
   use Application
 
   @impl true
