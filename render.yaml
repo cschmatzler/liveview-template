@@ -5,6 +5,16 @@ services:
     region: frankfurt
     env: docker
     envVars:
+      - key: CONFIG_CAT_SDK_KEY
+        sync: false
+      - key: TELEMETRY_NAMESPACE
+        sync: false
+      - key: LIGHTSTEP_ACCESS_TOKEN
+        sync: false
+      - key: SECRET_KEY_BASE
+        sync: false
+      - key: POSTMARK_API_KEY
+        sync: false
       - key: DATABASE_URL
         fromDatabase:
           name: leuchtturm
