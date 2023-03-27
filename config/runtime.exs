@@ -4,12 +4,19 @@ if System.get_env("ENABLE_SERVER") do
   config :leuchtturm, Leuchtturm.Web.Endpoint, server: true
 end
 
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
+  client_id: System.get_env("GITHUB_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
+
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+  redirect_uri: System.get_env("GOOGLE_REDIRECT_URI")
+
 # ---------
 # Production
 # ---------
 if config_env() == :prod do
-  version = System.get_env("RENDER_GIT_COMMIT") || "dev"
-
   # -------------
   # Feature Flags
   # -------------
@@ -19,6 +26,7 @@ if config_env() == :prod do
   # ---------
   # Telemetry
   # ---------
+  version = System.get_env("RENDER_GIT_COMMIT") || "dev"
   telemetry_namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
   lightstep_access_token = System.fetch_env!("LIGHTSTEP_ACCESS_TOKEN")
 

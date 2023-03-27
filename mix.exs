@@ -41,8 +41,8 @@ defmodule Leuchtturm.MixProject do
       {:boundary, "~> 0.9", runtime: false},
       {:carbonite, "~> 0.8"},
       {:certifi, "~> 2.11"},
-      {:credo, "~> 1.7", only: :dev, runtime: false},
       {:configcat, "~> 2.0"},
+      {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
@@ -65,7 +65,10 @@ defmodule Leuchtturm.MixProject do
       {:phoenix_live_view, "~> 0.18"},
       {:postgrex, "~> 0.16"},
       {:swoosh, "~> 1.9"},
-      {:tailwind, "~> 0.2"}
+      {:tailwind, "~> 0.2"},
+      {:ueberauth, "~> 0.10"},
+      {:ueberauth_github, "~> 0.8"},
+      {:ueberauth_google, "~> 0.10"}
     ]
   end
 
