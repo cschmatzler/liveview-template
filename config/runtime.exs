@@ -13,8 +13,8 @@ if config_env() == :prod do
   # -------------
   # Feature Flags
   # -------------
-  config_cat_sdk_key = System.fetch_env!("CONFIG_CAT_SDK_KEY")
-  config :leuchtturm, ConfigCat, sdk_key: config_cat_sdk_key
+  configcat_sdk_key = System.fetch_env!("CONFIGCAT_SDK_KEY")
+  config :leuchtturm, ConfigCat, sdk_key: configcat_sdk_key
 
   # ---------
   # Telemetry
