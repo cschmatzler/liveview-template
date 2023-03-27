@@ -1,5 +1,9 @@
 image: hexpm/elixir:1.14.3-erlang-25.3-ubuntu-jammy-20230126
 
+before_script:
+  - mix local.rebar --force
+  - mix local.hex --force
+
 deps:
   stage: build
   cache:
@@ -8,6 +12,7 @@ deps:
           - mix.lock
       paths:
         - deps/
+        - build/
   artifacts:
     paths:
       - deps/
@@ -15,8 +20,6 @@ deps:
   variables:
     MIX_ENV: test
   script:
-    - mix local.rebar --force
-    - mix local.hex --force
     - mix deps.get
     - mix deps.compile
 
