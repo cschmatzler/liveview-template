@@ -39,8 +39,8 @@ defmodule Leuchtturm.MixProject do
       # Alphabetically from here on
       {:bandit, "~> 0.7"},
       {:boundary, "~> 0.9", runtime: false},
-      {:carbonite, "~> 0.7"},
-      {:certifi, "~> 2.10"},
+      {:carbonite, "~> 0.8"},
+      {:certifi, "~> 2.11"},
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.9"},
