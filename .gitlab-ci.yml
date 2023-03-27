@@ -7,9 +7,7 @@ before_script:
 deps:
   stage: build
   cache:
-    - key:
-        files:
-          - mix.lock
+    - key: deps
       paths:
         - deps/
         - _build/
@@ -49,3 +47,15 @@ lint:
   script:
     - mix format --check-formatted
     - mix credo
+
+types:
+  stage: test
+  cache:
+    - key: types
+      paths:
+        - priv/plts
+  needs:
+    - job: deps
+      artifacts: true
+  script:
+    - mix dialyzer

@@ -15,6 +15,9 @@ defmodule Leuchtturm.MixProject do
         leuchtturm: [
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
         ]
+      ],
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ]
     ]
   end
