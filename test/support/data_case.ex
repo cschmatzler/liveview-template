@@ -14,6 +14,7 @@ defmodule Leuchtturm.DataCase do
   this option is not recommended for other databases.
   """
 
+  use Boundary
   use ExUnit.CaseTemplate
 
   using do

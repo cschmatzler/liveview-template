@@ -3,17 +3,6 @@ const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: ["./js/**/*.js", "../lib/leuchtturm/web/**/*.*ex"],
-  theme: {
-    extend: {
-      colors: {
-        ash: "#e3e2df",
-        wine: "#5d001e",
-        rose: "#e3afbc",
-        magenta: "#9a1750",
-        pink: "#ee4c7c",
-      },
-    },
-  },
   plugins: [
     require("@tailwindcss/forms"),
     plugin(({ addVariant }) =>

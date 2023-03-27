@@ -1,8 +1,7 @@
 defmodule Leuchtturm.Release do
-  @moduledoc """
-  Used for executing DB release tasks when run in production without Mix
-  installed.
-  """
+  @moduledoc false
+
+  use Boundary, deps: [], exports: [], top_level?: true
 
   def migrate do
     load_app()

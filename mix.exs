@@ -10,6 +10,7 @@ defmodule Leuchtturm.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
+      compilers: [:boundary] ++ Mix.compilers(),
       releases: [
         leuchtturm: [
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
@@ -30,52 +31,42 @@ defmodule Leuchtturm.MixProject do
 
   defp deps do
     [
-      # Web
-      {:finch, "~> 0.15"},
-      {:jason, "~> 1.4"},
-      {:bandit, "~> 0.7"},
-      {:phoenix, "~> 1.7"},
-      {:phoenix_html, "~> 3.3"},
-      {:phoenix_live_view, "~> 0.18"},
-      {:heroicons, "~> 0.5"},
-      # Database
-      {:ecto_sql, "~> 3.9"},
-      {:postgrex, "~> 0.16"},
-      {:phoenix_ecto, "~> 4.4"},
-      {:carbonite, "~> 0.7"},
-      # Telemetry
-      {:certifi, "~> 2.10"},
-      # This needs to be above the other OpenTelemetry dependencies
+      # This needs to be first
       {:opentelemetry_exporter, "~> 1.2"},
-      {:opentelemetry, "~> 1.3"},
-      {:opentelemetry_api, "~> 1.2"},
-      {:opentelemetry_phoenix, "~> 1.1"},
-      {:opentelemetry_liveview, "~> 1.0.0-rc"},
-      {:opentelemetry_ecto, "~> 1.1"},
-      {:opentelemetry_oban, "~> 1.0"},
-      # Job processing
-      {:oban, "~> 2.14"},
-      # Mail
-      {:swoosh, "~> 1.9"},
-      # Other
-      {:argon2_elixir, "~> 3.1"},
-      {:gettext, "~> 0.22"},
-      # Build tools
-      {:esbuild, "~> 0.7"},
-      {:tailwind, "~> 0.2"},
-      # Development helpers
+      # Alphabetically from here on
+      {:bandit, "~> 0.7"},
+      {:boundary, "~> 0.9", runtime: false},
+      {:carbonite, "~> 0.7"},
+      {:certifi, "~> 2.10"},
       {:credo, "~> 1.7", only: :dev, runtime: false},
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
+      {:ecto_sql, "~> 3.9"},
+      {:esbuild, "~> 0.7"},
+      {:finch, "~> 0.15"},
+      {:floki, "~> 0.34", only: :test},
+      {:gettext, "~> 0.22"},
+      {:heroicons, "~> 0.5"},
+      {:jason, "~> 1.4"},
+      {:oban, "~> 2.14"},
+      {:opentelemetry, "~> 1.3"},
+      {:opentelemetry_api, "~> 1.2"},
+      {:opentelemetry_ecto, "~> 1.1"},
+      {:opentelemetry_liveview, "~> 1.0.0-rc"},
+      {:opentelemetry_oban, "~> 1.0"},
+      {:opentelemetry_phoenix, "~> 1.1"},
+      {:phoenix, "~> 1.7"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
-      {:ecto_dbg, "~> 0.2", only: [:dev, :test]},
-      {:floki, "~> 0.34", only: :test}
+      {:phoenix_live_view, "~> 0.18"},
+      {:postgrex, "~> 0.16"},
+      {:swoosh, "~> 1.9"},
+      {:tailwind, "~> 0.2"}
     ]
   end
 
   defp aliases do
     [
-      # TODO: Revisit this
-      # NOTE: Replace with just?
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],

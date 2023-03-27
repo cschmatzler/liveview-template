@@ -11,7 +11,7 @@ config :logger, level: :warning
 config :leuchtturm, Leuchtturm.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: System.get_env("DB_HOST") || "localhost",
   database: "leuchtturm_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
@@ -34,8 +34,3 @@ config :leuchtturm, Oban, testing: :inline
 # ----
 config :leuchtturm, Leuchtturm.Mailer, adapter: Swoosh.Adapters.Test
 config :swoosh, :api_client, false
-
-# -----
-# Other
-# -----
-config :argon2_elixir, t_cost: 1, m_cost: 8
