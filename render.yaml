@@ -1,16 +1,18 @@
 services:
-  - type: web
-    name: leuchtturm-staging
-    env: docker
+  - name: leuchtturm
+    type: web
+    plan: free
     region: frankfurt
+    env: docker
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: leuchtturm-staging
+          name: leuchtturm
           property: connectionString
 
 databases:
-  - name: leuchtturm-staging
+  - name: leuchtturm
+    plan: free
     region: frankfurt
     postgresMajorVersion: 15
     user: leuchtturm
