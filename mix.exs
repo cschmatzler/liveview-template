@@ -42,6 +42,7 @@ defmodule Leuchtturm.MixProject do
       {:carbonite, "~> 0.8"},
       {:certifi, "~> 2.11"},
       {:credo, "~> 1.7", only: :dev, runtime: false},
+      {:configcat, "~> 2.0"},
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},

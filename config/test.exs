@@ -5,6 +5,11 @@ import Config
 # -------
 config :logger, level: :warning
 
+# -------------
+# Feature Flags
+# -------------
+config :leuchtturm, ConfigCat, enabled?: false
+
 # --------
 # Database
 # --------

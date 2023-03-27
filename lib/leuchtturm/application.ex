@@ -16,6 +16,15 @@ defmodule Leuchtturm.Application do
       Leuchtturm.Web.Endpoint
     ]
 
+    children =
+      if Application.get_env(:leuchtturm, ConfigCat)[:enabled?] do
+        [
+          {ConfigCat, Application.fetch_env!(:leuchtturm, ConfigCat)} | children
+        ]
+      else
+        children
+      end
+
     opts = [strategy: :one_for_one, name: Leuchtturm.Supervisor]
     Supervisor.start_link(children, opts)
   end

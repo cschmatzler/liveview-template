@@ -10,6 +10,12 @@ end
 if config_env() == :prod do
   version = System.get_env("RENDER_GIT_COMMIT") || "dev"
 
+  # -------------
+  # Feature Flags
+  # -------------
+  config_cat_sdk_key = System.fetch_env!("CONFIG_CAT_SDK_KEY")
+  config :leuchtturm, ConfigCat, sdk_key: config_cat_sdk_key
+
   # ---------
   # Telemetry
   # ---------
