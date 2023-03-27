@@ -22,6 +22,15 @@ defmodule Leuchtturm.Web.Router do
     live "/", PageLive, :index
   end
 
+  scope "/auth", Leuchtturm.Web do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :delete
+  end
+
   if Application.compile_env(:leuchtturm, :dev_routes) do
     scope "/dev" do
       pipe_through :browser

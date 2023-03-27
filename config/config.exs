@@ -33,6 +33,15 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
   pubsub_server: Leuchtturm.PubSub,
   live_view: [signing_salt: "17k0tPiq"]
 
+# --------------
+# Authentication
+# --------------
+config :ueberauth, Ueberauth,
+  providers: [
+    facebook: {Ueberauth.Strategy.Facebook, [opt1: "value", opts2: "value"]},
+    github: {Ueberauth.Strategy.Github, [opt1: "value", opts2: "value"]}
+  ]
+
 # ------
 # Web Assets
 # ------
