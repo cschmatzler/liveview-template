@@ -6,8 +6,11 @@ before_script:
 
 deps:
   stage: build
+  parallel:
+    matrix:
+      - MIX_ENV: [dev, test]
   cache:
-    - key: deps
+    - key: deps-$MIX_ENV
       paths:
         - deps/
         - _build/
@@ -15,17 +18,14 @@ deps:
     paths:
       - deps/
       - _build/
-  variables:
-    MIX_ENV: test
   script:
     - mix deps.get
     - mix deps.compile
 
 test:
   stage: test
-  needs:
-    - job: deps
-      artifacts: true
+  dependencies:
+    - "deps: [test]"
   services:
     - postgres:15.2
   variables:
@@ -39,25 +39,19 @@ test:
 
 lint:
   stage: test
-  needs:
-    - job: deps
-      artifacts: true
-  variables:
-    MIX_ENV: test
+  dependencies:
+    - "deps: [dev]"
   script:
     - mix format --check-formatted
     - mix credo
 
 analysis:
   stage: test
+  dependencies:
+    - "deps: [dev]"
   cache:
     - key: analysis
       paths:
         - priv/plts
-  needs:
-    - job: deps
-      artifacts: true
-  variables:
-    MIX_ENV: test
   script:
     - mix dialyzer
