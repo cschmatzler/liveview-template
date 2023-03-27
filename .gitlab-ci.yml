@@ -48,14 +48,16 @@ lint:
     - mix format --check-formatted
     - mix credo
 
-types:
+analysis:
   stage: test
   cache:
-    - key: types
+    - key: analysis
       paths:
         - priv/plts
   needs:
     - job: deps
       artifacts: true
+  variables:
+    MIX_ENV: test
   script:
     - mix dialyzer
