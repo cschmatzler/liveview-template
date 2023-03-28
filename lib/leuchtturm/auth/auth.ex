@@ -16,21 +16,27 @@ defmodule Leuchtturm.Auth do
     |> Repo.one()
   end
 
-  @spec create_user(String.t(), String.t(), String.t(), String.t() | nil) ::
+  @spec create_user(String.t(), String.t(), String.t(), String.t(), String.t() | nil) ::
           {:ok, User.t()} | {:error, Ecto.Changeset.t()}
-  def create_user(provider, uid, name, image_url) do
+  def create_user(provider, uid, email, name, image_url) do
     User.changeset(%{
       provider: provider,
       uid: uid,
+      email: email,
       name: name,
       image_url: image_url
     })
-    |> Repo.insert()
+    |> Repo.insert!()
   end
 
-  @spec create_token(integer()) :: {:ok, Token.t()} | {:error, Ecto.Changeset.t()}
-  def create_token(user_id) do
+  @spec create_token!(integer()) :: Token.t()
+  def create_token!(user_id) do
     Token.build(user_id)
-    |> Repo.insert()
+    |> Repo.insert!()
+  end
+
+  def delete_token(token) do
+    Token.by_token_query(token)
+    |> Repo.delete_all()
   end
 end

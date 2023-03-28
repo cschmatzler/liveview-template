@@ -8,6 +8,7 @@ defmodule Leuchtturm.Repo.Migrations.AddUsers do
     create table(:users, prefix: "auth") do
       add :provider, :string, null: false
       add :uid, :string, null: false
+      add :email, :string, null: false
       add :name, :string, null: false
       add :image_url, :string
       timestamps()

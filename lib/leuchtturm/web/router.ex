@@ -6,6 +6,7 @@ defmodule Leuchtturm.Web.Router do
   import Plug.Conn
   import Phoenix.Controller
   import Phoenix.LiveView.Router
+  import Leuchtturm.Web.Auth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,21 +15,36 @@ defmodule Leuchtturm.Web.Router do
     plug :put_root_layout, {Leuchtturm.Web.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_user
   end
 
   scope "/", Leuchtturm.Web do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", LandingController, :index
+  end
+
+  scope "/app", Leuchtturm.Web do
+    pipe_through :browser
+
+    live_session :redirect_if_unauthenticated,
+      on_mount: [{Leuchtturm.Web.Auth, :redirect_if_unauthenticated}] do
+      live "/", PageLive, :index
+    end
+  end
+
+  scope "/auth", Leuchtturm.Web do
+    pipe_through [:browser, :redirect_if_authenticated]
+
+    get "/:provider", AuthController, :request
   end
 
   scope "/auth", Leuchtturm.Web do
     pipe_through :browser
 
-    get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
     post "/:provider/callback", AuthController, :callback
-    delete "/logout", AuthController, :delete
+    delete "/session", AuthController, :logout
   end
 
   if Application.compile_env(:leuchtturm, :dev_routes) do
