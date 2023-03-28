@@ -43,12 +43,14 @@
         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
       </div>
       <div class="hidden lg:block lg:flex-1 lg:justify-end">
-        <%= if @user do %>
-          <.link href={~p"/app"}>Dashboard</.link> <br />
-          <.link href={~p"/auth/session"} method="delete">Log out</.link>
-        <% else %>
-          <.link href={~p"/auth/github"}>Log in with GitHub</.link> <br />
-          <.link href={~p"/auth/google"}>Log in with Google</.link> <br />
+        <%= if ConfigCat.get_value("enableLogin", false) do %>
+          <%= if @user do %>
+            <.link href={~p"/app"}>Dashboard</.link> <br />
+            <.link href={~p"/auth/session"} method="delete">Log out</.link>
+          <% else %>
+            <.link href={~p"/auth/github"}>Log in with GitHub</.link> <br />
+            <.link href={~p"/auth/google"}>Log in with Google</.link> <br />
+          <% end %>
         <% end %>
       </div>
     </nav>

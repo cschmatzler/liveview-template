@@ -32,7 +32,7 @@ defmodule Leuchtturm.Web.AuthController do
   defp get_or_create_user(provider, uid, email, name, image_url) do
     case Auth.get_user_by_oauth(provider, uid) do
       nil ->
-        Auth.create_user(provider, uid, email, name, image_url)
+        Auth.create_user!(provider, uid, email, name, image_url)
 
       user ->
         user
