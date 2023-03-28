@@ -8,37 +8,34 @@ defmodule Leuchtturm.Web.AuthController do
   def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
     conn
     |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: "/")
+    |> redirect(to: ~p"/")
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    provider = Atom.to_string(auth.provider)
-    uid = Integer.to_string(auth.uid)
+    provider = to_string(auth.provider)
+    uid = to_string(auth.uid)
 
-    user = get_or_create_user(provider, uid, auth.info.name, auth.info.image)
-    IO.inspect(user)
+    user = get_or_create_user(provider, uid, auth.info.email, auth.info.name, auth.info.image)
+    Leuchtturm.Web.Auth.login(conn, user)
 
     conn
-    |> redirect(to: "/")
+    |> redirect(to: ~p"/app")
   end
 
-  defp get_or_create_user(provider, uid, name, image_url) do
+  def logout(conn, _params) do
+    Leuchtturm.Web.Auth.logout(conn)
+
+    conn
+    |> redirect(to: ~p"/")
+  end
+
+  defp get_or_create_user(provider, uid, email, name, image_url) do
     case Auth.get_user_by_oauth(provider, uid) do
       nil ->
-        create_user(provider, uid, name, image_url)
+        Auth.create_user(provider, uid, email, name, image_url)
 
       user ->
         user
-    end
-  end
-
-  defp create_user(provider, uid, name, image_url) do
-    case Auth.create_user(provider, uid, name, image_url) do
-      {:ok, user} ->
-        user
-
-      {:error, _changeset} ->
-        :error
     end
   end
 end

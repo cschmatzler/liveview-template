@@ -38,8 +38,8 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
 # --------------
 config :ueberauth, Ueberauth,
   providers: [
-    facebook: {Ueberauth.Strategy.Facebook, [opt1: "value", opts2: "value"]},
-    github: {Ueberauth.Strategy.Github, [opt1: "value", opts2: "value"]}
+    github: {Ueberauth.Strategy.Github, []},
+    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
 # ------

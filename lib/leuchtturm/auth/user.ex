@@ -9,6 +9,7 @@ defmodule Leuchtturm.Auth.User do
   schema "users" do
     field :provider, :string
     field :uid, :string
+    field :email, :string
     field :name, :string
     field :image_url, :string
     timestamps()
@@ -18,14 +19,15 @@ defmodule Leuchtturm.Auth.User do
           id: integer(),
           provider: String.t(),
           uid: String.t(),
+          email: String.t(),
           name: String.t(),
           image_url: String.t() | nil
         }
 
   def changeset(%__MODULE__{} = user \\ %__MODULE__{}, attrs) do
     user
-    |> cast(attrs, [:provider, :uid, :name, :image_url])
-    |> validate_required([:provider, :uid, :name])
+    |> cast(attrs, [:provider, :uid, :email, :name, :image_url])
+    |> validate_required([:provider, :uid, :email, :name])
   end
 
   def by_oauth_query(provider, uid) do
