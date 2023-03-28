@@ -3,6 +3,8 @@ services:
     type: web
     plan: free
     region: frankfurt
+    domains:
+      - leuchtturm.io
     env: docker
     envVars:
       - key: CONFIGCAT_SDK_KEY
