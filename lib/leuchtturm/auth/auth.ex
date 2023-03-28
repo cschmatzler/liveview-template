@@ -16,9 +16,9 @@ defmodule Leuchtturm.Auth do
     |> Repo.one()
   end
 
-  @spec create_user(String.t(), String.t(), String.t(), String.t(), String.t() | nil) ::
+  @spec create_user!(String.t(), String.t(), String.t(), String.t(), String.t() | nil) ::
           {:ok, User.t()} | {:error, Ecto.Changeset.t()}
-  def create_user(provider, uid, email, name, image_url) do
+  def create_user!(provider, uid, email, name, image_url) do
     User.changeset(%{
       provider: provider,
       uid: uid,
