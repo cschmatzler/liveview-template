@@ -1,9 +1,9 @@
 ARG ELIXIR_VERSION=1.14.3
 ARG OTP_VERSION=25.3
-ARG ALPINE_VERSION=3.17.2
+ARG DEBIAN_VERSION=bullseye-20230227-slim
 
-ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-alpine-${ALPINE_VERSION}"
-ARG RUNNER_IMAGE="alpine:${ALPINE_VERSION}"
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
+ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
@@ -53,3 +53,4 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/leuchtturm ./
 USER nobody
 
 CMD ["/app/bin/start"]
+
