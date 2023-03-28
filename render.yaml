@@ -13,6 +13,8 @@ services:
         sync: false
       - key: LIGHTSTEP_ACCESS_TOKEN
         sync: false
+      - key: HOST
+        sync: false
       - key: SECRET_KEY_BASE
         sync: false
       - key: GITHUB_CLIENT_ID
