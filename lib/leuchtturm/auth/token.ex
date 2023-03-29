@@ -27,12 +27,12 @@ defmodule Leuchtturm.Auth.Token do
     %__MODULE__{token: token, user_id: user_id}
   end
 
-  def by_token_query(token) do
+  def with_token_query(token) do
     from t in __MODULE__,
       where: t.token == ^token
   end
 
-  def user_by_token_query(token) do
+  def user_with_token_query(token) do
     from t in __MODULE__,
       where: t.token == ^token,
       where: t.inserted_at >= ago(@session_validity_in_days, "day"),

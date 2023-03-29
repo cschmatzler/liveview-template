@@ -1,18 +1,22 @@
 defmodule Leuchtturm.Auth do
+  @moduledoc """
+  TODO: Add a description
+  """
+
   use Boundary, deps: [Leuchtturm.Repo], top_level?: true
 
   alias Leuchtturm.Repo
   alias Leuchtturm.Auth.User
   alias Leuchtturm.Auth.Token
 
-  @spec get_user_by_oauth(String.t(), String.t()) :: User.t() | nil
-  def get_user_by_oauth(provider, uid) do
-    User.by_oauth_query(provider, uid)
+  @spec get_user_with_oauth(String.t(), String.t()) :: User.t() | nil
+  def get_user_with_oauth(provider, uid) do
+    User.with_oauth_query(provider, uid)
     |> Repo.one()
   end
 
-  def get_user_by_token(token) do
-    Token.user_by_token_query(token)
+  def get_user_with_token(token) do
+    Token.user_with_token_query(token)
     |> Repo.one()
   end
 
@@ -36,7 +40,7 @@ defmodule Leuchtturm.Auth do
   end
 
   def delete_token(token) do
-    Token.by_token_query(token)
+    Token.with_token_query(token)
     |> Repo.delete_all()
   end
 end

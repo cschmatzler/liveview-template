@@ -30,7 +30,7 @@ defmodule Leuchtturm.Auth.User do
     |> validate_required([:provider, :uid, :email, :name])
   end
 
-  def by_oauth_query(provider, uid) do
+  def with_oauth_query(provider, uid) do
     from u in __MODULE__,
       where: u.provider == ^provider,
       where: u.uid == ^uid

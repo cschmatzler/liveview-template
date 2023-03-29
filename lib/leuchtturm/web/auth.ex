@@ -15,7 +15,7 @@ defmodule Leuchtturm.Web.Auth do
   # ------------
   def fetch_user(conn, _opts) do
     {session_token, conn} = ensure_session_token(conn)
-    user = session_token && Auth.get_user_by_token(session_token)
+    user = session_token && Auth.get_user_with_token(session_token)
 
     assign(conn, :user, user)
   end
@@ -25,7 +25,7 @@ defmodule Leuchtturm.Web.Auth do
       conn
     else
       conn
-      |> redirect(to: ~p"/")
+      |> redirect(to: signed_out_path())
       |> halt()
     end
   end
@@ -33,7 +33,7 @@ defmodule Leuchtturm.Web.Auth do
   def redirect_if_authenticated(conn, _opts) do
     if conn.assigns[:user] do
       conn
-      |> redirect(to: signed_in_path(conn))
+      |> redirect(to: signed_in_path())
       |> halt()
     else
       conn
@@ -46,11 +46,12 @@ defmodule Leuchtturm.Web.Auth do
     if socket.assigns.user do
       {:cont, socket}
     else
-      {:halt, Phoenix.LiveView.redirect(socket, to: ~p"/")}
+      {:halt, Phoenix.LiveView.redirect(socket, to: signed_out_path())}
     end
   end
 
-  defp signed_in_path(_conn), do: ~p"/app"
+  def signed_in_path, do: ~p"/app"
+  def signed_out_path, do: ~p"/"
 
   defp ensure_session_token(conn) do
     if token = get_session(conn, :session_token) do
@@ -76,7 +77,7 @@ defmodule Leuchtturm.Web.Auth do
     case session do
       %{"session_token" => session_token} ->
         Phoenix.Component.assign_new(socket, :user, fn ->
-          Auth.get_user_by_token(session_token)
+          Auth.get_user_with_token(session_token)
         end)
 
       %{} ->
@@ -87,17 +88,17 @@ defmodule Leuchtturm.Web.Auth do
   # ------------
   # User actions
   # ------------
-  def login(conn, user) do
+  def start_session(conn, user) do
     token = Auth.create_token!(user.id).token
 
     conn
     |> renew_session()
     |> put_token_in_session(token)
     |> write_session_cookie(token)
-    |> redirect(to: signed_in_path(conn))
+    |> redirect(to: signed_in_path())
   end
 
-  def logout(conn) do
+  def end_session(conn) do
     session_token = get_session(conn, :session_token)
     session_token && Auth.delete_token(session_token)
 
@@ -108,7 +109,7 @@ defmodule Leuchtturm.Web.Auth do
     conn
     |> renew_session()
     |> delete_resp_cookie(@session_cookie)
-    |> redirect(to: "/")
+    |> redirect(to: signed_out_path())
   end
 
   defp renew_session(conn) do
