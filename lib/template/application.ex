@@ -1,7 +1,7 @@
 defmodule Template.Application do
   @moduledoc false
 
-  use Boundary, deps: [Template.Repo, Template.Web], exports: []
+  use Boundary, deps: [Template.Repo, Template.Web], top_level?: true
   use Application
 
   @impl true

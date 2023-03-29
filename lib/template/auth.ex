@@ -1,6 +1,8 @@
 defmodule Template.Auth do
   @moduledoc """
-  The `Auth` module provides business logic and persistence for user authentication.
+  This module acts as a facade for the `Template.Auth.Behaviour` behaviour.
+
+  See the behaviour module for documentation.
   """
 
   use Boundary, deps: [Template.Repo], top_level?: true

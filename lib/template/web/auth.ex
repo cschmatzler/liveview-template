@@ -17,20 +17,15 @@ defmodule Template.Web.Auth do
 
   alias Template.Auth
 
-  defmodule Behaviour do
-    @callback fetch_user(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
-  end
-
-  @behaviour Behaviour
-
   @session_cookie "session"
   @max_age 60 * 60 * 24 * 7
   @session_options [sign: true, max_age: @max_age, same_site: "Lax"]
 
-  # ------------
-  # Route helpers
-  # ------------
-  @impl Behaviour
+  @doc """
+  Reads the session token from the browser session or cookies, whichever is available, and, if the
+  token is valid, assigns the corresponding user to the connection.
+  """
+  @spec fetch_user(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def fetch_user(conn, _opts) do
     {session_token, conn} = ensure_session_token(conn)
     user = session_token && Auth.get_user_with_token(session_token)
@@ -38,6 +33,10 @@ defmodule Template.Web.Auth do
     assign(conn, :user, user)
   end
 
+  @doc """
+  Redirects the connection to `signed_out_path/0` if no authenticated session exists.
+  """
+  @spec redirect_if_unauthenticated(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def redirect_if_unauthenticated(conn, _opts) do
     if conn.assigns[:user] do
       conn
@@ -48,6 +47,10 @@ defmodule Template.Web.Auth do
     end
   end
 
+  @doc """
+  Redirects the connection to `signed_in_path/0` if an authenticated session exists.
+  """
+  @spec redirect_if_authenticated(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
   def redirect_if_authenticated(conn, _opts) do
     if conn.assigns[:user] do
       conn
@@ -58,6 +61,19 @@ defmodule Template.Web.Auth do
     end
   end
 
+  @doc """
+  Handles mount actions for authenticated LiveView components.
+
+  This function checks the user's authentication status and halts the mount if no authenticated
+  session exists. Then, the user is redirected to `signed_out_path/0`.
+
+  ## Usage
+      live_session :authenticated, on_mount: {Template.Web.Auth, :redirect_if_authenticated} do
+        # ...
+      end
+  """
+  @spec on_mount(atom, map(), Phoenix.LiveView.Session.t(), Phoenix.LiveView.Socket.t()) ::
+          {:cont, Phoenix.LiveView.Socket.t()} | {:halt, Phoenix.LiveView.Socket.t()}
   def on_mount(:redirect_if_unauthenticated, _params, session, socket) do
     socket = mount_current_user(session, socket)
 

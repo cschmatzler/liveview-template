@@ -1,8 +1,6 @@
 defmodule Template.Web.AuthController do
   use Template.Web, :controller
 
-  alias Template.Auth
-
   plug Ueberauth
 
   def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
@@ -24,10 +22,10 @@ defmodule Template.Web.AuthController do
   end
 
   defp get_or_create_user(provider, uid, email, name, image_url) do
-    if user = Auth.get_user_with_oauth(provider, uid) do
+    if user = Template.Auth.get_user_with_oauth(provider, uid) do
       user
     else
-      Auth.create_user!(provider, uid, email, name, image_url)
+      Template.Auth.create_user!(provider, uid, email, name, image_url)
     end
   end
 end
