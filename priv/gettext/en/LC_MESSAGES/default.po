@@ -10,3 +10,28 @@ msgid ""
 msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/template/web/controllers/landing/index.html.heex:45
+#, elixir-autogen, elixir-format
+msgid "About"
+msgstr ""
+
+#: lib/template/web/controllers/landing/index.html.heex:112
+#, elixir-autogen, elixir-format
+msgid "Close menu"
+msgstr ""
+
+#: lib/template/web/controllers/landing/index.html.heex:20
+#, elixir-autogen, elixir-format
+msgid "Open main menu"
+msgstr ""
+
+#: lib/template/web/controllers/landing/index.html.heex:42
+#, elixir-autogen, elixir-format
+msgid "Pricing"
+msgstr ""
+
+#: lib/template/web/controllers/landing/index.html.heex:39
+#, elixir-autogen, elixir-format
+msgid "Product"
+msgstr ""
