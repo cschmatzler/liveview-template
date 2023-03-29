@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Release do
+defmodule Template.Release do
   @moduledoc false
 
   use Boundary, deps: [], exports: [], top_level?: true
@@ -17,10 +17,10 @@ defmodule Leuchtturm.Release do
   end
 
   defp repos do
-    Application.fetch_env!(:leuchtturm, :ecto_repos)
+    Application.fetch_env!(:template, :ecto_repos)
   end
 
   defp load_app do
-    Application.load(:leuchtturm)
+    Application.load(:template)
   end
 end

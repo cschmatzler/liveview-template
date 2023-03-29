@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Repo.Migrations.AddUsers do
+defmodule Template.Repo.Migrations.AddUsers do
   use Ecto.Migration
 
   def change do

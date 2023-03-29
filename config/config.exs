@@ -3,19 +3,19 @@ import Config
 # -------------
 # Feature Flags
 # -------------
-config :leuchtturm, ConfigCat, data_governance: :eu_only
+config :template, ConfigCat, data_governance: :eu_only
 
 # --------
 # Database
 # --------
-config :leuchtturm,
-  ecto_repos: [Leuchtturm.Repo]
+config :template,
+  ecto_repos: [Template.Repo]
 
 # ----
 # Jobs
 # ----
-config :leuchtturm, Oban,
-  repo: Leuchtturm.Repo,
+config :template, Oban,
+  repo: Template.Repo,
   prefix: "jobs",
   plugins: [Oban.Plugins.Pruner],
   queues: [default: 10, mail: 10]
@@ -23,14 +23,14 @@ config :leuchtturm, Oban,
 # ---
 # Web
 # ---
-config :leuchtturm, Leuchtturm.Web.Endpoint,
+config :template, Template.Web.Endpoint,
   adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: Leuchtturm.Web.ErrorHTML, json: Leuchtturm.Web.ErrorJSON],
+    formats: [html: Template.Web.ErrorHTML, json: Template.Web.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Leuchtturm.PubSub,
+  pubsub_server: Template.PubSub,
   live_view: [signing_salt: "17k0tPiq"]
 
 # --------------
@@ -68,6 +68,6 @@ config :tailwind,
 # ----
 # Mail
 # ----
-config :leuchtturm, Leuchtturm.Mailer, adapter: Swoosh.Adapters.Local
+config :template, Template.Mailer, adapter: Swoosh.Adapters.Local
 
 import_config "#{config_env()}.exs"

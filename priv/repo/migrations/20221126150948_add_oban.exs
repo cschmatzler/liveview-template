@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Repo.Migrations.AddOban do
+defmodule Template.Repo.Migrations.AddOban do
   use Ecto.Migration
 
   def up do

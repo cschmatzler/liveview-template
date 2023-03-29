@@ -1,7 +1,7 @@
-defmodule Leuchtturm.Web.ErrorHTML do
+defmodule Template.Web.ErrorHTML do
   @moduledoc false
 
-  use Leuchtturm.Web, :component
+  use Template.Web, :component
 
   def render(template, _assigns) do
     Phoenix.Controller.status_message_from_template(template)

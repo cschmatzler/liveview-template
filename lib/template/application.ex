@@ -1,7 +1,7 @@
-defmodule Leuchtturm.Application do
+defmodule Template.Application do
   @moduledoc false
 
-  use Boundary, deps: [Leuchtturm.Repo, Leuchtturm.Web], exports: []
+  use Boundary, deps: [Template.Repo, Template.Web], exports: []
   use Application
 
   @impl true
@@ -9,33 +9,33 @@ defmodule Leuchtturm.Application do
     start_telemetry()
 
     children = [
-      {Phoenix.PubSub, name: Leuchtturm.PubSub},
-      {Finch, name: Leuchtturm.Finch},
-      Leuchtturm.Repo,
+      {Phoenix.PubSub, name: Template.PubSub},
+      {Finch, name: Template.Finch},
+      Template.Repo,
       {ConfigCat, configcat_config()},
-      {Oban, Application.fetch_env!(:leuchtturm, Oban)},
-      Leuchtturm.Web.Endpoint
+      {Oban, Application.fetch_env!(:template, Oban)},
+      Template.Web.Endpoint
     ]
 
-    opts = [strategy: :one_for_one, name: Leuchtturm.Supervisor]
+    opts = [strategy: :one_for_one, name: Template.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
   @impl true
   def config_change(changed, _new, removed) do
-    Leuchtturm.Web.Endpoint.config_change(changed, removed)
+    Template.Web.Endpoint.config_change(changed, removed)
     :ok
   end
 
   defp start_telemetry do
     OpentelemetryPhoenix.setup()
     OpentelemetryLiveView.setup()
-    OpentelemetryEcto.setup([:leuchtturm, :repo])
+    OpentelemetryEcto.setup([:template, :repo])
     OpentelemetryOban.setup()
   end
 
   defp configcat_config do
-    config = Application.fetch_env!(:leuchtturm, ConfigCat)
+    config = Application.fetch_env!(:template, ConfigCat)
 
     Keyword.put(
       config,
