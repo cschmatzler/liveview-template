@@ -15,7 +15,7 @@ defmodule Leuchtturm.MixProject do
         leuchtturm: [
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
         ]
-      ],
+      ]
     ]
   end
 
@@ -39,13 +39,14 @@ defmodule Leuchtturm.MixProject do
       {:carbonite, "~> 0.8"},
       {:certifi, "~> 2.11"},
       {:configcat, "~> 2.0"},
-      {:credo, "~> 1.7", only: :dev, runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
       {:finch, "~> 0.15"},
       {:floki, "~> 0.34", only: :test},
       {:gettext, "~> 0.22"},
       {:heroicons, "~> 0.5"},
+      {:inch_ex, "~> 2.0", only: [:dev, :test], runtime: false},
       {:jason, "~> 1.4"},
       {:oban, "~> 2.14"},
       {:opentelemetry, "~> 1.3"},
