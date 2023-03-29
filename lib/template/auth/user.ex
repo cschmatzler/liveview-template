@@ -1,6 +1,6 @@
 defmodule Template.Auth.User do
   @moduledoc """
-  A user model.
+  Model for a user.
 
   Since we are exclusively using OAuth, this is a dumb copy of whatever information the external
   provider is giving us. There won't be any username/email and password authentication, allowing
