@@ -12,18 +12,10 @@ defmodule Leuchtturm.Application do
       {Phoenix.PubSub, name: Leuchtturm.PubSub},
       {Finch, name: Leuchtturm.Finch},
       Leuchtturm.Repo,
+      {ConfigCat, configcat_config()},
       {Oban, Application.fetch_env!(:leuchtturm, Oban)},
       Leuchtturm.Web.Endpoint
     ]
-
-    children =
-      if Application.get_env(:leuchtturm, ConfigCat)[:enabled?] do
-        [
-          {ConfigCat, Application.fetch_env!(:leuchtturm, ConfigCat)} | children
-        ]
-      else
-        children
-      end
 
     opts = [strategy: :one_for_one, name: Leuchtturm.Supervisor]
     Supervisor.start_link(children, opts)
@@ -40,5 +32,15 @@ defmodule Leuchtturm.Application do
     OpentelemetryLiveView.setup()
     OpentelemetryEcto.setup([:leuchtturm, :repo])
     OpentelemetryOban.setup()
+  end
+
+  defp configcat_config do
+    config = Application.fetch_env!(:leuchtturm, ConfigCat)
+
+    Keyword.put(
+      config,
+      :flag_overrides,
+      ConfigCat.LocalMapDataSource.new(config[:flag_overrides], config[:flag_override_strategy])
+    )
   end
 end

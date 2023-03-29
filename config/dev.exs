@@ -8,7 +8,12 @@ config :logger, :console, format: "[$level] $message\n", level: :debug
 # -------------
 # Feature Flags
 # -------------
-config :leuchtturm, ConfigCat, enabled?: false
+config :leuchtturm, ConfigCat,
+  sdk_key: "local_only",
+  flag_overrides: %{
+    "enableLogin" => true
+  },
+  flag_override_strategy: :local_only
 
 # --------
 # Database
