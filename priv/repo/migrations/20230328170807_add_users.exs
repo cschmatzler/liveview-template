@@ -5,12 +5,17 @@ defmodule Template.Repo.Migrations.AddUsers do
     execute "create extension if not exists citext", ""
     execute "create schema if not exists auth", ""
 
+    role_create_query = "CREATE TYPE users_role AS ENUM ('user', 'admin')"
+    role_drop_query = "DROP TYPE users_role"
+    execute(role_create_query, role_drop_query)
+
     create table(:users, prefix: "auth") do
       add :provider, :string, null: false
       add :uid, :string, null: false
       add :email, :string, null: false
       add :name, :string, null: false
       add :image_url, :string
+      add :role, :users_role
       timestamps()
     end
 

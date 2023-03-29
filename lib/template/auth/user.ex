@@ -24,6 +24,7 @@ defmodule Template.Auth.User do
     field :email, :string
     field :name, :string
     field :image_url, :string
+    field :role, Ecto.Enum, values: [:user, :admin], default: :user
     timestamps()
   end
 
