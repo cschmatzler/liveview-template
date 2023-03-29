@@ -42,6 +42,7 @@ defmodule Template.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
+      {:ex_doc, "~> 0.29", runtime: false},
       {:finch, "~> 0.15"},
       {:floki, "~> 0.34", only: :test},
       {:gettext, "~> 0.22"},
