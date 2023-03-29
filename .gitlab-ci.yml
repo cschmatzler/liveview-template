@@ -42,4 +42,5 @@ lint:
     - deps
   script:
     - mix format --check-formatted
+    - mix knigge.verify
     - mix credo

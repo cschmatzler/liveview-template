@@ -1,10 +1,27 @@
 defmodule Template.Web.Auth do
+  @moduledoc """
+  The `Template.Web.Auth` module provides authentication functionality for the web application.
+
+  This module includes functions to fetch the current user from a session, redirect users based on their
+  authentication status, manage session tokens, start and end user sessions, and handle mount actions
+  for authenticated LiveView components.
+
+  The authentication process relies on session tokens stored in cookies, and uses the `Template.Auth`
+  module to interact with the user authentication system.
+  """
+
   use Template.Web, :verified_routes
 
   import Plug.Conn
   import Phoenix.Controller
 
   alias Template.Auth
+
+  defmodule Behaviour do
+    @callback fetch_user(Plug.Conn.t(), Keyword.t()) :: Plug.Conn.t()
+  end
+
+  @behaviour Behaviour
 
   @session_cookie "session"
   @max_age 60 * 60 * 24 * 7
@@ -13,6 +30,7 @@ defmodule Template.Web.Auth do
   # ------------
   # Route helpers
   # ------------
+  @impl Behaviour
   def fetch_user(conn, _opts) do
     {session_token, conn} = ensure_session_token(conn)
     user = session_token && Auth.get_user_with_token(session_token)
