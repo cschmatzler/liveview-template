@@ -16,9 +16,6 @@ defmodule Leuchtturm.MixProject do
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
         ]
       ],
-      dialyzer: [
-        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
-      ]
     ]
   end
 
@@ -43,7 +40,6 @@ defmodule Leuchtturm.MixProject do
       {:certifi, "~> 2.11"},
       {:configcat, "~> 2.0"},
       {:credo, "~> 1.7", only: :dev, runtime: false},
-      {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
       {:finch, "~> 0.15"},

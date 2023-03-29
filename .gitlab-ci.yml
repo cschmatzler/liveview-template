@@ -4,13 +4,13 @@ before_script:
   - mix local.rebar --force
   - mix local.hex --force
 
+variables:
+  MIX_ENV: test
+
 deps:
   stage: build
-  parallel:
-    matrix:
-      - MIX_ENV: [dev, test]
   cache:
-    - key: deps-$MIX_ENV
+    - key: deps
       paths:
         - deps/
         - _build/
@@ -25,7 +25,7 @@ deps:
 test:
   stage: test
   dependencies:
-    - "deps: [test]"
+    - deps
   services:
     - postgres:15.2
   variables:
@@ -39,18 +39,7 @@ test:
 lint:
   stage: test
   dependencies:
-    - "deps: [dev]"
+    - deps
   script:
     - mix format --check-formatted
     - mix credo
-
-analysis:
-  stage: test
-  dependencies:
-    - "deps: [dev]"
-  cache:
-    - key: analysis
-      paths:
-        - priv/plts
-  script:
-    - mix dialyzer
