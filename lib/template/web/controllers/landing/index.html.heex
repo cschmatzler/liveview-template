@@ -1,9 +1,9 @@
-<div class="bg-white">
+<div x-data="{mobileMenuOpen: false}" class="bg-white">
   <header class="absolute inset-x-0 top-0 z-50">
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <a href="#" class="-m-1.5 p-1.5">
-          <span class="sr-only">Your Company</span>
+          <span class="sr-only">Template</span>
           <img
             class="h-8 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
@@ -13,10 +13,11 @@
       </div>
       <div class="flex lg:hidden">
         <button
+          x-on:click="mobileMenuOpen = true"
           type="button"
           class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
         >
-          <span class="sr-only">Open main menu</span>
+          <span class="sr-only"><%= gettext("Open main menu") %></span>
           <svg
             class="h-6 w-6"
             fill="none"
@@ -34,42 +35,81 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Product</a>
-
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Features</a>
-
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
-
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+          <%= gettext("Product") %>
+        </a>
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+          <%= gettext("Pricing") %>
+        </a>
+        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
+          <%= gettext("About") %>
+        </a>
       </div>
-      <div class="hidden lg:block lg:flex-1 lg:justify-end">
-        <%= if ConfigCat.get_value("enableLogin", false) do %>
-          <%= if @user do %>
-            <.link href={~p"/app"}>Dashboard</.link> <br />
-            <.link href={~p"/auth/session"} method="delete">Log out</.link>
-          <% else %>
-            <.link href={~p"/auth/github"}>Log in with GitHub</.link> <br />
-            <.link href={~p"/auth/google"}>Log in with Google</.link> <br />
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <%= if @user do %>
+          <.link href={~p"/app"}>Dashboard</.link> <br />
+        <% else %>
+          <%= if ConfigCat.get_value("enableLogin", false) do %>
+            <div x-data x-popover class="hidden lg:flex">
+              <div class="relative inline-block text-left">
+                <div>
+                  <button
+                    x-popover:button
+                    type="button"
+                    id="login-menu-button"
+                    class="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Sign in <span aria-hidden="true">&darr;</span>
+                  </button>
+                </div>
+                <div
+                  x-popover:panel
+                  x-cloak
+                  class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="login-menu-button"
+                  tabindex="-1"
+                >
+                  <div class="py-4 space-y-4" role="none">
+                    <OAuth.google url={~p"/auth/google"} />
+                    <OAuth.github url={~p"/auth/github"} />
+                  </div>
+                </div>
+              </div>
+            </div>
           <% end %>
         <% end %>
       </div>
     </nav>
-    <!-- Mobile menu, show/hide based on menu open state. -->
-    <div class="lg:hidden" role="dialog" aria-modal="true">
-      <!-- Background backdrop, show/hide based on slide-over state. -->
-      <div class="fixed inset-0 z-50"></div>
+    <div x-dialog x-model="mobileMenuOpen" class="lg:hidden" role="dialog" aria-modal="true">
+      <div x-dialog:overlay x-transition.opacity class="fixed inset-0 z-50 bg-black bg-opacity-50">
+      </div>
       <div class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-        <div class="flex items-center justify-between">
+        <div
+          x-dialog:panel
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="translate-x-full"
+          x-transition:enter-end="translate-x-0"
+          x-transition:leave="transition ease-in duration-300"
+          x-transition:leave-start="translate-x-0"
+          x-transition:leave-end="translate-x-full"
+          class="flex items-center justify-between"
+        >
           <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
+            <span class="sr-only">Template</span>
             <img
               class="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt=""
             />
           </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-            <span class="sr-only">Close menu</span>
+          <button
+            x-on:click="$dialog.close()"
+            type="button"
+            class="-m-2.5 rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only"><%= gettext("Close menu") %></span>
             <svg
               class="h-6 w-6"
               fill="none"

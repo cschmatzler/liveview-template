@@ -9,5 +9,7 @@ end
 defmodule Template.Web.LandingHTML do
   use Template.Web, :component
 
+  alias Template.Web.Components.Buttons.OAuth
+
   embed_templates "landing/*"
 end
