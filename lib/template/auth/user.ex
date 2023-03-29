@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Auth.User do
+defmodule Template.Auth.User do
   use Ecto.Schema
 
   import Ecto.Changeset

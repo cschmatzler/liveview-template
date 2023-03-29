@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Web.Components.Keyboard do
+defmodule Template.Web.Components.Keyboard do
   use Phoenix.LiveComponent
 
   @impl true

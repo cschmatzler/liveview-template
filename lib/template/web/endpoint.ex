@@ -1,7 +1,7 @@
-defmodule Leuchtturm.Web.Endpoint do
+defmodule Template.Web.Endpoint do
   @moduledoc false
 
-  use Phoenix.Endpoint, otp_app: :leuchtturm
+  use Phoenix.Endpoint, otp_app: :template
 
   @session_options [
     store: :cookie,
@@ -19,9 +19,9 @@ defmodule Leuchtturm.Web.Endpoint do
 
   plug Plug.Static,
     at: "/",
-    from: :leuchtturm,
+    from: :template,
     gzip: true,
-    only: Leuchtturm.Web.static_paths()
+    only: Template.Web.static_paths()
 
   if code_reloading? do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
@@ -40,5 +40,5 @@ defmodule Leuchtturm.Web.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug Leuchtturm.Web.Router
+  plug Template.Web.Router
 end

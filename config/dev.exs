@@ -8,7 +8,7 @@ config :logger, :console, format: "[$level] $message\n", level: :debug
 # -------------
 # Feature Flags
 # -------------
-config :leuchtturm, ConfigCat,
+config :template, ConfigCat,
   sdk_key: "local_only",
   flag_overrides: %{
     "enableLogin" => true
@@ -18,11 +18,11 @@ config :leuchtturm, ConfigCat,
 # --------
 # Database
 # --------
-config :leuchtturm, Leuchtturm.Repo,
+config :template, Template.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "leuchtturm_dev",
+  database: "template_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -30,9 +30,9 @@ config :leuchtturm, Leuchtturm.Repo,
 # ---
 # Web
 # ---
-config :leuchtturm, dev_routes: true
+config :template, dev_routes: true
 
-config :leuchtturm, Leuchtturm.Web.Endpoint,
+config :template, Template.Web.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
@@ -46,7 +46,7 @@ config :leuchtturm, Leuchtturm.Web.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/leuchtturm/web/*/*.*ex$"
+      ~r"lib/template/web/*/*.*ex$"
     ]
   ]
 

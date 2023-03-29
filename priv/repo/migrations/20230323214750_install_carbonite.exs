@@ -1,4 +1,4 @@
-defmodule Leuchtturm.Repo.Migrations.InstallCarbonite do
+defmodule Template.Repo.Migrations.InstallCarbonite do
   use Ecto.Migration
 
   def up do

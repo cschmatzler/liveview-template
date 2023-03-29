@@ -8,10 +8,10 @@ config :logger, level: :info
 # -------------
 # Feature Flags
 # -------------
-config :leuchtturm, ConfigCat, enabled?: true
+config :template, ConfigCat, enabled?: true
 
 # ---
 # Web
 # ---
-config :leuchtturm, Leuchtturm.Web.Endpoint,
+config :template, Template.Web.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"

@@ -1,4 +1,4 @@
 #!/bin/sh
 cd -P -- "$(dirname -- "$0")"
-./leuchtturm eval Leuchtturm.Release.migrate
-ENABLE_SERVER=true exec ./leuchtturm start
+./template eval Template.Release.migrate
+ENABLE_SERVER=true exec ./template start

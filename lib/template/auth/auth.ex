@@ -1,13 +1,13 @@
-defmodule Leuchtturm.Auth do
+defmodule Template.Auth do
   @moduledoc """
   TODO: Add a description
   """
 
-  use Boundary, deps: [Leuchtturm.Repo], top_level?: true
+  use Boundary, deps: [Template.Repo], top_level?: true
 
-  alias Leuchtturm.Repo
-  alias Leuchtturm.Auth.User
-  alias Leuchtturm.Auth.Token
+  alias Template.Repo
+  alias Template.Auth.User
+  alias Template.Auth.Token
 
   @spec get_user_with_oauth(String.t(), String.t()) :: User.t() | nil
   def get_user_with_oauth(provider, uid) do

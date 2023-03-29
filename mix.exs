@@ -1,9 +1,9 @@
-defmodule Leuchtturm.MixProject do
+defmodule Template.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :leuchtturm,
+      app: :template,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -12,7 +12,7 @@ defmodule Leuchtturm.MixProject do
       deps: deps(),
       compilers: [:boundary] ++ Mix.compilers(),
       releases: [
-        leuchtturm: [
+        template: [
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
         ]
       ]
@@ -21,7 +21,7 @@ defmodule Leuchtturm.MixProject do
 
   def application do
     [
-      mod: {Leuchtturm.Application, []},
+      mod: {Template.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

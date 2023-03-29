@@ -1,4 +1,4 @@
-# Leuchtturm
+# Template
 
 To start your Phoenix server:
 

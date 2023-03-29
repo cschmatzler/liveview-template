@@ -48,7 +48,7 @@ ENV MIX_ENV="prod"
 WORKDIR /app
 RUN chown nobody /app
 
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/leuchtturm ./
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/template ./
 
 USER nobody
 

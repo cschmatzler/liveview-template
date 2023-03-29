@@ -1,7 +1,7 @@
 import Config
 
 if System.get_env("ENABLE_SERVER") do
-  config :leuchtturm, Leuchtturm.Web.Endpoint, server: true
+  config :template, Template.Web.Endpoint, server: true
 end
 
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
@@ -21,7 +21,7 @@ if config_env() == :prod do
   # Feature Flags
   # -------------
   configcat_sdk_key = System.fetch_env!("CONFIGCAT_SDK_KEY")
-  config :leuchtturm, ConfigCat, sdk_key: configcat_sdk_key
+  config :template, ConfigCat, sdk_key: configcat_sdk_key
 
   # ---------
   # Telemetry
@@ -32,7 +32,7 @@ if config_env() == :prod do
 
   config :opentelemetry, :resource,
     service: %{
-      name: "leuchtturm.io",
+      name: "template.io",
       version: version
     },
     env: telemetry_namespace
@@ -52,7 +52,7 @@ if config_env() == :prod do
   # --------
   database_url = System.fetch_env!("DATABASE_URL")
 
-  config :leuchtturm, Leuchtturm.Repo,
+  config :template, Template.Repo,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
@@ -63,7 +63,7 @@ if config_env() == :prod do
   port = String.to_integer(System.get_env("PORT") || "4000")
   secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 
-  config :leuchtturm, Leuchtturm.Web.Endpoint,
+  config :template, Template.Web.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
     http: [
       port: port
@@ -73,7 +73,7 @@ if config_env() == :prod do
   # ----
   # Mail
   # ----
-  config :leuchtturm, Leuchtturm.Mailer,
+  config :template, Template.Mailer,
     adapter: Swoosh.Adapters.Postmark,
     api_key: System.fetch_env!("POSTMARK_API_KEY")
 end

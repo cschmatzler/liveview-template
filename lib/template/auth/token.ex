@@ -1,8 +1,8 @@
-defmodule Leuchtturm.Auth.Token do
+defmodule Template.Auth.Token do
   use Ecto.Schema
 
   import Ecto.Query
-  alias Leuchtturm.Auth.User
+  alias Template.Auth.User
 
   @rand_size 32
   @session_validity_in_days 7
@@ -11,7 +11,7 @@ defmodule Leuchtturm.Auth.Token do
   @timestamps_opts [type: :utc_datetime]
   schema "tokens" do
     field :token, :binary
-    belongs_to :user, Leuchtturm.Auth.User
+    belongs_to :user, Template.Auth.User
     timestamps(updated_at: false)
   end
 

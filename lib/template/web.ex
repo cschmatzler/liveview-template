@@ -1,10 +1,10 @@
-defmodule Leuchtturm.Web do
+defmodule Template.Web do
   @moduledoc """
   Entry point for modules implementing web-related features.
   Provides a `use` macro taking one parameter specifying what the module is/needs.
   """
 
-  use Boundary, deps: [Leuchtturm.Auth], exports: [Endpoint], top_level?: true
+  use Boundary, deps: [Template.Auth], exports: [Endpoint], top_level?: true
 
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
@@ -13,9 +13,9 @@ defmodule Leuchtturm.Web do
   def controller do
     quote do
       use Phoenix.Controller,
-        namespace: Leuchtturm.Web,
+        namespace: Template.Web,
         formats: [:html, :json],
-        layouts: [html: Leuchtturm.Web.Layouts]
+        layouts: [html: Template.Web.Layouts]
 
       import Plug.Conn
 
@@ -37,7 +37,7 @@ defmodule Leuchtturm.Web do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {Leuchtturm.Web.Layouts, :app},
+        layout: {Template.Web.Layouts, :app},
         container: {:div, class: "h-full"}
 
       unquote(html_helpers())
@@ -55,9 +55,9 @@ defmodule Leuchtturm.Web do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: Leuchtturm.Web.Endpoint,
-        router: Leuchtturm.Web.Router,
-        statics: Leuchtturm.Web.static_paths()
+        endpoint: Template.Web.Endpoint,
+        router: Template.Web.Router,
+        statics: Template.Web.static_paths()
     end
   end
 
@@ -66,7 +66,7 @@ defmodule Leuchtturm.Web do
   defp html_helpers do
     quote do
       import Phoenix.HTML
-      import Leuchtturm.Web.Gettext
+      import Template.Web.Gettext
 
       alias Phoenix.LiveView.JS
 

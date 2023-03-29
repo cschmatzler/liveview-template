@@ -1,4 +1,4 @@
-defmodule Leuchtturm.ConnCase do
+defmodule Template.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,29 +11,29 @@ defmodule Leuchtturm.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use Leuchtturm.Web.ConnCase, async: true`, although
+  by setting `use Template.Web.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
-  use Boundary, deps: [Leuchtturm.DataCase]
+  use Boundary, deps: [Template.DataCase]
   use ExUnit.CaseTemplate
 
   using do
     quote do
       # The default endpoint for testing
-      @endpoint Leuchtturm.Web.Endpoint
+      @endpoint Template.Web.Endpoint
 
-      use Leuchtturm.Web, :verified_routes
+      use Template.Web, :verified_routes
 
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import Leuchtturm.ConnCase
+      import Template.ConnCase
     end
   end
 
   setup tags do
-    Leuchtturm.DataCase.setup_sandbox(tags)
+    Template.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

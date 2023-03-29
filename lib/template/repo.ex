@@ -1,9 +1,9 @@
-defmodule Leuchtturm.Repo do
+defmodule Template.Repo do
   @moduledoc false
 
   use Boundary, top_level?: true
 
   use Ecto.Repo,
-    otp_app: :leuchtturm,
+    otp_app: :template,
     adapter: Ecto.Adapters.Postgres
 end

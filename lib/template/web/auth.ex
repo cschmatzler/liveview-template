@@ -1,10 +1,10 @@
-defmodule Leuchtturm.Web.Auth do
-  use Leuchtturm.Web, :verified_routes
+defmodule Template.Web.Auth do
+  use Template.Web, :verified_routes
 
   import Plug.Conn
   import Phoenix.Controller
 
-  alias Leuchtturm.Auth
+  alias Template.Auth
 
   @session_cookie "session"
   @max_age 60 * 60 * 24 * 7
@@ -103,7 +103,7 @@ defmodule Leuchtturm.Web.Auth do
     session_token && Auth.delete_token(session_token)
 
     if live_socket_id = get_session(conn, :live_socket_id) do
-      Leuchtturm.Web.Endpoint.broadcast(live_socket_id, "disconnect", %{})
+      Template.Web.Endpoint.broadcast(live_socket_id, "disconnect", %{})
     end
 
     conn
