@@ -9,7 +9,6 @@ defmodule Template.Auth.Token do
 
   alias Template.Auth.User
 
-  @doc "test"
   @token_size 32
   @session_validity_in_days 7
 

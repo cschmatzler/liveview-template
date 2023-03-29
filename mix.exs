@@ -4,18 +4,21 @@ defmodule Template.MixProject do
   def project do
     [
       app: :template,
-      version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
       deps: deps(),
       compilers: [:boundary] ++ Mix.compilers(),
       releases: [
         template: [
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
         ]
-      ]
+      ],
+      name: "LiveView Template",
+      description: "An opinionated template for LiveView services.",
+      docs: docs(),
+      version: version(),
+      aliases: aliases()
     ]
   end
 
@@ -69,6 +72,29 @@ defmodule Template.MixProject do
       {:ueberauth_github, "~> 0.8"},
       {:ueberauth_google, "~> 0.10"}
     ]
+  end
+
+  @extras Path.wildcard("pages/**/*.md")
+  defp docs do
+    [
+      extras: @extras
+    ]
+  end
+
+  @version_file "version"
+  def version do
+    cond do
+      File.exists?(@version_file) ->
+        @version_file
+        |> File.read!()
+        |> String.trim()
+
+      System.get_env("REQUIRE_VERSION_FILE") == "true" ->
+        exit("Version file (`#{@version_file}`) doesn't exist but is required!")
+
+      true ->
+        "0.0.0-dev"
+    end
   end
 
   defp aliases do
