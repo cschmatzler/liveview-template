@@ -8,7 +8,7 @@ defmodule Leuchtturm.Web.AuthController do
   def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
     conn
     |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: ~p"/")
+    |> redirect(to: Leuchtturm.Web.Auth.signed_out_path())
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
@@ -16,26 +16,19 @@ defmodule Leuchtturm.Web.AuthController do
     uid = to_string(auth.uid)
 
     user = get_or_create_user(provider, uid, auth.info.email, auth.info.name, auth.info.image)
-    Leuchtturm.Web.Auth.login(conn, user)
 
-    conn
-    |> redirect(to: ~p"/app")
+    Leuchtturm.Web.Auth.start_session(conn, user)
   end
 
   def logout(conn, _params) do
-    Leuchtturm.Web.Auth.logout(conn)
-
-    conn
-    |> redirect(to: ~p"/")
+    Leuchtturm.Web.Auth.end_session(conn)
   end
 
   defp get_or_create_user(provider, uid, email, name, image_url) do
-    case Auth.get_user_by_oauth(provider, uid) do
-      nil ->
-        Auth.create_user!(provider, uid, email, name, image_url)
-
-      user ->
-        user
+    if user = Auth.get_user_with_oauth(provider, uid) do
+      user
+    else
+      Auth.create_user!(provider, uid, email, name, image_url)
     end
   end
 end
