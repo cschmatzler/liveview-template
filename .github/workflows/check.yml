@@ -39,7 +39,7 @@ jobs:
       - run: mix compile
       - run: mix format --check-formatted
       # - run: mix credo --strict
-      - run: mix ecto.init
+      - run: mix ecto.reset
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
         with:
