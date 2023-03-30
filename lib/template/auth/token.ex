@@ -26,6 +26,11 @@ defmodule Template.Auth.Token do
           user: User.t() | Ecto.Association.NotLoaded.t()
         }
 
+  @doc false
+  def token_size, do: @token_size
+  @doc false
+  def session_validity_in_days, do: @session_validity_in_days
+
   @doc """
   Builds a session token.
 
