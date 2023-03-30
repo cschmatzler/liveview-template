@@ -14,7 +14,7 @@ defmodule Template.Web.Auth do
   import Plug.Conn
   import Phoenix.Controller
 
-  alias Template.Auth
+  alias Template.Auth.Facade, as: Auth
 
   @session_cookie "session"
   @max_age 60 * 60 * 24 * 7
