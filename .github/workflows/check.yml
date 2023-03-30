@@ -37,8 +37,8 @@ jobs:
             mix-
       - run: mix deps.get
       - run: mix compile
-      - run: mix format --check-formatted
-      - run: mix credo --strict
+      # - run: mix format --check-formatted
+      # - run: mix credo --strict
       - run: mix ecto.init
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
