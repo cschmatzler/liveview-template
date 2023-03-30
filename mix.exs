@@ -9,6 +9,7 @@ defmodule Template.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       compilers: [:boundary] ++ Mix.compilers(),
+      test_coverage: [tool: ExCoveralls],
       releases: [
         template: [
           applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
@@ -45,6 +46,7 @@ defmodule Template.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
+      {:excoveralls, "~> 0.16", only: :test},
       {:ex_doc, "~> 0.29", runtime: false},
       {:finch, "~> 0.15"},
       {:floki, "~> 0.34", only: :test},
