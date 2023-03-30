@@ -72,7 +72,8 @@ defmodule Template.MixProject do
       {:tailwind, "~> 0.2"},
       {:ueberauth, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"},
-      {:ueberauth_google, "~> 0.10"}
+      {:ueberauth_google, "~> 0.10"},
+      {:sobelow, "~> 0.12"}
     ]
   end
 
