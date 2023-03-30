@@ -1,7 +1,7 @@
 defmodule Template.Web.AuthController do
   use Template.Web, :controller
 
-  alias Template.Auth.Facade, as: Auth
+  alias Template.Auth
 
   plug Ueberauth
 
