@@ -19,7 +19,7 @@ defmodule Template.MixProject do
       description: "An opinionated template for LiveView services.",
       docs: docs(),
       version: version(),
-      aliases: aliases(),
+      aliases: aliases()
     ]
   end
 
