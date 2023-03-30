@@ -16,7 +16,7 @@ defmodule Template.Web.AuthTest do
   @valid_token %Token{id: 1, token: "valid_token", user_id: 1}
 
   setup_all do
-    Hammox.defmock(AuthMock, for: Template.Auth.Behaviour)
+    Hammox.defmock(AuthMock, for: Template.Auth)
     Application.put_env(:template, Template.Auth, AuthMock)
   end
 
