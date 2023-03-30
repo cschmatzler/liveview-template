@@ -16,6 +16,7 @@ jobs:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
       - uses: actions/cache@v3
+        id: compile-cache
         with:
           path: |
             deps
@@ -24,7 +25,9 @@ jobs:
           restore-keys: |
             mix-
       - run: mix deps.get
+        if: steps.compile-cache.outputs.cache-hit != 'true'
       - run: mix deps.compile
+        if: steps.compile-cache.outputs.cache-hit != 'true'
       - run: mix compile
 
   test:
@@ -47,6 +50,7 @@ jobs:
     steps:
       - uses: actions/cache@v3
         with:
+          key: mix-$GITHUB_SHA
           restore-keys: |
             mix-
       - run: mix ecto.reset
