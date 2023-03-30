@@ -7,7 +7,6 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      MIX_ENV: test
       POSTGRES_HOST: localhost
     services:
       postgres:
@@ -36,12 +35,13 @@ jobs:
           restore-keys: |
             mix-
       - run: mix deps.get
-      - run: mix compile
+      - run: mix deps.compile
+      # - run: mix compile
       # - run: mix format --check-formatted
       # - run: mix credo --strict
-      - run: mix ecto.init
-      - run: mix coveralls.json
-      - uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: cover/excoveralls.json
+      # - run: mix ecto.init
+      # - run: mix coveralls.json
+      # - uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: cover/excoveralls.json

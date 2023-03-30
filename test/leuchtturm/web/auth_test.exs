@@ -17,7 +17,7 @@ defmodule Template.Web.AuthTest do
 
   setup_all do
     Hammox.defmock(AuthMock, for: Template.Auth.Behaviour)
-    Application.put_env(:template, Template.Auth.Facade, AuthMock)
+    Application.put_env(:template, Template.Auth, AuthMock)
   end
 
   setup %{conn: conn} do

@@ -1,4 +1,4 @@
-defmodule Template.Auth.Facade do
+defmodule Template.Auth do
   @moduledoc """
   This module acts as a facade for the `Template.Auth.Behaviour` behaviour.
 
