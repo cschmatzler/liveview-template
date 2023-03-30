@@ -5,9 +5,11 @@ defmodule Template.Auth do
   See the behaviour module for documentation.
   """
 
+  alias Template.Auth.{Behaviour, Implementation}
+
   use Knigge,
     otp_app: :template,
-    behaviour: Template.Auth.Behaviour,
-    default: Template.Auth.Implementation,
+    behaviour: Behaviour,
+    default: Implementation,
     delegate_at_runtime?: true
 end
