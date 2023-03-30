@@ -36,7 +36,7 @@ jobs:
             mix-
       - run: mix deps.get
       - run: mix deps.compile
-      # - run: mix compile
+      - run: mix compile
       # - run: mix format --check-formatted
       # - run: mix credo --strict
       # - run: mix ecto.init
