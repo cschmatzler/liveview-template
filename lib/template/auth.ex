@@ -10,5 +10,6 @@ defmodule Template.Auth do
   use Knigge,
     otp_app: :template,
     behaviour: Template.Auth.Behaviour,
-    default: Template.Auth.Implementation
+    default: Template.Auth.Implementation,
+    delegate_at_runtime?: true
 end
