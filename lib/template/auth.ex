@@ -7,8 +7,6 @@ defmodule Template.Auth do
 
   use Boundary, deps: [Template.Repo], top_level?: true
 
-  use Knigge,
-    otp_app: :template,
-    behaviour: Template.AuthBehaviour,
-    default: Template.Auth.Implementation
+  use Auth.Macro
 end
+
