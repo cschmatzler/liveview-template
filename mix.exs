@@ -19,14 +19,15 @@ defmodule Template.MixProject do
       description: "An opinionated template for LiveView services.",
       docs: docs(),
       version: version(),
-      aliases: aliases()
+      aliases: aliases(),
+      xref: [exclude: [Plug.Router, Plug.Router.Utils]]
     ]
   end
 
   def application do
     [
       mod: {Template.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:crypto, :logger, :runtime_tools]
     ]
   end
 
