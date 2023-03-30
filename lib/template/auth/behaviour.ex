@@ -1,4 +1,4 @@
-defmodule Template.Auth.Behaviour do
+defmodule Template.AuthBehaviour do
   @moduledoc """
   """
   # TODO: Write proper documentation
