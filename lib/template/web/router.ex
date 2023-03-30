@@ -14,7 +14,7 @@ defmodule Template.Web.Router do
     plug :fetch_live_flash
     plug :put_root_layout, {Template.Web.Layouts, :root}
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
+    plug :put_secure_browser_headers, %{"content-security-policy" => "default-src 'self'"}
     plug :fetch_user
   end
 
@@ -43,7 +43,6 @@ defmodule Template.Web.Router do
     pipe_through :browser
 
     get "/:provider/callback", AuthController, :callback
-    post "/:provider/callback", AuthController, :callback
     delete "/session", AuthController, :logout
   end
 

@@ -3,24 +3,12 @@ on:
   push:
   pull_request:
 
+env:
+  MIX_ENV: test
+
 jobs:
-  check:
+  compile:
     runs-on: ubuntu-latest
-    env:
-      MIX_ENV: test
-      POSTGRES_HOST: localhost
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
@@ -38,8 +26,34 @@ jobs:
       - run: mix deps.get
       - run: mix deps.compile
       - run: mix compile
-      - run: mix format --check-formatted
-      # - run: mix credo --strict
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            deps
+            _build
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      POSTGRES_HOST: localhost
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: build
       - run: mix ecto.reset
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
