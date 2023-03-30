@@ -26,14 +26,6 @@ jobs:
       - run: mix deps.get
       - run: mix deps.compile
       - run: mix compile
-      - uses: actions/upload-artifact@v3
-        with:
-          name: deps
-          path: deps
-      - uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: _build
 
   test:
     runs-on: ubuntu-latest
@@ -53,12 +45,10 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/cache@v3
         with:
-          name: deps
-      - uses: actions/download-artifact@v3
-        with:
-          name: build
+          restore-keys: |
+            mix-
       - run: mix ecto.reset
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
