@@ -35,7 +35,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: compile
     env:
       POSTGRES_HOST: localhost
     services:
