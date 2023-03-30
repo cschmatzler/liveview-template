@@ -2,10 +2,9 @@ defmodule Template.Auth.Implementation do
   @moduledoc false
 
   alias Template.Repo
-  alias Template.Auth.User
-  alias Template.Auth.Token
+  alias Template.Auth.{Token, User}
 
-  @behaviour Template.Auth.Behaviour
+  @behaviour Template.Auth
 
   @impl true
   def get_user_with_oauth(provider, uid) do
