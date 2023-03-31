@@ -12,7 +12,8 @@ defmodule Template.Auth do
     otp_app: :template,
     default: Template.Auth.Implementation
 
-  alias Template.Auth.{Token, User}
+  alias Template.Auth.Token
+  alias Template.Auth.User
 
   @doc """
   Fetches a user with OAuth provider and external UID.

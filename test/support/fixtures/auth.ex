@@ -4,7 +4,8 @@ defmodule Template.Fixtures.Auth do
   use Boundary, check: [in: false, out: false]
 
   alias Template.Repo
-  alias Template.Auth.{Token, User}
+  alias Template.Auth.Token
+  alias Template.Auth.User
 
   @default_user_attrs %{
     provider: "google",
