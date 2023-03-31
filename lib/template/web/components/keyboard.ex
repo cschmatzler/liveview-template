@@ -1,4 +1,8 @@
 defmodule Template.Web.Components.Keyboard do
+  @moduledoc """
+  Component for handling keyboard events.
+  """
+
   use Phoenix.LiveComponent
 
   @impl true

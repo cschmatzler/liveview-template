@@ -3,7 +3,7 @@ defmodule Template.Web.AuthTest do
 
   alias Phoenix.LiveView
   alias Template.Web.Auth
-  alias Template.Auth.{User, Token}
+  alias Template.Auth.{Token, User}
 
   @valid_user %User{
     id: 1,
