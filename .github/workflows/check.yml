@@ -83,7 +83,7 @@ jobs:
       - run: mix format --check-formatted
       - run: mix credo --strict
 
-  analysis:
+  analyze:
     runs-on: ubuntu-latest
     needs: deps
     steps:
