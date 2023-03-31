@@ -28,4 +28,8 @@ defmodule Template.Auth.UserTest do
       assert is_nil(user)
     end
   end
+
+  describe "create_token!/1" do
+    
+  end
 end

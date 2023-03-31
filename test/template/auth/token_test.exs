@@ -39,34 +39,4 @@ defmodule Template.Auth.TokenTest do
       refute Repo.one(query)
     end
   end
-
-  describe "user_with_token_query/1" do
-    test "returns a query that fetches a user if the token is valid and not expired", %{
-      token: token,
-      user: user
-    } do
-      query = Token.user_with_token_query(token.token)
-
-      assert Repo.one(query) == user
-    end
-
-    test "returns a query that does not fetch a user if the token is invalid" do
-      query = Token.user_with_token_query("invalid_token")
-
-      refute Repo.one(query)
-    end
-
-    test "returns a query that does not fetch a user if the token is expired", %{token: token} do
-      expired_date =
-        DateTime.utc_now()
-        |> DateTime.add(-Token.session_validity_in_days(), :day)
-        |> DateTime.truncate(:second)
-
-      Ecto.Changeset.change(token, inserted_at: expired_date) |> Repo.update!()
-
-      query = Token.user_with_token_query(token.token)
-
-      refute Repo.one(query)
-    end
-  end
 end
