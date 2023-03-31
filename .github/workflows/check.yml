@@ -21,7 +21,7 @@ jobs:
           path: |
             deps
             _build
-          key: mix-${{ GITHUB_SHA }}
+          key: mix-${{ env.GITHUB_SHA }}
           restore-keys: |
             mix-
       - run: mix deps.get
