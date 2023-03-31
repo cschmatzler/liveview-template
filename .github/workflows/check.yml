@@ -29,6 +29,7 @@ jobs:
       - run: mix deps.compile
         if: steps.compile-cache.outputs.cache-hit != 'true'
       - run: mix compile
+        if: steps.compile-cache.outputs.cache-hit != 'true'
 
   test:
     runs-on: ubuntu-latest
