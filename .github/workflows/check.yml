@@ -21,7 +21,7 @@ jobs:
           path: |
             deps
             _build
-          key: mix-${{ hashFiles('**/mix.lock') }}
+          key: mix-$GITHUB_SHA
           restore-keys: |
             mix-
       - run: mix deps.get
