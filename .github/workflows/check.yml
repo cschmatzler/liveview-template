@@ -7,7 +7,7 @@ env:
   MIX_ENV: test
 
 jobs:
-  compile:
+  deps:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,24 +16,23 @@ jobs:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
       - uses: actions/cache@v3
-        id: compile-cache
+        id: deps-cache
         with:
           path: |
             deps
             _build
-          key: mix-${{ github.sha }}
+          key: mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             mix-
       - run: mix deps.get
-        if: steps.compile-cache.outputs.cache-hit != 'true'
+        if: steps.deps-cache.outputs.cache-hit != 'true'
       - run: mix deps.compile
-        if: steps.compile-cache.outputs.cache-hit != 'true'
+        if: steps.deps-cache.outputs.cache-hit != 'true'
       - run: mix compile
-        if: steps.compile-cache.outputs.cache-hit != 'true'
 
   test:
     runs-on: ubuntu-latest
-    needs: compile
+    needs: deps
     env:
       POSTGRES_HOST: localhost
     services:
@@ -66,7 +65,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: compile
+    needs: deps
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
@@ -86,7 +85,7 @@ jobs:
 
   analysis:
     runs-on: ubuntu-latest
-    needs: compile
+    needs: deps
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
