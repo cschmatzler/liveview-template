@@ -1,4 +1,6 @@
 defmodule Template.Fixtures.Auth do
+  @moduledoc false
+
   use Boundary, check: [in: false, out: false]
 
   alias Template.Repo
