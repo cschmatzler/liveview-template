@@ -1,8 +1,9 @@
 defmodule Template.Auth do
   @moduledoc """
-  This module acts as a facade for the `Template.Auth.Behaviour` behaviour.
+  Aggregate responsible for authentication.
 
-  See the behaviour module for documentation.
+  Login and signup are handled by using external OAuth providers. At the moment, these are Google and GitHub.
+  For session persistence, tokens are used.
   """
 
   use Boundary, deps: [Template.Repo], top_level?: true

@@ -1,5 +1,7 @@
 defmodule Template.Auth.Implementation do
-  @moduledoc false
+  @moduledoc """
+  The default implementation of `Template.Auth`.
+  """
 
   alias Template.Repo
   alias Template.Auth.{Token, User}

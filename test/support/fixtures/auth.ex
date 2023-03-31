@@ -6,7 +6,7 @@ defmodule Template.Fixtures.Auth do
 
   @default_user_attrs %{
     provider: "google",
-    uid: "123456789",
+    uid: make_ref() |> :erlang.ref_to_list() |> List.to_string(),
     email: "google_user@example.com",
     name: "Google User",
     image: "https://example.com/image.jpg"
