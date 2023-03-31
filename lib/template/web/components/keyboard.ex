@@ -5,7 +5,7 @@ defmodule Template.Web.Components.Keyboard do
 
   use Phoenix.LiveComponent
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
     <div
@@ -19,12 +19,12 @@ defmodule Template.Web.Components.Keyboard do
     """
   end
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def handle_event("keydown", %{"key" => _key}, socket), do: {:noreply, socket}
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def handle_event("keydown", _, socket), do: {:noreply, socket}
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def handle_event("keyup", _, socket), do: {:noreply, socket}
 end

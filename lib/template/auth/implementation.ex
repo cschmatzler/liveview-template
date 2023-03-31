@@ -3,24 +3,25 @@ defmodule Template.Auth.Implementation do
   The default implementation of `Template.Auth`.
   """
 
-  alias Template.Repo
-  alias Template.Auth.{Token, User}
-
   @behaviour Template.Auth
 
-  @impl true
+  alias Template.Repo
+  alias Template.Auth.Token
+  alias Template.Auth.User
+
+  @impl Template.Auth
   def get_user_with_oauth(provider, uid) do
     User.with_oauth_query(provider, uid)
     |> Repo.one()
   end
 
-  @impl true
+  @impl Template.Auth
   def get_user_with_token(token) do
     Token.user_with_token_query(token)
     |> Repo.one()
   end
 
-  @impl true
+  @impl Template.Auth
   def create_user!(provider, uid, email, name, image_url) do
     User.changeset(%{
       provider: provider,
@@ -32,13 +33,13 @@ defmodule Template.Auth.Implementation do
     |> Repo.insert!()
   end
 
-  @impl true
+  @impl Template.Auth
   def create_token!(user_id) do
     Token.build(user_id)
     |> Repo.insert!()
   end
 
-  @impl true
+  @impl Template.Auth
   def delete_token(token) do
     Token.with_token_query(token)
     |> Repo.delete_all()

@@ -4,7 +4,7 @@ defmodule Template.Application do
   use Boundary, deps: [Template.Repo, Template.Web], top_level?: true
   use Application
 
-  @impl true
+  @impl Application
   def start(_type, _args) do
     start_telemetry()
 
@@ -21,7 +21,7 @@ defmodule Template.Application do
     Supervisor.start_link(children, opts)
   end
 
-  @impl true
+  @impl Application
   def config_change(changed, _new, removed) do
     Template.Web.Endpoint.config_change(changed, removed)
     :ok
