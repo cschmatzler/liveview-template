@@ -37,7 +37,7 @@
           {Credo.Check.Warning.UnsafeToAtom, []}
         ],
         disabled: [
-          {Credo.Check.Design.AliasUsage, []},
+          {Credo.Check.Design.AliasUsage, []}
         ]
       }
     }
