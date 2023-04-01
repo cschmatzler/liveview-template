@@ -33,7 +33,6 @@ defmodule Template.MixProject do
       {:bandit, "~> 0.7"},
       {:boundary, "~> 0.9", runtime: false},
       {:carbonite, "~> 0.8"},
-      {:certifi, "~> 2.11"},
       {:configcat, "~> 2.0"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.9"},

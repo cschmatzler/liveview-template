@@ -30,7 +30,7 @@ defmodule Template.Web.Endpoint do
     plug Phoenix.CodeReloader
   end
 
-  plug RemoteIp
+  plug RemoteIp, headers: ["Cf-Connecting-Ip"]
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
