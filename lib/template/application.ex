@@ -6,7 +6,7 @@ defmodule Template.Application do
 
   @impl Application
   def start(_type, _args) do
-    start_telemetry()
+    Logger.add_backend(Sentry.LoggerBackend)
 
     children = [
       {Phoenix.PubSub, name: Template.PubSub},
@@ -25,13 +25,6 @@ defmodule Template.Application do
   def config_change(changed, _new, removed) do
     Template.Web.Endpoint.config_change(changed, removed)
     :ok
-  end
-
-  defp start_telemetry do
-    OpentelemetryPhoenix.setup()
-    OpentelemetryLiveView.setup()
-    OpentelemetryEcto.setup([:template, :repo])
-    OpentelemetryOban.setup()
   end
 
   defp configcat_config do

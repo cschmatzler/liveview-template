@@ -10,11 +10,6 @@ defmodule Template.MixProject do
       deps: deps(),
       compilers: [:boundary] ++ Mix.compilers(),
       test_coverage: [tool: ExCoveralls],
-      releases: [
-        template: [
-          applications: [opentelemetry_exporter: :permanent, opentelemetry: :temporary]
-        ]
-      ],
       name: "LiveView Template",
       description: "An opinionated template for LiveView services.",
       docs: docs(),
@@ -35,9 +30,6 @@ defmodule Template.MixProject do
 
   defp deps do
     [
-      # This needs to be first
-      {:opentelemetry_exporter, "~> 1.2"},
-      # Alphabetically from here on
       {:bandit, "~> 0.7"},
       {:boundary, "~> 0.9", runtime: false},
       {:carbonite, "~> 0.8"},
@@ -46,8 +38,8 @@ defmodule Template.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
-      {:excoveralls, "~> 0.16", only: :test},
       {:ex_doc, "~> 0.29", runtime: false},
+      {:excoveralls, "~> 0.16", only: :test},
       {:finch, "~> 0.15"},
       {:floki, "~> 0.34", only: :test},
       {:gettext, "~> 0.22"},
@@ -56,24 +48,19 @@ defmodule Template.MixProject do
       {:jason, "~> 1.4"},
       {:knigge, "~> 1.4"},
       {:oban, "~> 2.14"},
-      {:opentelemetry, "~> 1.3"},
-      {:opentelemetry_api, "~> 1.2"},
-      {:opentelemetry_ecto, "~> 1.1"},
-      {:opentelemetry_liveview, "~> 1.0.0-rc"},
-      {:opentelemetry_oban, "~> 1.0"},
-      {:opentelemetry_phoenix, "~> 1.1"},
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phoenix_live_view, "~> 0.18"},
       {:postgrex, "~> 0.16"},
+      {:sentry, "~> 8.0"},
+      {:sobelow, "~> 0.12", only: :test, runtime: false},
       {:swoosh, "~> 1.9"},
       {:tailwind, "~> 0.2"},
       {:ueberauth, "~> 0.10"},
       {:ueberauth_github, "~> 0.8"},
-      {:ueberauth_google, "~> 0.10"},
-      {:sobelow, "~> 0.12"}
+      {:ueberauth_google, "~> 0.10"}
     ]
   end
 
