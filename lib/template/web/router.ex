@@ -8,6 +8,9 @@ defmodule Template.Web.Router do
   import Phoenix.LiveView.Router
   import Template.Web.Auth
 
+  alias Controllers.AuthController
+  alias Controllers.LandingController
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -16,7 +19,8 @@ defmodule Template.Web.Router do
     plug :protect_from_forgery
 
     plug :put_secure_browser_headers, %{
-      "content-security-policy" => "default-src 'self' 'unsafe-eval' 'unsafe-inline'"
+      "content-security-policy" =>
+        "default-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src https://tailwindui.com"
     }
 
     plug :fetch_user

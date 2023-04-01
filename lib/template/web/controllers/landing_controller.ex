@@ -1,4 +1,8 @@
-defmodule Template.Web.LandingController do
+defmodule Template.Web.Controllers.LandingController do
+  @moduledoc """
+  Application's landing page.
+  """
+
   use Template.Web, :controller
 
   def index(conn, _params) do
@@ -6,7 +10,9 @@ defmodule Template.Web.LandingController do
   end
 end
 
-defmodule Template.Web.LandingHTML do
+defmodule Template.Web.Controllers.LandingHTML do
+  @moduledoc false
+
   use Template.Web, :component
 
   embed_templates "landing/*"

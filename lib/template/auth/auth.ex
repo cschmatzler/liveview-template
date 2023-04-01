@@ -33,18 +33,15 @@ defmodule Template.Auth do
 
   @doc """
   Creates a new user.
-
-  Since all the fields are provided by an external OAuth provider, there is no further error
-  handling and the method raises when validation fails.
   """
-  @callback create_user!(
+  @callback create_user(
               provider :: String.t(),
               uid :: String.t(),
               email :: String.t(),
               name :: String.t(),
               image_url :: String.t() | nil
             ) ::
-              User.t()
+              {:ok, User.t()} | {:error, Ecto.Changeset.t()}
 
   @doc """
   Creates a new session token for a user.
