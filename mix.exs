@@ -54,6 +54,7 @@ defmodule Template.MixProject do
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phoenix_live_view, "~> 0.18"},
       {:postgrex, "~> 0.16"},
+      {:remote_ip, "~> 1.1"},
       {:sentry, "~> 8.0"},
       {:sobelow, "~> 0.12", only: :test, runtime: false},
       {:swoosh, "~> 1.9"},
