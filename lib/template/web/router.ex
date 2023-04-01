@@ -8,6 +8,7 @@ defmodule Template.Web.Router do
   import Phoenix.LiveView.Router
   import Template.Web.Auth
 
+  alias Controllers.ErrorController
   alias Controllers.AuthController
   alias Controllers.LandingController
 
@@ -30,6 +31,7 @@ defmodule Template.Web.Router do
     pipe_through :browser
 
     get "/", LandingController, :index
+    get "/error", ErrorController, :index
   end
 
   scope "/app", Template.Web do
