@@ -26,7 +26,7 @@ COPY priv priv
 COPY lib lib
 COPY assets assets
 
-RUN npm install --prefix ./assets
+RUN npm i --ci --prefix ./assets
 RUN mix assets.deploy
 RUN mix compile
 
