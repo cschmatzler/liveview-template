@@ -16,7 +16,7 @@ ENV REQUIRE_VERSION_FILE="true"
 RUN mix local.hex --force && \
     mix local.rebar --force
 
-COPY mix.exs mix.lock ./
+COPY mix.exs mix.lock version ./
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
@@ -25,7 +25,6 @@ COPY config/config.exs config/${MIX_ENV}.exs config/
 COPY priv priv
 COPY lib lib
 COPY assets assets
-COPY version version
 
 RUN npm install --prefix ./assets
 RUN mix assets.deploy
