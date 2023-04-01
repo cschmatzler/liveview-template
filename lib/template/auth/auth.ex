@@ -4,6 +4,8 @@ defmodule Template.Auth do
 
   Login and signup are handled by using external OAuth providers. At the moment, these are Google and GitHub.
   For session persistence, tokens are used.
+
+  The default implementation lives in `Template.Auth.Implementation`.
   """
 
   use Boundary, deps: [Template.Repo], top_level?: true

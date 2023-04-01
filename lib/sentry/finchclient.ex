@@ -1,9 +1,7 @@
-defmodule Sentry.FinchClient do
+defmodule External.Sentry.FinchClient do
   @moduledoc """
   An alternative HTTP client for Sentry that uses Finch instead of Hackney.
   """
-
-  use Boundary
 
   @behaviour Sentry.HTTPClient
 
