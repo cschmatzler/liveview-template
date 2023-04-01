@@ -12,11 +12,11 @@ defmodule External.Sentry.FinchClient do
 
   @impl Sentry.HTTPClient
   def post(url, headers, body) do
-    request =
+    response =
       Finch.build(:post, url, headers, body)
       |> Finch.request(__MODULE__)
 
-    case request do
+    case response do
       {:ok, %Finch.Response{status: status, headers: headers, body: body}} ->
         {:ok, status, headers, body}
 

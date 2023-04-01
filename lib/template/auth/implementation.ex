@@ -22,7 +22,7 @@ defmodule Template.Auth.Implementation do
   end
 
   @impl Template.Auth
-  def create_user!(provider, uid, email, name, image_url) do
+  def create_user(provider, uid, email, name, image_url) do
     User.changeset(%{
       provider: provider,
       uid: uid,
@@ -30,7 +30,7 @@ defmodule Template.Auth.Implementation do
       name: name,
       image_url: image_url
     })
-    |> Repo.insert!()
+    |> Repo.insert()
   end
 
   @impl Template.Auth

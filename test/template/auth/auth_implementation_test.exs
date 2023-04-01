@@ -61,7 +61,7 @@ defmodule Template.Auth.AuthImplementationTest do
     end
   end
 
-  describe "create_user!/5" do
+  describe "create_user/5" do
     test "returns a user" do
       provider = "google"
       uid = make_ref() |> :erlang.ref_to_list() |> List.to_string()
@@ -69,36 +69,37 @@ defmodule Template.Auth.AuthImplementationTest do
       name = "Google User"
       image_url = "https://example.com/image.jpg"
 
-      user = Auth.create_user!(provider, uid, email, name, image_url)
+      {:ok, result} = Auth.create_user(provider, uid, email, name, image_url)
 
-      assert %User{} = user
+      assert %User{} = result
     end
 
-    test "creates a struct with the OAuth provider, UID, email, name, and image url" do
+    test "returns a struct with the OAuth provider, UID, email, name, and image url" do
       provider = "google"
       uid = make_ref() |> :erlang.ref_to_list() |> List.to_string()
       email = "google_user@example.com"
       name = "Google User"
       image_url = "https://example.com/image.jpg"
 
-      user = Auth.create_user!(provider, uid, email, name, image_url)
+      {:ok, result} = Auth.create_user(provider, uid, email, name, image_url)
 
-      assert user.provider == provider
-      assert user.uid == uid
-      assert user.email == email
-      assert user.name == name
-      assert user.image_url == image_url
+      assert result.provider == provider
+      assert result.uid == uid
+      assert result.email == email
+      assert result.name == name
+      assert result.image_url == image_url
     end
 
-    test "it raises when OAuth provider is nil" do
+    test "it returns an error when OAuth provider is nil" do
       uid = make_ref() |> :erlang.ref_to_list() |> List.to_string()
       email = "google_user@example.com"
       name = "Google User"
       image_url = "https://example.com/image.jpg"
 
-      assert_raise(Ecto.InvalidChangesetError, fn ->
-        Auth.create_user!(nil, uid, email, name, image_url)
-      end)
+      result = Auth.create_user(nil, uid, email, name, image_url)
+
+      assert {:error, %Ecto.Changeset{} = changeset} = result
+      assert errors_on(changeset).provider
     end
 
     test "it raises when UID is nil" do
@@ -107,9 +108,10 @@ defmodule Template.Auth.AuthImplementationTest do
       name = "Google User"
       image_url = "https://example.com/image.jpg"
 
-      assert_raise(Ecto.InvalidChangesetError, fn ->
-        Auth.create_user!(provider, nil, email, name, image_url)
-      end)
+      result = Auth.create_user(provider, nil, email, name, image_url)
+
+      assert {:error, %Ecto.Changeset{} = changeset} = result
+      assert errors_on(changeset).uid
     end
 
     test "it raises when email is nil" do
@@ -118,9 +120,10 @@ defmodule Template.Auth.AuthImplementationTest do
       name = "Google User"
       image_url = "https://example.com/image.jpg"
 
-      assert_raise(Ecto.InvalidChangesetError, fn ->
-        Auth.create_user!(provider, uid, nil, name, image_url)
-      end)
+      result = Auth.create_user(provider, uid, nil, name, image_url)
+
+      assert {:error, %Ecto.Changeset{} = changeset} = result
+      assert errors_on(changeset).email
     end
 
     test "it raises when name is nil" do
@@ -129,9 +132,10 @@ defmodule Template.Auth.AuthImplementationTest do
       email = "google_user@example.com"
       image_url = "https://example.com/image.jpg"
 
-      assert_raise(Ecto.InvalidChangesetError, fn ->
-        Auth.create_user!(provider, uid, email, nil, image_url)
-      end)
+      result = Auth.create_user(provider, uid, email, nil, image_url)
+
+      assert {:error, %Ecto.Changeset{} = changeset} = result
+      assert errors_on(changeset).name
     end
   end
 

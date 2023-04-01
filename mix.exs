@@ -47,6 +47,7 @@ defmodule Template.MixProject do
       {:heroicons, "~> 0.5"},
       {:jason, "~> 1.4"},
       {:knigge, "~> 1.4"},
+      {:mix_test_interactive, "~> 1.2", only: :dev, runtime: false},
       {:oban, "~> 2.14"},
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},

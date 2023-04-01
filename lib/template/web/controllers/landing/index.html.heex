@@ -11,6 +11,7 @@
           />
         </a>
       </div>
+
       <div class="flex lg:hidden">
         <button
           x-on:click="mobileMenuOpen = true"
@@ -44,6 +45,42 @@
         <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
           <%= gettext("About") %>
         </a>
+      </div>
+
+      <div x-data={ "{ open: #{!!@flash["login_error"]} }" }>
+        <div
+          x-dialog
+          x-model="open"
+          class="absolute z-50 mr-4 -mt-4 right-0 rounded-md bg-red-50 p-4"
+        >
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <Heroicons.exclamation_circle class="h-5 w-5 text-red-400" />
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">
+                <%= gettext("Error while logging in") %>
+              </h3>
+              <div class="mt-2 text-sm text-red-700">
+                <p>
+                  <%= gettext("Please try again later.") %>
+                </p>
+              </div>
+            </div>
+            <div class="ml-16 pl-3">
+              <div class="-mx-1.5 -my-1.5">
+                <button
+                  x-on:click="$dialog.close()"
+                  type="button"
+                  class="inline-flex rounded-md bg-red-50 p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 focus:ring-offset-red-50"
+                >
+                  <span class="sr-only"><%= gettext("Dismiss") %></span>
+                  <Heroicons.x_mark class="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <%= if @user do %>
@@ -202,6 +239,7 @@
                 <%= gettext("About") %>
               </a>
             </div>
+
             <div>
               <p class="mt-6 text-sm font-medium leading-6 text-gray-900">Sign in with</p>
               <div class="mt-2 grid grid-cols-3 gap-3">
