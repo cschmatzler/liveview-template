@@ -5,6 +5,7 @@ import Config
 # -------------
 config :sentry,
   environment_name: Mix.env(),
+  release: Application.spec(:template, :vsn),
   included_environments: [:prod],
   enable_source_code_context: true,
   root_source_code_paths: [File.cwd!()],
