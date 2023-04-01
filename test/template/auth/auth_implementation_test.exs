@@ -1,5 +1,6 @@
 defmodule Template.Auth.AuthImplementationTest do
   use Template.DataCase, async: true
+  use Hammox.Protect, module: Template.Auth.Implementation, behaviour: Template.Auth
 
   import Template.Fixtures.Auth
 
