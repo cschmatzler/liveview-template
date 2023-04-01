@@ -3,6 +3,7 @@ services:
     type: web
     plan: free
     region: frankfurt
+    autoDeploy: false
     # domains:
     #   - template.io
     env: docker
