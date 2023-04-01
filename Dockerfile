@@ -1,13 +1,12 @@
 ARG ELIXIR_VERSION=1.14.3
 ARG OTP_VERSION=25.3
-ARG DEBIAN_VERSION=bullseye-20230227-slim
-
-ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
-ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
+ARG UBUNTU_VERSION=jammy-20230126
+ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-ubuntu-${UBUNTU_VERSION}"
+ARG RUNNER_IMAGE="ubuntu:${UBUNTU_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 WORKDIR /app
@@ -26,6 +25,7 @@ COPY priv priv
 COPY lib lib
 COPY assets assets
 
+RUN npm install --prefix ./assets
 RUN mix assets.deploy
 RUN mix compile
 
