@@ -5,6 +5,12 @@ defmodule Template.Web.AuthController do
 
   plug Ueberauth
 
+  def request(conn, _params) do
+    conn
+    |> put_flash(:error, "Unknown identity provider")
+    |> redirect(to: Template.Web.Auth.signed_out_path())
+  end
+
   def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
     conn
     |> put_flash(:error, "Failed to authenticate.")
