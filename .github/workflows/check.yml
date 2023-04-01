@@ -55,7 +55,7 @@ jobs:
             _build
           key: mix-${{ github.sha }}
           restore-keys: |
-            mix-
+            mix-${{ hashFiles('**/mix.lock') }}
       - run: mix ecto.reset
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
@@ -79,7 +79,7 @@ jobs:
             _build
           key: mix-${{ github.sha }}
           restore-keys: |
-            mix-
+            mix-${{ hashFiles('**/mix.lock') }}
       - run: mix format --check-formatted
       - run: mix credo --strict
 
@@ -99,5 +99,5 @@ jobs:
             _build
           key: mix-${{ github.sha }}
           restore-keys: |
-            mix-
+            mix-${{ hashFiles('**/mix.lock') }}
       - run: mix sobelow --config
