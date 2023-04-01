@@ -1,6 +1,7 @@
 defmodule Template.Web.Endpoint do
   @moduledoc false
 
+  use Sentry.PlugCapture
   use Phoenix.Endpoint, otp_app: :template
 
   @session_options [
@@ -37,6 +38,7 @@ defmodule Template.Web.Endpoint do
     pass: ["*/*"],
     json_decoder: Jason
 
+  plug Sentry.PlugContext
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options

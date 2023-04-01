@@ -7,11 +7,9 @@ services:
       - template.io
     env: docker
     envVars:
+      - key: SENTRY_DSN
+        sync: false
       - key: CONFIGCAT_SDK_KEY
-        sync: false
-      - key: TELEMETRY_NAMESPACE
-        sync: false
-      - key: LIGHTSTEP_ACCESS_TOKEN
         sync: false
       - key: HOST
         sync: false

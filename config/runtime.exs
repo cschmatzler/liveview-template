@@ -4,6 +4,9 @@ if System.get_env("ENABLE_SERVER") do
   config :template, Template.Web.Endpoint, server: true
 end
 
+# -----
+# OAuth
+# -----
 config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: System.get_env("GITHUB_CLIENT_ID"),
   client_secret: System.get_env("GITHUB_CLIENT_SECRET")
@@ -18,34 +21,16 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 # ---------
 if config_env() == :prod do
   # -------------
+  # Observability
+  # -------------
+  config :sentry,
+    dsn: System.get_env("SENTRY_DSN")
+
+  # -------------
   # Feature Flags
   # -------------
   configcat_sdk_key = System.fetch_env!("CONFIGCAT_SDK_KEY")
   config :template, ConfigCat, sdk_key: configcat_sdk_key
-
-  # ---------
-  # Telemetry
-  # ---------
-  version = System.get_env("RENDER_GIT_COMMIT") || "dev"
-  telemetry_namespace = System.fetch_env!("TELEMETRY_NAMESPACE")
-  lightstep_access_token = System.fetch_env!("LIGHTSTEP_ACCESS_TOKEN")
-
-  config :opentelemetry, :resource,
-    service: %{
-      name: "template.io",
-      version: version
-    },
-    env: telemetry_namespace
-
-  config :opentelemetry,
-    span_processor: :batch,
-    traces_exporter: :otlp
-
-  config :opentelemetry_exporter,
-    otlp_protocol: :grpc,
-    otlp_compression: :gzip,
-    otlp_endpoint: "https://ingest.lightstep.com:443",
-    otlp_headers: [{"lightstep-access-token", lightstep_access_token}]
 
   # --------
   # Database
