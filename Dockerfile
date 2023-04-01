@@ -11,6 +11,7 @@ RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
 
 WORKDIR /app
 ENV MIX_ENV="prod"
+ENV REQUIRE_VERSION_FILE="true"
 
 RUN mix local.hex --force && \
     mix local.rebar --force
@@ -24,6 +25,7 @@ COPY config/config.exs config/${MIX_ENV}.exs config/
 COPY priv priv
 COPY lib lib
 COPY assets assets
+COPY version version
 
 RUN npm install --prefix ./assets
 RUN mix assets.deploy
