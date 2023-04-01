@@ -1,6 +1,7 @@
 defmodule Template.Web do
   @moduledoc """
   Entry point for modules implementing web-related features.
+
   Provides a `use` macro taking one parameter specifying what the module is/needs.
   """
 

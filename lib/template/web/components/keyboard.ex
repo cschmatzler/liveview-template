@@ -6,15 +6,12 @@ defmodule Template.Web.Components.KeyboardHandler do
   use Template.Web, :live_component
 
   @impl Phoenix.LiveComponent
-  def mount(socket) do
-    {:ok,
-     socket
-     |> assign_new(:keydown_enabled, fn -> false end)
-     |> assign_new(:keyup_enabled, fn -> false end)}
-  end
-
-  @impl Phoenix.LiveComponent
   def render(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:keydown_enabled, fn -> "false" end)
+      |> assign_new(:keyup_enabled, fn -> "false" end)
+
     ~H"""
     <div
       id={"#{@id}"}

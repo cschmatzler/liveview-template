@@ -1,5 +1,7 @@
 defmodule Template.Application do
-  @moduledoc false
+  @moduledoc """
+  Main entrypoint for the service.
+  """
 
   use Boundary, deps: [Template.Repo, Template.Web], top_level?: true
   use Application
@@ -9,10 +11,10 @@ defmodule Template.Application do
     Logger.add_backend(Sentry.LoggerBackend)
 
     children = [
+      {ConfigCat, configcat_config()},
       {Phoenix.PubSub, name: Template.PubSub},
       {Finch, name: Template.Finch},
       Template.Repo,
-      {ConfigCat, configcat_config()},
       {Oban, Application.fetch_env!(:template, Oban)},
       Template.Web.Endpoint
     ]
