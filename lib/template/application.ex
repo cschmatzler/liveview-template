@@ -9,7 +9,7 @@ defmodule Template.Application do
   @impl Application
   def start(_type, _args) do
     OpentelemetryEcto.setup([:template, :repo])
-    OpentelemetryOban.setup()
+    OpentelemetryOban.setup(trace: [:jobs])
     OpentelemetryPhoenix.setup()
     OpentelemetryLiveView.setup()
 
