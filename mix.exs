@@ -39,9 +39,13 @@ defmodule Template.MixProject do
 
   defp deps do
     [
-      {:opentelemetry_exporter, "~> 1.0"},
-      {:opentelemetry, "~> 1.0"},
+      {:opentelemetry_exporter, "~> 1.2"},
+      {:opentelemetry, "~> 1.3"},
       {:opentelemetry_api, "~> 1.0"},
+      {:opentelemetry_ecto, "~> 1.1"},
+      {:opentelemetry_liveview, "~> 1.0-rc.4"},
+      {:opentelemetry_oban, "~> 1.0"},
+      {:opentelemetry_phoenix, "~> 1.1"},
       {:bandit, "~> 0.7"},
       {:boundary, "~> 0.9", runtime: false},
       {:carbonite, "~> 0.8"},
