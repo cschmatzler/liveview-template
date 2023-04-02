@@ -15,5 +15,7 @@ defmodule Template.Web.Controllers.LandingHTML do
 
   use Template.Web, :component
 
+  alias Template.Web.Auth
+
   embed_templates "landing/*"
 end

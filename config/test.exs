@@ -10,7 +10,9 @@ config :logger, level: :warning
 # -------------
 config :template, ConfigCat,
   sdk_key: "local_only",
-  flag_overrides: %{},
+  flag_overrides: %{
+    "enableLogin" => true
+  },
   flag_override_strategy: :local_only
 
 # --------

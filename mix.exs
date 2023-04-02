@@ -106,7 +106,7 @@ defmodule Template.MixProject do
 
   defp aliases do
     [
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "excoveralls.html"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "assets.deploy": [
