@@ -20,11 +20,29 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 # Production
 # ---------
 if config_env() == :prod do
+  host = System.get_env("HOST") || System.get_env("RENDER_EXTERNAL_HOSTNAME")
+
   # -------------
   # Observability
   # -------------
-  config :sentry,
-    dsn: System.get_env("SENTRY_DSN")
+  config :opentelemetry,
+    resource: [
+      service: [
+        name: "template",
+        namespace: System.fetch_env!("NAMESPACE")
+      ],
+      host: [
+        name: host
+      ]
+    ]
+
+  config :opentelemetry_exporter,
+    otlp_protocol: :http_protobuf,
+    otlp_endpoint: "https://api.honeycomb.io:443",
+    otlp_headers: [
+      {"x-honeycomb-team", System.fetch_env!("HONEYCOMB_API_KEY")},
+      {"x-honeycomb-dataset", "template"}
+    ]
 
   # -------------
   # Feature Flags
@@ -44,7 +62,6 @@ if config_env() == :prod do
   # ---
   # Web
   # ---
-  host = System.get_env("HOST") || System.get_env("RENDER_EXTERNAL_HOSTNAME")
   port = String.to_integer(System.get_env("PORT") || "4000")
   secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 
