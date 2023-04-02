@@ -6,7 +6,7 @@ import Config
 config :logger, level: :info
 config :opentelemetry,
     span_processor: :batch,
-    exporter: :otlp,
+    exporter: :otlp
 
 # -------------
 # Feature Flags
