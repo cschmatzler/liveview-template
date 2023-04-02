@@ -1,20 +1,11 @@
 defmodule Template.Web.AuthTest do
-  use Template.ConnCase, async: true
+  use Template.ConnCase, async: false
+
+  import Hammox
+  import Template.Fixtures.Auth
 
   alias Phoenix.LiveView
   alias Template.Web.Auth
-  alias Template.Auth.Token
-  alias Template.Auth.User
-
-  @valid_user %User{
-    id: 1,
-    provider: "test_provider",
-    uid: "test_uid",
-    email: "user1@example.com",
-    name: "user1",
-    image_url: "https://example.com/image.jpg"
-  }
-  @valid_token %Token{id: 1, token: "valid_token", user_id: 1}
 
   setup_all do
     Hammox.defmock(AuthMock, for: Template.Auth)
@@ -27,8 +18,12 @@ defmodule Template.Web.AuthTest do
       |> Map.replace!(:secret_key_base, Template.Web.Endpoint.config(:secret_key_base))
       |> init_test_session(%{})
 
-    %{conn: conn}
+    {token, user} = token_fixture()
+
+    %{conn: conn, user: user, token: token}
   end
+
+  setup :verify_on_exit!
 
   describe "mount: redirect_if_unauthenticated" do
     test "redirects to signed out path if no session token is present", %{conn: conn} do
@@ -44,18 +39,22 @@ defmodule Template.Web.AuthTest do
       assert updated_socket.assigns.user == nil
     end
 
-    test "fetches user from the database and mounts it if valid token is present", %{conn: conn} do
-      Hammox.stub(AuthMock, :get_user_with_token, fn _ -> @valid_user end)
+    test "fetches user from the database and mounts it if valid token is present", %{
+      conn: conn,
+      user: user,
+      token: token
+    } do
+      Hammox.stub(AuthMock, :get_user_with_token, fn _ -> user end)
 
       session =
         conn
-        |> put_session(:session_token, @valid_token.token)
+        |> put_session(:session_token, token.token)
         |> get_session()
 
       {:cont, updated_socket} =
         Auth.on_mount(:redirect_if_unauthenticated, %{}, session, %LiveView.Socket{})
 
-      assert updated_socket.assigns.user == @valid_user
+      assert updated_socket.assigns.user == user
     end
   end
 
@@ -66,15 +65,19 @@ defmodule Template.Web.AuthTest do
       assert conn.assigns[:user] == nil
     end
 
-    test "fetches user from the database and assigns it if valid token is present", %{conn: conn} do
-      Hammox.stub(AuthMock, :get_user_with_token, fn _ -> @valid_user end)
+    test "fetches user from the database and assigns it if valid token is present", %{
+      conn: conn,
+      user: user,
+      token: token
+    } do
+      Hammox.stub(AuthMock, :get_user_with_token, fn _ -> user end)
 
       conn =
         conn
-        |> put_session(:session_token, @valid_token.token)
+        |> put_session(:session_token, token.token)
         |> Auth.fetch_user([])
 
-      assert conn.assigns[:user] == @valid_user
+      assert conn.assigns[:user] == user
     end
   end
 
@@ -86,16 +89,16 @@ defmodule Template.Web.AuthTest do
       assert redirected_to(conn) == Auth.signed_out_path()
     end
 
-    test "does not redirect if user present", %{conn: conn} do
-      conn = conn |> assign(:user, @valid_user) |> Auth.redirect_if_unauthenticated([])
+    test "does not redirect if user present", %{conn: conn, user: user} do
+      conn = conn |> assign(:user, user) |> Auth.redirect_if_unauthenticated([])
 
       refute conn.halted
     end
   end
 
   describe "redirect_if_authenticated/2" do
-    test "redirects to signed in path if user present", %{conn: conn} do
-      conn = conn |> assign(:user, @valid_user) |> Auth.redirect_if_authenticated([])
+    test "redirects to signed in path if user present", %{conn: conn, user: user} do
+      conn = conn |> assign(:user, user) |> Auth.redirect_if_authenticated([])
 
       assert conn.halted
       assert redirected_to(conn) == Auth.signed_in_path()
@@ -109,42 +112,42 @@ defmodule Template.Web.AuthTest do
   end
 
   describe "start_session/2" do
-    setup do
-      Hammox.stub(AuthMock, :create_token!, fn _ -> @valid_token end)
+    setup %{token: token} do
+      Hammox.stub(AuthMock, :create_token!, fn _ -> token end)
 
       :ok
     end
 
-    test "clears the existing session", %{conn: conn} do
-      conn = conn |> put_session(:old_token, "value") |> Auth.start_session(@valid_user)
+    test "clears the existing session", %{conn: conn, user: user} do
+      conn = conn |> put_session(:old_token, "value") |> Auth.start_session(user)
 
       refute get_session(conn, :old_token)
     end
 
-    test "stores the token in the session", %{conn: conn} do
-      conn = Auth.start_session(conn, @valid_user)
+    test "stores the token in the session", %{conn: conn, user: user, token: token} do
+      conn = Auth.start_session(conn, user)
 
-      assert @valid_token.token == get_session(conn, :session_token)
+      assert token.token == get_session(conn, :session_token)
     end
 
-    test "stores the token in a cookie", %{conn: conn} do
-      conn = conn |> fetch_cookies() |> Auth.start_session(@valid_user)
+    test "stores the token in a cookie", %{conn: conn, user: user, token: token} do
+      conn = conn |> fetch_cookies() |> Auth.start_session(user)
 
-      assert @valid_token.token == conn.cookies["session"]
+      assert token.token == conn.cookies["session"]
       assert %{value: signed_token, max_age: max_age} = conn.resp_cookies["session"]
-      assert signed_token != get_session(conn, :user_token)
+      assert signed_token != get_session(conn, :session_token)
       assert max_age == 604_800
     end
 
-    test "stores the token as live socket identifier", %{conn: conn} do
-      conn = Auth.start_session(conn, @valid_user)
+    test "stores the token as live socket identifier", %{conn: conn, user: user, token: token} do
+      conn = Auth.start_session(conn, user)
 
       assert get_session(conn, :live_socket_id) ==
-               "session_token:#{Base.url_encode64(@valid_token.token)}"
+               "session_token:#{Base.url_encode64(token.token)}"
     end
 
-    test "redirects to signed out path", %{conn: conn} do
-      conn = Auth.start_session(conn, @valid_user)
+    test "redirects to signed out path", %{conn: conn, user: user} do
+      conn = Auth.start_session(conn, user)
 
       assert redirected_to(conn) == Auth.signed_in_path()
     end
@@ -157,16 +160,16 @@ defmodule Template.Web.AuthTest do
       :ok
     end
 
-    test "erases the session", %{conn: conn} do
-      conn = conn |> put_session(:session_token, @valid_token.token) |> Auth.end_session()
+    test "erases the session", %{conn: conn, token: token} do
+      conn = conn |> put_session(:session_token, token.token) |> Auth.end_session()
 
       refute get_session(conn, :session_token)
     end
 
-    test "erases the cookie", %{conn: conn} do
+    test "erases the cookie", %{conn: conn, token: token} do
       conn =
         conn
-        |> put_req_cookie("session", @valid_token.token)
+        |> put_req_cookie("session", token.token)
         |> fetch_cookies()
         |> Auth.end_session()
 
@@ -185,8 +188,8 @@ defmodule Template.Web.AuthTest do
       assert_receive %Phoenix.Socket.Broadcast{event: "disconnect", topic: ^live_socket_id}
     end
 
-    test "it redirects to signed out path", %{conn: conn} do
-      conn = conn |> put_session(:session_token, @valid_token.token) |> Auth.end_session()
+    test "it redirects to signed out path", %{conn: conn, token: token} do
+      conn = conn |> put_session(:session_token, token.token) |> Auth.end_session()
 
       assert redirected_to(conn) == Auth.signed_out_path()
     end
