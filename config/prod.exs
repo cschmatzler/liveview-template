@@ -4,9 +4,10 @@ import Config
 # Observability
 # -------------
 config :logger, level: :info
+
 config :opentelemetry,
-    span_processor: :batch,
-    exporter: :otlp
+  span_processor: :batch,
+  exporter: :otlp
 
 # -------------
 # Feature Flags
