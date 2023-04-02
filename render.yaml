@@ -5,8 +5,8 @@ services:
     region: frankfurt
     autoDeploy: false
     env: elixir
-    buildCommand: mix assets.deploy && mix release
-    startCommand: /app/bin/start
+    buildCommand: mix deploy
+    startCommand: _build/prod/rel/template/bin/template start
     # domains:
     #   - template.io
     envVars:
