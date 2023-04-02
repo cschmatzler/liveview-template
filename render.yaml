@@ -5,6 +5,7 @@ services:
     region: frankfurt
     autoDeploy: false
     env: elixir
+    startCommand: /app/bin/start
     # domains:
     #   - template.io
     envVars:
