@@ -8,8 +8,6 @@ defmodule Template.Application do
 
   @impl Application
   def start(_type, _args) do
-    Logger.add_backend(Sentry.LoggerBackend)
-
     children = [
       {ConfigCat, configcat_config()},
       {Phoenix.PubSub, name: Template.PubSub},

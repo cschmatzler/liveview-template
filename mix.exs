@@ -9,6 +9,15 @@ defmodule Template.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       compilers: [:boundary] ++ Mix.compilers(),
+      releases: [
+        template: [
+          applications: [
+            template: :permanent,
+            opentelemetry_exporter: :permanent,
+            opentelemetry: :temporary
+          ]
+        ]
+      ],
       test_coverage: [tool: ExCoveralls],
       name: "LiveView Template",
       description: "An opinionated template for LiveView services.",
@@ -30,6 +39,9 @@ defmodule Template.MixProject do
 
   defp deps do
     [
+      {:opentelemetry_exporter, "~> 1.0"},
+      {:opentelemetry, "~> 1.0"},
+      {:opentelemetry_api, "~> 1.0"},
       {:bandit, "~> 0.7"},
       {:boundary, "~> 0.9", runtime: false},
       {:carbonite, "~> 0.8"},
@@ -55,7 +67,6 @@ defmodule Template.MixProject do
       {:phoenix_live_view, "~> 0.18"},
       {:postgrex, "~> 0.16"},
       {:remote_ip, "~> 1.1"},
-      {:sentry, "~> 8.0"},
       {:sobelow, "~> 0.12", only: :test, runtime: false},
       {:swoosh, "~> 1.9"},
       {:tailwind, "~> 0.2"},

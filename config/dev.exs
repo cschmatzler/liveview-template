@@ -1,9 +1,18 @@
 import Config
 
-# -------
-# Logging
-# -------
+# -------------
+# Observability
+# -------------
 config :logger, :console, format: "[$level] $message\n", level: :debug
+
+if System.get_env("DEBUG_OTEL") == "true" do
+  config :opentelemetry, :processors,
+    otel_batch_processor: %{
+      exporter: {:otel_exporter_stdout, []}
+    }
+else
+  config :opentelemetry, traces_exporter: :none
+end
 
 # -------------
 # Feature Flags

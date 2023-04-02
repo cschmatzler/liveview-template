@@ -1,9 +1,12 @@
 import Config
 
-# -------
-# Logging
-# -------
+# -------------
+# Observability
+# -------------
 config :logger, level: :info
+config :opentelemetry,
+    span_processor: :batch,
+    exporter: :otlp,
 
 # -------------
 # Feature Flags

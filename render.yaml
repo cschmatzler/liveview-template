@@ -8,7 +8,9 @@ services:
     #   - template.io
     env: docker
     envVars:
-      - key: SENTRY_DSN
+      - key: NAMESPACE
+        sync: false
+      - key: HONEYCOMB_API_KEY
         sync: false
       - key: CONFIGCAT_SDK_KEY
         sync: false

@@ -1,17 +1,6 @@
 import Config
 
 # -------------
-# Observability
-# -------------
-config :sentry,
-  environment_name: Mix.env(),
-  release: to_string(Application.spec(:template, :vsn)),
-  included_environments: [:prod],
-  enable_source_code_context: true,
-  root_source_code_paths: [File.cwd!()],
-  client: External.Sentry.FinchClient
-
-# -------------
 # Feature Flags
 # -------------
 config :template, ConfigCat, data_governance: :eu_only
