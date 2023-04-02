@@ -7,7 +7,8 @@ config :logger, level: :info
 
 config :opentelemetry,
   span_processor: :batch,
-  exporter: :otlp
+  exporter: :otlp,
+  sampler: {:parent_based, %{root: {:trace_id_ratio_based, 0.05}}}
 
 # -------------
 # Feature Flags
