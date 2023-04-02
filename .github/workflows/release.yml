@@ -19,14 +19,6 @@ jobs:
           git config --global user.email "actions@medium.place"
           git commit -am "Bump version"
           git push
-      - uses: getsentry/action-release@v1
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-        with:
-          environment: prod
-          version: ${{ env.VERSION }}
       - uses: johnbeynon/render-deploy-action@v0.0.8
         with:
           api-key: ${{ secrets.RENDER_API_KEY }}
