@@ -5,6 +5,7 @@ env:
   IMAGE_OWNER: ${{ github.repository_owner }}
   IMAGE_NAME: template
   IMAGE_VER: ${{ github.sha }}
+  COMPOSE_FILE: docker-compose.gha.yml
 
 jobs:
   build-test:
@@ -51,3 +52,32 @@ jobs:
           cache-to: type=gha,scope=${{ github.workflow }}-test,mode=max
           tags: |
             ghcr.io/${{ env.IMAGE_OWNER }}/${{ env.IMAGE_NAME }}:test-${{ env.IMAGE_VER }}
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: [build-test]
+    steps:
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull repos
+        run: |
+          docker compose pull --quiet --include-deps test
+          docker images --no-trunc
+
+      - name: Start services
+        run: docker compose up --detach test
+
+      - name: Initialize test database
+        run: docker compose run test mix do ecto.create, ecto.migrate
+
+      - name: Run tests
+        run: docker compose run test mix test
