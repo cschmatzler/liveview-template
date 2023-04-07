@@ -6,7 +6,7 @@ ARG RUNNER_IMAGE="ubuntu:${UBUNTU_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
-RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
+RUN apt-get update -y && apt-get install -y build-essential git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 WORKDIR /app
@@ -26,7 +26,6 @@ COPY priv priv
 COPY lib lib
 COPY assets assets
 
-RUN npm i --ci --prefix ./assets
 RUN mix assets.deploy
 RUN mix compile
 

@@ -1,6 +1,6 @@
 defmodule Template.Web.Auth do
   @moduledoc """
-  The `Template.Web.Auth` module provides authentication functionality for the web application.
+  Authentication and authorization functionality for the web service.
 
   This module includes functions to fetch the current user from a session, redirect users based on their
   authentication status, manage session tokens, start and end user sessions, and handle mount actions
@@ -21,26 +21,39 @@ defmodule Template.Web.Auth do
   @session_options [sign: true, max_age: @max_age, same_site: "Lax"]
 
   @doc """
-  Handles mount actions for authenticated LiveView components.
+  Mount actions for LiveViews and live sessions that interact with authentication.
+
+  ## `:mount_user`
 
   Mounts the session user from the initial connection as `assigns.user`.
-  If no authenticated session exists, halts the mount and redirects to `signed_out_path/0`.
+
+  ## `:redirect_if_unauthenticated`
+
+  If no valid authenticated session exists, halts the mount and redirects to `signed_out_path/0`.
+  Most likely to be used together with `:mount_user`.
 
   ## Usage
       # Router
-      live_session :authenticated, on_mount: {Template.Web.Auth, :redirect_if_authenticated} do
+      live_session :authenticated,
+      on_mount: [
+        {Template.Web.Auth, :mount_user},
+        {Template.Web.Auth, :redirect_if_authenticated}
+      do
         scope "/", Template.Web do
           pipe_through :browser
 
           live "/profile", UserLive.Profile, :index
         end
       end
-  end
   """
-  def on_mount(:redirect_if_unauthenticated, _params, session, socket) do
+  def on_mount(:mount_user, _params, session, socket) do
     socket = mount_user(session, socket)
 
-    if socket.assigns.user do
+    {:cont, socket}
+  end
+
+  def on_mount(:redirect_if_unauthenticated, _params, _session, socket) do
+    if Map.get(socket.assigns, :user) do
       {:cont, socket}
     else
       {:halt, Phoenix.LiveView.redirect(socket, to: signed_out_path())}
