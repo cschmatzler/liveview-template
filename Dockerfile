@@ -67,9 +67,8 @@ FROM build-deps-get AS test-image
     RUN mix deps.compile
     RUN mix esbuild.install --if-missing
 
-    COPY .formatter.exs coveralls.jso[n] .credo.ex[s] ./
-    COPY lib ./lib
     COPY priv ./priv
+    COPY lib ./lib
     COPY test ./test
 
     RUN mix compile --warnings-as-errors
