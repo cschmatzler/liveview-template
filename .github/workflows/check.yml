@@ -100,4 +100,6 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
+      - run: mix hex.audit
+      - run: mix deps.audit
       - run: mix sobelow --config
