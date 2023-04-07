@@ -80,6 +80,7 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
+      - run: mix deps.unlock --check-unused
       - run: mix format --check-formatted
       - run: mix credo --strict
 
