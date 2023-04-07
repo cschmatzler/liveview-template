@@ -22,8 +22,7 @@ defmodule Template.MixProject do
       name: "LiveView Template",
       description: "An opinionated template for LiveView services.",
       docs: docs(),
-      version: version(),
-      aliases: aliases()
+      version: version()
     ]
   end
 
@@ -63,6 +62,7 @@ defmodule Template.MixProject do
       {:heroicons, "~> 0.5"},
       {:jason, "~> 1.4"},
       {:knigge, "~> 1.4"},
+      {:mix_audit, "~> 2.1"},
       {:mix_test_interactive, "~> 1.2", only: :dev, runtime: false},
       {:oban, "~> 2.14"},
       {:phoenix, "~> 1.7"},
@@ -102,21 +102,5 @@ defmodule Template.MixProject do
       true ->
         "0.0.0-dev"
     end
-  end
-
-  defp aliases do
-    [
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "assets.deploy": [
-        "cmd npm i --prefix ./assets",
-        "tailwind default --minify",
-        "esbuild default --minify",
-        "phx.digest"
-      ],
-      "assets.reset": ["cmd rm -rf priv/static/assets"],
-      deploy: ["deps.get", "assets.deploy", "release"]
-    ]
   end
 end
