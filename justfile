@@ -3,7 +3,8 @@ reset-db:
   mix ecto.create
   mix ecto.migrate
 
-test: reset-db
+test:
+  MIX_ENV=test just reset-db
   mix test
 
 reset-assets:

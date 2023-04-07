@@ -67,7 +67,7 @@ FROM build-deps AS test
     RUN mix deps.compile
     RUN mix esbuild.install --if-missing
 
-    COPY .formatter.exs coveralls.jso[n] .credo.ex[s] ./
+    COPY .formatter.exs coveralls.jso[n] .credo.ex[s] .sobelow-conf ./
     COPY priv ./priv
     COPY lib ./lib
     COPY test ./test
