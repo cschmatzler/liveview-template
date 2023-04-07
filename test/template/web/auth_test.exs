@@ -25,21 +25,39 @@ defmodule Template.Web.AuthTest do
 
   setup :verify_on_exit!
 
+  describe "mount: mount_user" do
+    test "mounts the user if a session token is present", %{conn: conn, user: user, token: token} do
+      Hammox.stub(AuthMock, :get_user_with_token, fn _ -> user end)
+
+      session =
+        conn
+        |> put_session(:session_token, token.token)
+        |> get_session()
+
+      {:cont, updated_socket} = Auth.on_mount(:mount_user, %{}, session, %LiveView.Socket{})
+
+      assert Map.has_key?(updated_socket.assigns, :user)
+      assert updated_socket.assigns.user == user
+    end
+
+    test "does not mount the user if no valid session token is present", %{conn: conn} do
+      session = get_session(conn)
+
+      assert {:cont, socket} = Auth.on_mount(:mount_user, %{}, session, %LiveView.Socket{})
+
+      assert is_nil(socket.assigns.user)
+    end
+  end
+
   describe "mount: redirect_if_unauthenticated" do
     test "redirects to signed out path if no session token is present", %{conn: conn} do
       session = get_session(conn)
 
-      socket = %LiveView.Socket{
-        endpoint: Template.Web.Endpoint,
-        assigns: %{__changed__: %{}, flash: %{}}
-      }
-
-      {:halt, updated_socket} = Auth.on_mount(:redirect_if_unauthenticated, %{}, session, socket)
-
-      assert updated_socket.assigns.user == nil
+      assert {:halt, _socket} =
+               Auth.on_mount(:redirect_if_unauthenticated, %{}, session, %LiveView.Socket{})
     end
 
-    test "fetches user from the database and mounts it if valid token is present", %{
+    test "does not redirect if valid session token is present", %{
       conn: conn,
       user: user,
       token: token
@@ -51,10 +69,10 @@ defmodule Template.Web.AuthTest do
         |> put_session(:session_token, token.token)
         |> get_session()
 
-      {:cont, updated_socket} =
-        Auth.on_mount(:redirect_if_unauthenticated, %{}, session, %LiveView.Socket{})
+      {:cont, socket_with_user} = Auth.on_mount(:mount_user, %{}, session, %LiveView.Socket{})
 
-      assert updated_socket.assigns.user == user
+      assert {:cont, _socket} =
+               Auth.on_mount(:redirect_if_unauthenticated, %{}, session, socket_with_user)
     end
   end
 

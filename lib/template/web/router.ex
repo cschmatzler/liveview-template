@@ -21,7 +21,7 @@ defmodule Template.Web.Router do
 
     plug :put_secure_browser_headers, %{
       "content-security-policy" =>
-        "default-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src https://tailwindui.com"
+        "default-src 'self' 'unsafe-eval' 'unsafe-inline'; img-src https://tailwindui.com; script-src-elem 'self' https://unpkg.com"
     }
 
     plug :fetch_user
@@ -30,15 +30,19 @@ defmodule Template.Web.Router do
   scope "/", Template.Web do
     pipe_through :browser
 
-    get "/", LandingController, :index
     get "/error", ErrorController, :index
+
+    live "/", Live.Landing, :index
   end
 
   scope "/app", Template.Web do
     pipe_through :browser
 
     live_session :redirect_if_unauthenticated,
-      on_mount: [{Template.Web.Auth, :redirect_if_unauthenticated}] do
+      on_mount: [
+        {Template.Web.Auth, :mount_user},
+        {Template.Web.Auth, :redirect_if_unauthenticated}
+      ] do
       live "/", PageLive, :index
     end
   end
