@@ -81,3 +81,7 @@ jobs:
 
       - name: Run tests
         run: docker compose run test mix test
+
+      - name: Run lints
+        run: docker compose run test mix do format --check-formatted, deps.unlock --check-unused, credo --all, hex.audit, deps.audit, sobelow --config
+

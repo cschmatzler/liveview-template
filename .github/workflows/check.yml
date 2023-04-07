@@ -56,7 +56,7 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
-      - run: just reset-db
+      - run: mix ecto.create
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
         with:
