@@ -5,7 +5,7 @@ env:
   IMAGE_OWNER: ${{ github.repository_owner }}
   IMAGE_NAME: template
   IMAGE_VER: ${{ github.sha }}
-  COMPOSE_FILE: docker-compose.gha.yml
+  COMPOSE_FILE: .github/docker-compose.yml
 
 jobs:
   build-test:
