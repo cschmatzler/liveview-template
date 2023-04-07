@@ -145,7 +145,7 @@ FROM prod-base AS prod
 
     EXPOSE $APP_PORT
 
-    ENTRYPOINT ["bin/prod"]
+    ENTRYPOINT ["bin/$RELEASE"]
 
     CMD ["start"]
 

@@ -10,9 +10,6 @@ jobs:
   build-test:
     name: Build test image
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      actions: write
 
     steps:
       - name: Cancel previous runs in progress
