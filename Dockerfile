@@ -121,14 +121,12 @@ FROM prod-base AS prod
     ARG APP_NAME
     ARG APP_USER
     ARG APP_GROUP
-    ARG APP_PORT
 
     ARG MIX_ENV
     ARG RELEASE
 
     ENV HOME=$APP_DIR \
-        PORT=$APP_PORT \
-        PHX_SERVER=true \
+        ENABLE_SERVER=true \
         MIX_ENV=$MIX_ENV \
         RELEASE_TMP="/run/${APP_NAME}"
 
