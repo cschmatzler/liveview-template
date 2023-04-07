@@ -10,8 +10,7 @@ services:
         BUILDKIT_INLINE_CACHE: "1"
       context: .
     environment:
-      - DATABASE_DB
-      - DATABASE_HOST=${DATABASE_HOST:-postgres}
+      - DB_HOST=${DB_HOST:-postgres}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE:-xVyLzQNJAvDcfSHnRMLfkU8V3WEX79B18qvba+h/jIxqawRBM4wQw2qkYdfjCrtA}
     volumes:
       - "./.cache:/var/cache"
