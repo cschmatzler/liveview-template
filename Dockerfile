@@ -23,7 +23,7 @@ ARG LANG=C.UTF-8
 
 ARG MIX_ENV=prod
 
-FROM ${BUILD_BASE_IMAGE_NAME}:${BUILD_BASE_IMAGE_TAG} AS build-os-deps
+FROM ${BUILD_BASE_IMAGE_NAME}:${BUILD_BASE_IMAGE_TAG} AS build-base
     ARG LANG
     ENV LANG=$LANG
 
@@ -45,7 +45,7 @@ FROM ${BUILD_BASE_IMAGE_NAME}:${BUILD_BASE_IMAGE_TAG} AS build-os-deps
         apk add --no-progress just && \
         apk add --no-progress git build-base
 
-FROM build-os-deps AS build-deps-get
+FROM build-base AS build-deps
     ARG APP_DIR
 
     WORKDIR $APP_DIR
@@ -57,7 +57,7 @@ FROM build-os-deps AS build-deps-get
     RUN mix 'do' local.rebar --force, local.hex --force
     RUN mix deps.get
 
-FROM build-deps-get AS test-image
+FROM build-deps AS test
     ARG APP_DIR
 
     ENV MIX_ENV=test
@@ -74,7 +74,7 @@ FROM build-deps-get AS test-image
 
     RUN mix compile --warnings-as-errors
 
-FROM build-deps-get AS prod-release
+FROM build-deps AS prod-release
     ARG APP_DIR
     ARG RELEASE
     ARG MIX_ENV=prod
@@ -145,7 +145,7 @@ FROM prod-base AS prod
 
     EXPOSE $APP_PORT
 
-    ENTRYPOINT ["bin/$RELEASE"]
+    ENTRYPOINT ["bin/template"]
 
     CMD ["start"]
 
