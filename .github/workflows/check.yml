@@ -57,6 +57,7 @@ jobs:
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
       - run: mix ecto.create
+      - run: mix ecto.migrate
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
         with:
