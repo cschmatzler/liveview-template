@@ -2,7 +2,7 @@
 version: "3.9"
 services:
   test:
-    image: "${IMAGE_OWNER}/${IMAGE_NAME}:test${IMAGE_VER}"
+    image: "ghcr.io/${IMAGE_OWNER}/${IMAGE_NAME}:test${IMAGE_VER}"
     build:
       dockerfile: ${DOCKERFILE:-Dockerfile}
       target: test-image
