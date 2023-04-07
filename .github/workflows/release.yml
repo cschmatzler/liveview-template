@@ -1,9 +1,0 @@
-name: Release
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  check:
-    uses: ./.github/workflows/check.yml

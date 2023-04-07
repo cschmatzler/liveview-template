@@ -5,7 +5,7 @@ services:
     image: "ghcr.io/${IMAGE_OWNER}/${IMAGE_NAME}:test-${IMAGE_VER}"
     build:
       dockerfile: ${DOCKERFILE:-Dockerfile}
-      target: test-image
+      target: test
       args:
         BUILDKIT_INLINE_CACHE: "1"
       context: .

@@ -44,7 +44,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           file: Dockerfile
-          target: test-image
+          target: test
           context: .
           builder: ${{ steps.buildx.outputs.name }}
           push: true
