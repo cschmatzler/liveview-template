@@ -30,8 +30,8 @@ defmodule Template.Web.Router do
 
     live_session :redirect_if_unauthenticated,
       on_mount: [
-        {Template.Web.Auth, :mount_user},
-        {Template.Web.Auth, :redirect_if_unauthenticated}
+        {Template.Web.Live.Auth, :mount_user},
+        {Template.Web.Live.Auth, :redirect_if_unauthenticated}
       ] do
       live "/", PageLive, :index
     end
