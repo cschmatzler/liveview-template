@@ -20,94 +20,8 @@ defmodule Template.Web.Auth do
   @max_age 60 * 60 * 24 * 7
   @session_options [sign: true, max_age: @max_age, same_site: "Lax"]
 
-  @doc """
-  Mount actions for LiveViews and live sessions that interact with authentication.
-
-  ## `:mount_user`
-
-  Mounts the session user from the initial connection as `assigns.user`.
-
-  ## `:redirect_if_unauthenticated`
-
-  If no valid authenticated session exists, halts the mount and redirects to `signed_out_path/0`.
-  Most likely to be used together with `:mount_user`.
-
-  ## Usage
-      # Router
-      live_session :authenticated,
-      on_mount: [
-        {Template.Web.Auth, :mount_user},
-        {Template.Web.Auth, :redirect_if_authenticated}
-      do
-        scope "/", Template.Web do
-          pipe_through :browser
-
-          live "/profile", UserLive.Profile, :index
-        end
-      end
-  """
-  def on_mount(:mount_user, _params, session, socket) do
-    socket = mount_user(session, socket)
-
-    {:cont, socket}
-  end
-
-  def on_mount(:redirect_if_unauthenticated, _params, _session, socket) do
-    if Map.get(socket.assigns, :user) do
-      {:cont, socket}
-    else
-      {:halt, Phoenix.LiveView.redirect(socket, to: signed_out_path())}
-    end
-  end
-
-  @doc """
-  Reads the session token from the browser session or cookies, whichever is available, and, if the
-  token is valid, assigns the corresponding user to the connection.
-
-  ## Usage
-      # Router
-      pipe_through :fetch_user
-  """
-  def fetch_user(conn, _opts) do
-    {session_token, conn} = ensure_session_token(conn)
-    user = session_token && Auth.get_user_with_token(session_token)
-
-    assign(conn, :user, user)
-  end
-
-  @doc """
-  Redirects the connection to `signed_out_path/0` if no authenticated session exists.
-
-  ## Usage
-      # Router
-      pipe_through :redirect_if_unauthenticated
-  """
-  def redirect_if_unauthenticated(conn, _opts) do
-    if conn.assigns[:user] do
-      conn
-    else
-      conn
-      |> redirect(to: signed_out_path())
-      |> halt()
-    end
-  end
-
-  @doc """
-  Redirects the connection to `signed_in_path/0` if an authenticated session exists.
-
-  ## Usage
-      # Router
-      pipe_through :redirect_if_authenticated
-  """
-  def redirect_if_authenticated(conn, _opts) do
-    if conn.assigns[:user] do
-      conn
-      |> redirect(to: signed_in_path())
-      |> halt()
-    else
-      conn
-    end
-  end
+  @doc false
+  def session_cookie, do: @session_cookie
 
   @doc "Path to redirect to when an authenticated session exists."
   def signed_in_path, do: ~p"/app"
@@ -115,36 +29,11 @@ defmodule Template.Web.Auth do
   @doc "Path to redirect to when unauthenticated."
   def signed_out_path, do: ~p"/"
 
-  defp ensure_session_token(conn) do
-    if token = get_session(conn, :session_token) do
-      {token, conn}
-    else
-      conn = fetch_cookies(conn, signed: [@session_cookie])
-
-      if token = conn.cookies[@session_cookie] do
-        {token, put_token_in_session(conn, token)}
-      else
-        {nil, conn}
-      end
-    end
-  end
-
-  defp put_token_in_session(conn, token) do
+  @doc "Adds a session token to the current session."
+  def put_token_in_session(conn, token) do
     conn
     |> put_session(:session_token, token)
     |> put_session(:live_socket_id, "session_token:#{Base.url_encode64(token)}")
-  end
-
-  defp mount_user(session, socket) do
-    case session do
-      %{"session_token" => session_token} ->
-        Phoenix.Component.assign_new(socket, :user, fn ->
-          Auth.get_user_with_token(session_token)
-        end)
-
-      %{} ->
-        Phoenix.Component.assign_new(socket, :user, fn -> nil end)
-    end
   end
 
   @doc """

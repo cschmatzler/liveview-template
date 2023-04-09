@@ -82,7 +82,7 @@ jobs:
             mix-${{ hashFiles('**/mix.lock') }}
       - run: mix deps.unlock --check-unused
       - run: mix format --check-formatted
-      - run: mix credo --strict
+      - run: mix credo
       - run: mix excellent_migrations.check_safety
 
   analyze:

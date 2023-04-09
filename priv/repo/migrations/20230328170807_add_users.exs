@@ -1,7 +1,7 @@
 defmodule Template.Repo.Migrations.AddUsers do
   use Ecto.Migration
 
-   # excellent_migrations:safety-assured-for-this-file raw_sql_executed
+  # excellent_migrations:safety-assured-for-this-file raw_sql_executed
   @disable_ddl_transaction true
   @disable_migration_lock true
 
