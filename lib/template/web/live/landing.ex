@@ -3,10 +3,21 @@ defmodule Template.Web.Live.Landing do
 
   on_mount {Template.Web.Live.Auth, :mount_user}
 
+  @navigation_items [
+    %{label: "Features", href: "/features"},
+    %{label: "About", href: "/about"}
+  ]
+
+  @impl Phoenix.LiveView
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, navigation_items: @navigation_items)}
+  end
+
+  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <div class="bg-white">
-      <header class="absolute inset-x-0 top-0 z-50">
+      <header class="absolute inset-x-0 top-0 z-10">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div class="flex lg:flex-1">
             <a href="#" class="-m-1.5 p-1.5">
@@ -19,6 +30,8 @@ defmodule Template.Web.Live.Landing do
             </a>
           </div>
 
+          <.navigation navigation_items={@navigation_items} />
+          <.login user={@user} />
           <div class="flex lg:hidden">
             <button
               type="button"
@@ -26,220 +39,170 @@ defmodule Template.Web.Live.Landing do
               class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             >
               <span class="sr-only"><%= gettext("Open main menu") %></span>
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
+              <Heroicons.bars_3 class="h-6 w-6" />
             </button>
           </div>
-
-          <div class="hidden lg:flex lg:gap-x-12">
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">
-              <%= gettext("About") %>
-            </a>
-          </div>
-
-          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <%= if @user do %>
-              <.link
-                href={Template.Web.Auth.signed_in_path()}
-                class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                <%= gettext("Dashboard") %>
-              </.link>
-            <% else %>
-              <%= if ConfigCat.get_value("enableLogin", false) do %>
-                <.login />
-              <% end %>
-            <% end %>
-          </div>
-
-          <div id="sidebar" class="hidden lg:hidden" role="dialog" aria-modal="true">
-            <div id="sidebar-overlay" class="fixed inset-0 z-50 bg-gray-50/90" aria-hidden="true">
-            </div>
-            <div
-              id="sidebar-content"
-              phx-click-away={close_sidebar()}
-              class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-            >
-              <div class="flex items-center justify-between">
-                <a href="#" class="-m-1.5 p-1.5">
-                  <span class="sr-only">Template</span>
-                  <img
-                    class="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt=""
-                  />
-                </a>
-                <button
-                  type="button"
-                  phx-click={close_sidebar()}
-                  class="-m-2.5 rounded-md p-2.5 text-gray-700"
-                >
-                  <span class="sr-only"><%= gettext("Close menu") %></span>
-                  <Heroicons.x_mark class="h-6 w-6" />
-                </button>
-              </div>
-              <div class="mt-6 flow-root">
-                <div class="-my-6 divide-y divide-gray-500/10">
-                  <div class="space-y-2 py-6">
-                    <a
-                      href="#"
-                      class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      <%= gettext("About") %>
-                    </a>
-                  </div>
-
-                  <div>
-                    <%= if @user do %>
-                      <.link
-                        href={Template.Web.Auth.signed_in_path()}
-                        class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      >
-                        <%= gettext("Dashboard") %>
-                      </.link>
-                    <% else %>
-                      <div id="sign-in-sidebar">
-                        <p class="mt-6 text-sm font-medium leading-6 text-gray-900">Sign in with</p>
-                        <div class="mt-2 grid grid-cols-3 gap-3">
-                          <div>
-                            <.link
-                              href={~p"/auth/google"}
-                              id="sign-in-sidebar-google"
-                              class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
-                            >
-                              <span class="sr-only">Sign in with Google</span>
-                              <.google_icon />
-                            </.link>
-                          </div>
-
-                          <div>
-                            <.link
-                              href={~p"/auth/github"}
-                              id="sign-in-sidebar-github"
-                              class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
-                            >
-                              <span class="sr-only">Sign in with GitHub</span>
-                              <.github_icon />
-                            </.link>
-                          </div>
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <.sidebar user={@user} navigation_items={@navigation_items} />
         </nav>
       </header>
+      <.main />
+    </div>
+    """
+  end
 
-      <div class="relative isolate pt-14">
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-          <svg
-            class="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
-            viewBox="0 0 1155 678"
-          >
-            <path
-              fill="url(#9b2541ea-d39d-499b-bd42-aeea3e93f5ff)"
-              fill-opacity=".3"
-              d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-            />
-            <defs>
-              <linearGradient
-                id="9b2541ea-d39d-499b-bd42-aeea3e93f5ff"
-                x1="1155.49"
-                x2="-78.208"
-                y1=".177"
-                y2="474.645"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#9089FC" />
-                <stop offset="1" stop-color="#FF80B5" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div class="py-48 sm:py-64 lg:pb-40">
-          <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl text-center">
-              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Products are more fun than landing pages.
-              </h1>
-              <p class="mt-6 text-lg leading-8 text-gray-600">
-                ... at least for now.
-              </p>
-              <p class="mt-6 text-sm leading-8 text-gray-400">
-                Version <%= to_string(Application.spec(:template, :vsn)) %>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-          <svg
-            class="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
-            viewBox="0 0 1155 678"
-          >
-            <path
-              fill="url(#b9e4a85f-ccd5-4151-8e84-ab55c66e5aa1)"
-              fill-opacity=".3"
-              d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-            />
-            <defs>
-              <linearGradient
-                id="b9e4a85f-ccd5-4151-8e84-ab55c66e5aa1"
-                x1="1155.49"
-                x2="-78.208"
-                y1=".177"
-                y2="474.645"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stop-color="#9089FC" />
-                <stop offset="1" stop-color="#FF80B5" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
+  defp navigation(assigns) do
+    ~H"""
+    <div class="hidden lg:flex lg:gap-x-12">
+      <%= for navigation_item <- @navigation_items do %>
+        <a href={navigation_item.href} class="text-sm font-semibold leading-6 text-gray-900">
+          <%= Gettext.gettext(Template.Web.Gettext, navigation_item.label) %>
+        </a>
+      <% end %>
     </div>
     """
   end
 
   defp login(assigns) do
     ~H"""
-    <span class="py-1.5 text-sm font-semibold leading-6 text-gray-900">
-      <%= gettext("Sign in with") %>
-    </span>
+    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <%= if @user do %>
+        <.link
+          href={Template.Web.Auth.signed_in_path()}
+          class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          <%= gettext("Dashboard") %>
+        </.link>
+      <% else %>
+        <%= if ConfigCat.get_value("enableLogin", false) do %>
+          <span class="py-1.5 text-sm font-semibold leading-6 text-gray-900">
+            <%= gettext("Sign in with") %>
+          </span>
 
-    <div class="flex space-x-2 ml-5">
-      <.link
-        href={~p"/auth/google"}
-        id="sign-in-google"
-        class="flex justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
-      >
-        <span class="sr-only">Google</span>
-        <.google_icon />
-      </.link>
+          <div class="flex space-x-2 ml-5">
+            <.link
+              href={~p"/auth/google"}
+              id="sign-in-google"
+              class="flex justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+            >
+              <span class="sr-only">Google</span>
+              <.google_icon />
+            </.link>
 
-      <.link
-        href={~p"/auth/github"}
-        id="sign-in-github"
-        class="flex justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+            <.link
+              href={~p"/auth/github"}
+              id="sign-in-github"
+              class="flex justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+            >
+              <span class="sr-only">GitHub</span>
+              <.github_icon />
+            </.link>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    """
+  end
+
+  defp sidebar(assigns) do
+    ~H"""
+    <div id="sidebar" class="hidden lg:hidden" role="dialog" aria-modal="true">
+      <div id="sidebar-overlay" class="fixed inset-0 z-50 bg-gray-50/90" aria-hidden="true"></div>
+      <div
+        id="sidebar-content"
+        phx-click-away={close_sidebar()}
+        class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
       >
-        <span class="sr-only">GitHub</span>
-        <.github_icon />
-      </.link>
+        <div class="flex items-center justify-between">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">Template</span>
+            <img
+              class="h-8 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt=""
+            />
+          </a>
+          <button
+            type="button"
+            phx-click={close_sidebar()}
+            class="-m-2.5 rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only"><%= gettext("Close menu") %></span>
+            <Heroicons.x_mark class="h-6 w-6" />
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6">
+              <%= for navigation_item <- @navigation_items do %>
+                <a
+                  href={navigation_item.href}
+                  class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  <%= Gettext.gettext(Template.Web.Gettext, navigation_item.label) %>
+                </a>
+              <% end %>
+            </div>
+
+            <div>
+              <%= if @user do %>
+                <.link
+                  href={Template.Web.Auth.signed_in_path()}
+                  class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  <%= gettext("Dashboard") %>
+                </.link>
+              <% else %>
+                <div id="sign-in-sidebar">
+                  <p class="mt-6 text-sm font-medium leading-6 text-gray-900">Sign in with</p>
+                  <div class="mt-2 grid grid-cols-3 gap-3">
+                    <div>
+                      <.link
+                        href={~p"/auth/google"}
+                        id="sign-in-sidebar-google"
+                        class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+                      >
+                        <span class="sr-only">Sign in with Google</span>
+                        <.google_icon />
+                      </.link>
+                    </div>
+
+                    <div>
+                      <.link
+                        href={~p"/auth/github"}
+                        id="sign-in-sidebar-github"
+                        class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+                      >
+                        <span class="sr-only">Sign in with GitHub</span>
+                        <.github_icon />
+                      </.link>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  defp main(assigns) do
+    ~H"""
+    <div class="pt-20">
+      <div class="py-48 sm:py-64 lg:pb-40">
+        <div class="mx-auto max-w-2xl text-center">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            Products are more fun than landing pages.
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            ... at least for now.
+          </p>
+          <p class="mt-6 text-sm leading-8 text-gray-400">
+            Version <%= to_string(Application.spec(:template, :vsn)) %>
+          </p>
+        </div>
+      </div>
     </div>
     """
   end
@@ -288,19 +251,19 @@ defmodule Template.Web.Live.Landing do
 
   defp open_sidebar(js \\ %JS{}) do
     js
-    |> JS.show(to: "#sidebar")
-    |> JS.show(to: "#sidebar-overlay")
-    |> JS.show(
-      to: "#sidebar-content",
-      transition:
-        {"transition-all transform ease-out duration-300", "translate-x-20", "translate-x-0"}
+    |> JS.remove_class("hidden", to: "#sidebar")
+    |> JS.transition(
+      {"transition ease-in-out duration-300 transform", "translate-x-full", "translate-x-0"},
+      to: "#sidebar-content"
     )
   end
 
   defp close_sidebar(js \\ %JS{}) do
     js
-    |> JS.hide(to: "#sidebar-content")
-    |> JS.hide(to: "#sidebar-overlay")
-    |> JS.hide(to: "#sidebar")
+    |> JS.add_class("hidden", to: "#sidebar")
+    |> JS.transition(
+      {"transition ease-in-out duration-300 transform", "translate-x-0", "translate-x-full"},
+      to: "#sidebar-content"
+    )
   end
 end
