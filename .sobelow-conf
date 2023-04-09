@@ -1,5 +1,5 @@
 [
   threshold: :low,
-  ignore: ["Config.HTTPS"],
-  router: "lib/template/web/router.ex"
+  router: "lib/template/web/router.ex",
+  ignore: ["Config.HTTPS", "Config.Headers"]
 ]

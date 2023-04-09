@@ -23,6 +23,7 @@ config :template, Oban,
 # ---
 # Web
 # ---
+config :template, Corsica, origins: "*", allow_headers: :all
 config :template, Template.Web.Endpoint,
   adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
