@@ -1,10 +1,10 @@
-defmodule Template.Auth.AuthImplementationTest do
+defmodule Template.Auth.AuthImplTest do
   use Template.DataCase, async: true
-  use Hammox.Protect, module: Template.Auth.Implementation, behaviour: Template.Auth
+  use Hammox.Protect, module: Template.Auth.Impl, behaviour: Template.Auth
 
   import Template.Fixtures.Auth
 
-  alias Template.Auth.Implementation, as: Auth
+  alias Template.Auth.Impl, as: Auth
   alias Template.Auth.Token
   alias Template.Auth.User
 

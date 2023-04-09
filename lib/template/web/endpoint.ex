@@ -44,5 +44,4 @@ defmodule Template.Web.Endpoint do
   plug Template.Web.Plugs.CORS
   plug Plug.Session, @session_options
   plug Template.Web.Router
-
 end
