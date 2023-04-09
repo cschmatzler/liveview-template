@@ -55,6 +55,7 @@ defmodule Template.MixProject do
       {:ecto_sql, "~> 3.9"},
       {:esbuild, "~> 0.7"},
       {:ex_doc, "~> 0.29", runtime: false},
+      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.16", only: :test},
       {:finch, "~> 0.15"},
       {:floki, "~> 0.34", only: :test},

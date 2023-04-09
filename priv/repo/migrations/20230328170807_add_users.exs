@@ -1,6 +1,10 @@
 defmodule Template.Repo.Migrations.AddUsers do
   use Ecto.Migration
 
+   # excellent_migrations:safety-assured-for-this-file raw_sql_executed
+  @disable_ddl_transaction true
+  @disable_migration_lock true
+
   def change do
     execute "create extension if not exists citext", ""
     execute "create schema if not exists auth", ""
@@ -19,7 +23,7 @@ defmodule Template.Repo.Migrations.AddUsers do
       timestamps()
     end
 
-    create unique_index(:users, [:provider, :uid], prefix: "auth")
+    create unique_index(:users, [:provider, :uid], prefix: "auth", concurrently: true)
 
     create table(:tokens, prefix: "auth") do
       add :token, :binary, null: false
@@ -27,6 +31,6 @@ defmodule Template.Repo.Migrations.AddUsers do
       timestamps(updated_at: false)
     end
 
-    create index(:tokens, [:token], prefix: "auth")
+    create index(:tokens, [:token], prefix: "auth", concurrently: true)
   end
 end
