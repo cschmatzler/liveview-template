@@ -34,6 +34,16 @@ defmodule Template.Web.Plugs.ContentSecurityPolicyTest do
     assert directives =~ "style-src"
   end
 
+  test "sets the font-src directive" do
+    conn =
+      conn(:get, "/")
+      |> ContentSecurityPolicy.call(@opts)
+
+    directives = List.keyfind(conn.resp_headers, "content-security-policy", 0) |> elem(1)
+
+    assert directives =~ "font-src"
+  end
+
   test "sets the script-src directive" do
     conn =
       conn(:get, "/")
