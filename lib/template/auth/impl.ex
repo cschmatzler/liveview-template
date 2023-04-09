@@ -1,4 +1,4 @@
-defmodule Template.Auth.Implementation do
+defmodule Template.Auth.Impl do
   @moduledoc """
   The default implementation of `Template.Auth`.
   """

@@ -12,7 +12,7 @@ defmodule Template.Auth do
 
   use Knigge,
     otp_app: :template,
-    default: Template.Auth.Implementation
+    default: Template.Auth.Impl
 
   alias Template.Auth.Token
   alias Template.Auth.User

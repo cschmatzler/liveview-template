@@ -17,7 +17,7 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   redirect_uri: System.get_env("GOOGLE_REDIRECT_URI")
 
 # ---------
-# Production
+# Prod
 # ---------
 if config_env() == :prod do
   host = System.get_env("HOST") || System.get_env("RENDER_EXTERNAL_HOSTNAME")
@@ -64,9 +64,6 @@ if config_env() == :prod do
   # ---
   port = String.to_integer(System.get_env("PORT") || "4000")
   secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
-
-  config :template, canonical_host: host
-  config :template, Corsica, origins: System.get_env("CORS_ALLOWED_ORIGINS")
 
   config :template, Template.Web.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
