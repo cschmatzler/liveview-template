@@ -6,6 +6,7 @@ defmodule Template.Web.PageLive do
   def render(assigns) do
     ~H"""
     <.live_component module={KeyboardHandler} id="keyboard-handler" keydown_enabled="true" /> Hello!
+    <.link href={~p"/auth/session"} method="delete">Logout</.link>
     """
   end
 
