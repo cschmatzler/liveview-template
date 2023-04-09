@@ -10,7 +10,7 @@ env:
   MIX_ENV: test
 
 jobs:
-  deps:
+  compile:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: deps
+    needs: compile
     env:
       POSTGRES_HOST: localhost
     services:
@@ -68,7 +68,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: deps
+    needs: compile
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
@@ -90,7 +90,7 @@ jobs:
 
   analyze:
     runs-on: ubuntu-latest
-    needs: deps
+    needs: compile
     steps:
       - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
