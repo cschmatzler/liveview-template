@@ -1,9 +1,7 @@
 defmodule Template.Web.Live.Landing do
   use Template.Web, :live_view
 
-  alias Template.Web.Auth
-
-  on_mount {Auth, :mount_user}
+  on_mount {Template.Web.Live.Auth, :mount_user}
 
   def render(assigns) do
     ~H"""
@@ -54,7 +52,7 @@ defmodule Template.Web.Live.Landing do
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
             <%= if @user do %>
               <.link
-                href={Auth.signed_in_path()}
+                href={Template.Web.Auth.signed_in_path()}
                 class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 <%= gettext("Dashboard") %>
@@ -106,7 +104,7 @@ defmodule Template.Web.Live.Landing do
                   <div>
                     <%= if @user do %>
                       <.link
-                        href={Auth.signed_in_path()}
+                        href={Template.Web.Auth.signed_in_path()}
                         class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         <%= gettext("Dashboard") %>
