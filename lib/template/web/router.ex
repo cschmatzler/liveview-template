@@ -10,7 +10,6 @@ defmodule Template.Web.Router do
 
   alias Controllers.ErrorController
   alias Controllers.AuthController
-  alias Controllers.LandingController
 
   pipeline :browser do
     plug :accepts, ["html"]
