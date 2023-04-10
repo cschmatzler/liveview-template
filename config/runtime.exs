@@ -65,7 +65,10 @@ if config_env() == :prod do
     http: [
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
-    secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
+    secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
+    liveview: [
+      signing_salt: System.fetch_env!("LIVEVIEW_SIGNING_SALT")
+    ]
 
   # ----
   # Mail

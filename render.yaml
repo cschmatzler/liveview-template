@@ -18,6 +18,8 @@ services:
         sync: false
       - key: SECRET_KEY_BASE
         sync: false
+      - key: LIVEVIEW_SIGNING_SALT
+        sync: false
       - key: GITHUB_CLIENT_ID
         sync: false
       - key: GITHUB_CLIENT_SECRET
