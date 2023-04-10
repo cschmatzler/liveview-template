@@ -7,15 +7,16 @@ defmodule Template.Fixtures.Auth do
   alias Template.Auth.Token
   alias Template.Auth.User
 
-  @default_user_attrs %{
-    provider: "google",
-    uid: make_ref() |> :erlang.ref_to_list() |> List.to_string(),
-    email: "google_user@example.com",
-    name: "Google User",
-    image: "https://example.com/image.jpg"
-  }
   def user_fixture(attrs \\ %{}) do
-    attrs = Map.merge(@default_user_attrs, attrs)
+    default_attrs = %{
+      provider: "google",
+      uid: make_ref() |> :erlang.ref_to_list() |> List.to_string(),
+      email: "google_user@example.com",
+      name: "Google User",
+      image: "https://example.com/image.jpg",
+    }
+
+    attrs = Map.merge(default_attrs, attrs)
 
     %User{}
     |> User.changeset(attrs)

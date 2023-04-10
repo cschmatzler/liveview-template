@@ -30,13 +30,16 @@ defmodule Template.Auth.User do
     timestamps()
   end
 
+  @type roles :: :user | :admin
+
   @type t :: %User{
           id: integer(),
           provider: String.t(),
           uid: String.t(),
           email: String.t(),
           name: String.t(),
-          image_url: String.t() | nil
+          image_url: String.t() | nil,
+          role: roles()
         }
 
   @doc """
@@ -45,7 +48,7 @@ defmodule Template.Auth.User do
   @spec changeset(%User{}, map()) :: Ecto.Changeset.t()
   def changeset(%User{} = user \\ %User{}, attrs) do
     user
-    |> cast(attrs, [:provider, :uid, :email, :name, :image_url])
+    |> cast(attrs, [:provider, :uid, :email, :name, :image_url, :role])
     |> validate_required([:provider, :uid, :email, :name])
   end
 
