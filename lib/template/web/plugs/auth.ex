@@ -25,9 +25,9 @@ defmodule Template.Web.Plugs.Auth do
 
   ## Usage
       # Router
-      plug :redirect_if_unauthenticated
+      plug :require_session
   """
-  def redirect_if_unauthenticated(conn, _opts) do
+  def require_session(conn, _opts) do
     if conn.assigns[:user] do
       conn
     else

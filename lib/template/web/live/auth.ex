@@ -13,6 +13,11 @@ defmodule Template.Web.Live.Auth do
   If no valid authenticated session exists, halts the mount and redirects to `signed_out_path/0`.
   Most likely to be used together with `:mount_user`.
 
+  ## `:require_admin`
+
+  If no valid authenticated session exists, or the authenticated user is not an admin, halts the
+  mount and redirects to `signed_out_path/0`. Most likely to be used together with `:mount_user`.
+
   ## Usage
       # Router
       live_session :authenticated,
@@ -33,11 +38,21 @@ defmodule Template.Web.Live.Auth do
     {:cont, socket}
   end
 
-  def on_mount(:redirect_if_unauthenticated, _params, _session, socket) do
+  def on_mount(:require_session, _params, _session, socket) do
     if Map.get(socket.assigns, :user) do
       {:cont, socket}
     else
       {:halt, Phoenix.LiveView.redirect(socket, to: signed_out_path())}
+    end
+  end
+
+  def on_mount(:require_admin, _params, _session, socket) do
+    with user when not is_nil(user) <- Map.get(socket.assigns, :user),
+         :admin <- user.role do
+      {:cont, socket}
+    else
+      _ ->
+        {:halt, Phoenix.LiveView.redirect(socket, to: signed_out_path())}
     end
   end
 

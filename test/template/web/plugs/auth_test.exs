@@ -46,16 +46,16 @@ defmodule Template.Web.Plugs.AuthTest do
     end
   end
 
-  describe "redirect_if_unauthenticated/2" do
+  describe "require_session/2" do
     test "redirects to signed out path if no user present", %{conn: conn} do
-      conn = Auth.redirect_if_unauthenticated(conn, [])
+      conn = Auth.require_session(conn, [])
 
       assert conn.halted
       assert redirected_to(conn) == Template.Web.Auth.signed_out_path()
     end
 
     test "does not redirect if user present", %{conn: conn, user: user} do
-      conn = conn |> assign(:user, user) |> Auth.redirect_if_unauthenticated([])
+      conn = conn |> assign(:user, user) |> Auth.require_session([])
 
       refute conn.halted
     end

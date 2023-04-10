@@ -28,12 +28,24 @@ defmodule Template.Web.Router do
   scope "/app", Template.Web do
     pipe_through :browser
 
-    live_session :redirect_if_unauthenticated,
+    live_session :app,
       on_mount: [
         {Template.Web.Live.Auth, :mount_user},
-        {Template.Web.Live.Auth, :redirect_if_unauthenticated}
+        {Template.Web.Live.Auth, :require_session}
       ] do
       live "/", PageLive, :index
+    end
+  end
+
+  scope "/admin", Template.Web do
+    pipe_through :browser
+
+    live_session :admin,
+      on_mount: [
+        {Template.Web.Live.Auth, :mount_user},
+        {Template.Web.Live.Auth, :require_admin}
+      ] do
+      live "/users", Live.Admin.Users, :index
     end
   end
 
