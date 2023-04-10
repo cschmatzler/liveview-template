@@ -1,7 +1,7 @@
 services:
   - name: template
     type: web
-    plan: free
+    plan: starter
     region: frankfurt
     autoDeploy: false
     env: docker
@@ -37,7 +37,7 @@ services:
 
 databases:
   - name: template
-    plan: free
+    plan: starter
     region: frankfurt
     postgresMajorVersion: 15
     user: template
