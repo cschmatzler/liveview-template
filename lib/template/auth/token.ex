@@ -1,6 +1,6 @@
 defmodule Template.Auth.Token do
   @moduledoc """
-  Model for a session token.
+  A session token.
   """
 
   use Ecto.Schema
@@ -10,7 +10,7 @@ defmodule Template.Auth.Token do
   alias Template.Auth.User
 
   @token_size 32
-  @session_validity_in_days 7
+  @token_validity_in_days 7
 
   @schema_prefix "auth"
   @timestamps_opts [type: :utc_datetime]
@@ -29,7 +29,7 @@ defmodule Template.Auth.Token do
   @doc false
   def token_size, do: @token_size
   @doc false
-  def session_validity_in_days, do: @session_validity_in_days
+  def token_validity_in_days, do: @token_validity_in_days
 
   @doc """
   Builds a session token.
@@ -61,7 +61,7 @@ defmodule Template.Auth.Token do
   def user_with_token_query(token) do
     from t in __MODULE__,
       where: t.token == ^token,
-      where: t.inserted_at >= ago(@session_validity_in_days, "day"),
+      where: t.inserted_at >= ago(@token_validity_in_days, "day"),
       join: u in assoc(t, :user),
       select: u
   end

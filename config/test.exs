@@ -32,6 +32,7 @@ config :template, Template.Repo,
 config :template, Template.Web.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "psMlmgXsUK7hJMaoJWZXzSHrbTLdJeBS3Cn+LEoMueyEt78DJtPA5G9dkvoxpBku",
+  live_view: [signing_salt: "17k0tPiq"],
   server: false
 
 # ----

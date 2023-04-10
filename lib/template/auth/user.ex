@@ -16,6 +16,8 @@ defmodule Template.Auth.User do
   import Ecto.Changeset
   import Ecto.Query
 
+  alias Template.Auth.User
+
   @schema_prefix "auth"
   @timestamps_opts [type: :utc_datetime]
   schema "users" do
@@ -28,7 +30,7 @@ defmodule Template.Auth.User do
     timestamps()
   end
 
-  @type t :: %__MODULE__{
+  @type t :: %User{
           id: integer(),
           provider: String.t(),
           uid: String.t(),
@@ -40,8 +42,8 @@ defmodule Template.Auth.User do
   @doc """
   Builds a changeset for a user.
   """
-  @spec changeset(%__MODULE__{}, map()) :: Ecto.Changeset.t()
-  def changeset(%__MODULE__{} = user \\ %__MODULE__{}, attrs) do
+  @spec changeset(%User{}, map()) :: Ecto.Changeset.t()
+  def changeset(%User{} = user \\ %User{}, attrs) do
     user
     |> cast(attrs, [:provider, :uid, :email, :name, :image_url])
     |> validate_required([:provider, :uid, :email, :name])
@@ -52,8 +54,19 @@ defmodule Template.Auth.User do
   """
   @spec with_oauth_query(String.t(), String.t()) :: Ecto.Query.t()
   def with_oauth_query(provider, uid) do
-    from u in __MODULE__,
+    from(u in User,
       where: u.provider == ^provider,
       where: u.uid == ^uid
+    )
+  end
+
+  @doc "Converts a user to a ConfigCat user."
+  @spec to_configcat_user(User.t()) :: ConfigCat.User.t()
+  def to_configcat_user(%User{} = user) do
+    %ConfigCat.User{
+      identifier: user.id,
+      email: user.email,
+      custom: %{role: user.role}
+    }
   end
 end

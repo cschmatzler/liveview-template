@@ -1,16 +1,16 @@
 defmodule Template.Web.Plugs.ContentSecurityPolicy do
-  @doc """
-  This plug adds Phoenix secure HTTP headers including a
-  “Content-Security-Policy” header to responses.You will need to customize each
-  policy directive to fit your application needs.
+  @moduledoc """
+  Sets the Content-Security-Policy header.
   """
 
   @behaviour Plug
 
   import Phoenix.Controller, only: [put_secure_browser_headers: 2]
 
+  @impl Plug
   def init(opts), do: opts
 
+  @impl Plug
   def call(conn, _) do
     directives = [
       "default-src #{default_src_directive()}",
