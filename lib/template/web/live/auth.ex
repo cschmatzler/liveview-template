@@ -1,6 +1,8 @@
 defmodule Template.Web.Live.Auth do
   import Template.Web.Auth, only: [signed_out_path: 0]
 
+  alias Template.Auth.User
+
   @doc """
   Mount actions for LiveViews and live sessions that interact with authentication.
 
@@ -47,7 +49,7 @@ defmodule Template.Web.Live.Auth do
   end
 
   def on_mount(:require_admin, _params, _session, socket) do
-    with user when not is_nil(user) <- Map.get(socket.assigns, :user),
+    with %User{} = user <- Map.get(socket.assigns, :user),
          :admin <- user.role do
       {:cont, socket}
     else
