@@ -13,7 +13,7 @@ defmodule Template.Fixtures.Auth do
       uid: make_ref() |> :erlang.ref_to_list() |> List.to_string(),
       email: "google_user@example.com",
       name: "Google User",
-      image: "https://example.com/image.jpg",
+      image: "https://example.com/image.jpg"
     }
 
     attrs = Map.merge(default_attrs, attrs)
