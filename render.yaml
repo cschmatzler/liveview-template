@@ -8,10 +8,6 @@ services:
     # domains:
     #   - template.io
     envVars:
-      - key: ELIXIR_VERSION
-        value: 1.14.3
-      - key: ERLANG_VERSION
-        value: "25.2"
       - key: NAMESPACE
         sync: false
       - key: HONEYCOMB_API_KEY
