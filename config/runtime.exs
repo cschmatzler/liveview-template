@@ -47,30 +47,26 @@ if config_env() == :prod do
   # -------------
   # Feature Flags
   # -------------
-  configcat_sdk_key = System.fetch_env!("CONFIGCAT_SDK_KEY")
-  config :template, ConfigCat, sdk_key: configcat_sdk_key
+  config :template, ConfigCat, sdk_key: System.fetch_env!("CONFIGCAT_SDK_KEY")
 
   # --------
   # Database
   # --------
-  database_url = System.fetch_env!("DATABASE_URL")
 
   config :template, Template.Repo,
-    url: database_url,
+    url: System.fetch_env!("DATABASE_URL"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
   # ---
   # Web
   # ---
-  port = String.to_integer(System.get_env("PORT") || "4000")
-  secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 
   config :template, Template.Web.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
     http: [
-      port: port
+      port: String.to_integer(System.get_env("PORT") || "4000")
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: System.fetch_env!("SECRET_KEY_BASE")
 
   # ----
   # Mail

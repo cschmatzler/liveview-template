@@ -17,7 +17,7 @@ config :template,
 config :template, Oban,
   repo: Template.Repo,
   prefix: "jobs",
-  plugins: [Oban.Plugins.Pruner],
+  plugins: [Oban.Plugins.Pruner, {Oban.Plugins.Reindexer, schedule: "@weekly"}],
   queues: [default: 10, mail: 10]
 
 # ---
@@ -27,13 +27,11 @@ config :template, Corsica, origins: "*", allow_headers: :all
 
 config :template, Template.Web.Endpoint,
   adapter: Bandit.PhoenixAdapter,
-  url: [host: "localhost"],
+  pubsub_server: Template.PubSub,
   render_errors: [
     formats: [html: Template.Web.ErrorHTML, json: Template.Web.ErrorJSON],
     layout: false
-  ],
-  pubsub_server: Template.PubSub,
-  live_view: [signing_salt: "17k0tPiq"]
+  ]
 
 # --------------
 # Authentication
@@ -48,7 +46,7 @@ config :ueberauth, Ueberauth,
 # Web Assets
 # ------
 config :esbuild,
-  version: "0.17.13",
+  version: "0.17.16",
   default: [
     args:
       ~w(js/app.js --bundle --target=es2020 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
@@ -57,7 +55,7 @@ config :esbuild,
   ]
 
 config :tailwind,
-  version: "3.2.7",
+  version: "3.3.1",
   default: [
     args: ~w(
       --config=tailwind.config.js
@@ -67,9 +65,5 @@ config :tailwind,
     cd: Path.expand("../assets", __DIR__)
   ]
 
-# ----
-# Mail
-# ----
-config :template, Template.Mailer, adapter: Swoosh.Adapters.Local
 
 import_config "#{config_env()}.exs"

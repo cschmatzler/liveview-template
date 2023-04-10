@@ -4,15 +4,7 @@ import Config
 # Observability
 # -------------
 config :logger, :console, format: "[$level] $message\n", level: :debug
-
-if System.get_env("DEBUG_OTEL") == "true" do
-  config :opentelemetry, :processors,
-    otel_batch_processor: %{
-      exporter: {:otel_exporter_stdout, []}
-    }
-else
-  config :opentelemetry, traces_exporter: :none
-end
+config :opentelemetry, traces_exporter: :none
 
 # -------------
 # Feature Flags
@@ -43,10 +35,12 @@ config :template, dev_routes: true
 
 config :template, Template.Web.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
+  url: [host: "localhost"],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
   secret_key_base: "QO5FvhA4dGbDCsISsEv3rzECQIBYjPtnThS7ZU08B27DUcDzgvukVmFfxz/qZ19N",
+  live_view: [signing_salt: "17k0tPiq"],
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
@@ -63,3 +57,4 @@ config :template, Template.Web.Endpoint,
 # Mail
 # ----
 config :swoosh, :api_client, false
+config :template, Template.Mailer, adapter: Swoosh.Adapters.Local
