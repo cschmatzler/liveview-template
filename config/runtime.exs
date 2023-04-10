@@ -66,7 +66,7 @@ if config_env() == :prod do
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
     secret_key_base: System.fetch_env!("SECRET_KEY_BASE"),
-    liveview: [
+    live_view: [
       signing_salt: System.fetch_env!("LIVEVIEW_SIGNING_SALT")
     ]
 
