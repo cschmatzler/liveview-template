@@ -1,5 +1,7 @@
 defmodule Template.Web.Live.AuthTest do
-  use Template.ConnCase
+  # NOTE: does the `Application.put_env` mock still allow us to run this async?
+  # Will see during integration tests.
+  use Template.ConnCase, async: false
 
   import Hammox
   import Template.Fixtures.Auth
