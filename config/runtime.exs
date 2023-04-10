@@ -60,7 +60,6 @@ if config_env() == :prod do
   # ---
   # Web
   # ---
-
   config :template, Template.Web.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
     http: [
