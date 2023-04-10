@@ -50,7 +50,7 @@ defmodule Template.Auth.AuthImplTest do
     test "returns nil if the token is valid, but expired", %{token: token} do
       expired_date =
         DateTime.utc_now()
-        |> DateTime.add(-Token.session_validity_in_days(), :day)
+        |> DateTime.add(-Token.token_validity_in_days(), :day)
         |> DateTime.truncate(:second)
 
       Ecto.Changeset.change(token, inserted_at: expired_date) |> Repo.update!()

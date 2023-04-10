@@ -1,8 +1,9 @@
 defmodule Template.Auth do
   @moduledoc """
-  Aggregate responsible for authentication.
+  Aggregate for authentication and authorization.
 
-  Login and signup are handled by using external OAuth providers. At the moment, these are Google and GitHub.
+  Login and signup are handled by using external OAuth providers. At the moment, these are Google
+  and GitHub.
   For session persistence, tokens are used.
 
   The default implementation lives in `Template.Auth.Implementation`.

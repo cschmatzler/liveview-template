@@ -2,7 +2,7 @@ defmodule Template.Web do
   @moduledoc """
   Entrypoint for implementing the web interface to the service.
 
-  Provides a `__using__/1` macro taking one parameter specifying what the module is/needs.
+  Provides a `__using__/1` macro accepting one parameter specifying what the module is.
   """
 
   use Boundary, deps: [Template.Auth], exports: [Endpoint], top_level?: true
