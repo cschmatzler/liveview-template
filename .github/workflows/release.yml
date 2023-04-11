@@ -14,3 +14,4 @@ jobs:
       - run: git config --global user.email "actions@medium.place"
       - run: git tag -a $VERSION -m "Release $VERSION"
       - run: git push --tags
+      - uses: softprops/action-gh-release@v1
