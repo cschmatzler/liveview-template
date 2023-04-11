@@ -8,12 +8,11 @@ RUN apt-get update -y && apt-get install -y build-essential git \
 
 WORKDIR /app
 ENV MIX_ENV="prod"
-ENV REQUIRE_VERSION_FILE="true"
 
 RUN mix local.hex --force && \
     mix local.rebar --force
 
-COPY mix.exs mix.lock version ./
+COPY mix.exs mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
