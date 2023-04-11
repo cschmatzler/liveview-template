@@ -10,3 +10,12 @@ This template also comes with a few other must-haves such CI integration with Gi
 ## Documentation
 
 Design and service decisions are documented and explained in the `pages/` directory in this repository. These are also included in ExDoc, so you can easily view the rendered version by running `mix docs --open`.
+
+## Running the thing
+
+This project requires `rtx` to install toolchains.
+Make sure it's installed, e.g. with `brew install rtx`. Install toolchains with `rtx trust` and `rtx i`.
+
+1. Start runtime dependencies with `docker-compose -f docker-compose.dev.yaml up -d`.
+2. Set up the database with `mix ecto.setup`.
+3. Run the development server with `mix phx.server`.
