@@ -112,12 +112,11 @@ defmodule Template.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "assets.deploy": [
-        "assets.reset",
+        "phx.digest.clean",
         "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
-      ],
-      "assets.reset": ["cmd rm -rf priv/static/assets"]
+      ]
     ]
   end
 end
