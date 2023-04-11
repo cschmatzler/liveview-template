@@ -94,6 +94,9 @@ defmodule Template.MixProject do
   @version_file "version"
   def version do
     cond do
+      Mix.env() in [:dev, :test] ->
+        "0.0.0-dev"
+
       File.exists?(@version_file) ->
         @version_file
         |> File.read!()
