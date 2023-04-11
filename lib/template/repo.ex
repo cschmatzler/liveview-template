@@ -6,4 +6,6 @@ defmodule Template.Repo do
   use Ecto.Repo,
     otp_app: :template,
     adapter: Ecto.Adapters.Postgres
+
+  use Paginator
 end
