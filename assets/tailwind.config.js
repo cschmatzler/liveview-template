@@ -10,6 +10,14 @@ module.exports = {
       fontFamily: {
         sans: ["Manrope", ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        vellum: "#eee3db",
+        blush: "#f9ebed",
+        moss: "#505646",
+      },
+      borderRadius: {
+        md: "0.25rem",
+      },
     },
   },
   plugins: [
