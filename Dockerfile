@@ -12,6 +12,7 @@ ENV MIX_ENV="prod"
 RUN mix local.hex --force && \
     mix local.rebar --force
 
+COPY .git .git
 COPY mix.exs mix.lock ./
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
