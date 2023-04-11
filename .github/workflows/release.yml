@@ -13,4 +13,4 @@ jobs:
       - run: git config --global user.name "actions[bot]"
       - run: git config --global user.email "actions@medium.place"
       - run: git tag -a $VERSION -m "Release $VERSION"
-      - run: git push
+      - run: git push --tags
