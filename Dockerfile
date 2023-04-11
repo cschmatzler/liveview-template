@@ -13,7 +13,7 @@ ENV REQUIRE_VERSION_FILE="true"
 RUN mix local.hex --force && \
     mix local.rebar --force
 
-COPY mix.exs mix.lock ./
+COPY mix.exs mix.lock version ./
 RUN mix deps.get --only $MIX_ENV
 RUN mix deps.compile
 
