@@ -90,8 +90,12 @@ defmodule Template.MixProject do
     ]
   end
 
-  @version System.cmd("git", ["describe", "--tags", "--abbrev=0"]) |> elem(0) |> String.trim()
-  def version, do: @version
+  def version do
+    case System.cmd("git", ["describe", "--tags", "--abbrev=0"]) do
+      {version, 0} -> String.trim(version)
+      {_, _} -> "0.0.0-empty"
+    end
+  end
 
   defp aliases do
     [
