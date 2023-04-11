@@ -13,14 +13,9 @@ jobs:
     needs: check
     steps:
       - uses: actions/checkout@v3
-      - run: echo "$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" > version
       - run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - run: git tag -a $VERSION -m "Release $VERSION"
       - run: |
-          git config --global user.name "GitHub Actions"
+          git config --global user.name "actions[bot]"
           git config --global user.email "actions@medium.place"
-          git commit -am "Bump version"
           git push
-      - uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          api-key: ${{ secrets.RENDER_API_KEY }}
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}

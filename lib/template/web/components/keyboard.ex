@@ -5,13 +5,11 @@ defmodule Template.Web.Components.KeyboardHandler do
 
   use Template.Web, :live_component
 
+  attr :keydown_enabled, :boolean, default: false
+  attr :keyup_enabled, :boolean, default: false
+
   @impl Phoenix.LiveComponent
   def render(assigns) do
-    assigns =
-      assigns
-      |> assign_new(:keydown_enabled, fn -> "false" end)
-      |> assign_new(:keyup_enabled, fn -> "false" end)
-
     ~H"""
     <div
       id={"#{@id}"}
@@ -26,16 +24,16 @@ defmodule Template.Web.Components.KeyboardHandler do
   end
 
   @impl Phoenix.LiveComponent
-  def handle_event(
-        "keydown",
-        %{"key" => key},
-        socket
-      ) do
+  def handle_event("keydown", %{"key" => key}, socket) do
     send(self(), {:keydown, key})
 
     {:noreply, socket}
   end
 
   @impl Phoenix.LiveComponent
-  def handle_event("keyup", _, socket), do: {:noreply, socket}
+  def handle_event("keyup", %{"key" => key}, socket) do
+    send(self(), {:keyup, key})
+
+    {:noreply, socket}
+  end
 end
