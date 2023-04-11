@@ -12,6 +12,8 @@ jobs:
       - run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
       - run: git config --global user.name "actions[bot]"
       - run: git config --global user.email "actions@medium.place"
+      - run: echo $VERSION > version
+      - run: git commit -am "Release $VERSION"
       - run: git tag -a $VERSION -m "Release $VERSION"
       - run: git push --tags
       - uses: johnbeynon/render-deploy-action@v0.0.8
