@@ -14,3 +14,7 @@ jobs:
       - run: git config --global user.email "actions@medium.place"
       - run: git tag -a $VERSION -m "Release $VERSION"
       - run: git push --tags
+      - uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          api-key: ${{ secrets.RENDER_API_KEY }}
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
