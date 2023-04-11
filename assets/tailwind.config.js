@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/forms"),
     plugin(function({ matchComponents, theme }) {
-      let iconsDir = path.join(__dirname, "./vendor/phosphor");
+      let iconsDir = path.join(__dirname, "./vendor/phosphor/optimized");
       let values = {};
       fs.readdirSync(iconsDir).map((file) => {
         let name = path.basename(file, ".svg");
