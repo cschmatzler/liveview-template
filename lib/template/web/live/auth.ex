@@ -10,7 +10,7 @@ defmodule Template.Web.Live.Auth do
 
   Mounts the session user from the initial connection as `assigns.user`.
 
-  ## `:redirect_if_unauthenticated`
+  ## `:require_session`
 
   If no valid authenticated session exists, halts the mount and redirects to `signed_out_path/0`.
   Most likely to be used together with `:mount_user`.
@@ -25,7 +25,7 @@ defmodule Template.Web.Live.Auth do
       live_session :authenticated,
       on_mount: [
         {Template.Web.Live.Auth, :mount_user},
-        {Template.Web.Live.Auth, :redirect_if_authenticated}
+        {Template.Web.Live.Auth, :require_session}
       do
         scope "/", Template.Web do
           pipe_through :browser
