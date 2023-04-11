@@ -18,7 +18,7 @@ defmodule Template.Web.Live.Landing do
   @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
-    <div class="bg-white">
+    <div class="h-full bg-vellum">
       <header class="absolute inset-x-0 top-0 z-10">
         <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div class="flex lg:flex-1">
@@ -32,7 +32,6 @@ defmodule Template.Web.Live.Landing do
             </a>
           </div>
 
-          <.navigation navigation_items={@navigation_items} />
           <.login user={@user} />
           <div class="flex lg:hidden">
             <button
@@ -45,22 +44,10 @@ defmodule Template.Web.Live.Landing do
               <Heroicons.bars_3 class="h-6 w-6" />
             </button>
           </div>
-          <.sidebar user={@user} navigation_items={@navigation_items} />
+          <.sidebar user={@user} />
         </nav>
       </header>
       <.main />
-    </div>
-    """
-  end
-
-  defp navigation(assigns) do
-    ~H"""
-    <div class="hidden lg:flex lg:gap-x-12">
-      <%= for navigation_item <- @navigation_items do %>
-        <a href={navigation_item.href} class="text-sm font-semibold leading-6 text-gray-900">
-          <%= Gettext.gettext(Template.Web.Gettext, navigation_item.label) %>
-        </a>
-      <% end %>
     </div>
     """
   end
@@ -71,13 +58,13 @@ defmodule Template.Web.Live.Landing do
       <%= if @user do %>
         <.link
           href={Template.Web.Auth.signed_in_path()}
-          class="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          class="rounded-md border-moss border-2 bg-white px-3 py-1.5 text-sm font-semibold text-moss shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           <%= gettext("Dashboard") %>
         </.link>
       <% else %>
         <%= if ConfigCat.get_value("enableLogin", false) do %>
-          <span class="py-1.5 text-sm font-semibold leading-6 text-gray-900">
+          <span class="py-1.5 text-sm font-semibold leading-7 text-gray-900">
             <%= gettext("Sign in with") %>
           </span>
 
@@ -85,19 +72,19 @@ defmodule Template.Web.Live.Landing do
             <.link
               href={~p"/auth/google"}
               id="sign-in-google"
-              class="flex justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+              class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
             >
               <span class="sr-only">Google</span>
-              <.icon name="phosphor-google-logo-bold" class="h-6 w-6" />
+              <.icon name="phosphor-google-logo-bold" class="h-5 w-5" />
             </.link>
 
             <.link
               href={~p"/auth/github"}
               id="sign-in-github"
-              class="flex justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+              class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
             >
               <span class="sr-only">GitHub</span>
-              <.icon name="phosphor-github-logo-bold" class="h-6 w-6" />
+              <.icon name="phosphor-github-logo-bold" class="h-5 w-5" />
             </.link>
           </div>
         <% end %>
@@ -113,7 +100,7 @@ defmodule Template.Web.Live.Landing do
       <div
         id="sidebar-content"
         phx-click-away={close_sidebar()}
-        class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-blush px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
       >
         <div class="flex items-center justify-between">
           <a href="#" class="-m-1.5 p-1.5">
@@ -135,17 +122,6 @@ defmodule Template.Web.Live.Landing do
         </div>
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
-              <%= for navigation_item <- @navigation_items do %>
-                <a
-                  href={navigation_item.href}
-                  class="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  <%= Gettext.gettext(Template.Web.Gettext, navigation_item.label) %>
-                </a>
-              <% end %>
-            </div>
-
             <div>
               <%= if @user do %>
                 <.link
@@ -156,13 +132,13 @@ defmodule Template.Web.Live.Landing do
                 </.link>
               <% else %>
                 <div id="sign-in-sidebar">
-                  <p class="mt-6 text-sm font-medium leading-6 text-gray-900">Sign in with</p>
+                  <p class="mt-6 text-lg font-semibold leading-6 text-gray-900">Sign in with</p>
                   <div class="mt-2 grid grid-cols-3 gap-3">
                     <div>
                       <.link
                         href={~p"/auth/google"}
                         id="sign-in-sidebar-google"
-                        class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+                        class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
                       >
                         <span class="sr-only">Sign in with Google</span>
                         <.icon name="phosphor-google-logo-bold" class="h-6 w-6" />
@@ -173,7 +149,7 @@ defmodule Template.Web.Live.Landing do
                       <.link
                         href={~p"/auth/github"}
                         id="sign-in-sidebar-github"
-                        class="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
+                        class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
                       >
                         <span class="sr-only">Sign in with GitHub</span>
                         <.icon name="phosphor-github-logo-bold" class="h-6 w-6" />
