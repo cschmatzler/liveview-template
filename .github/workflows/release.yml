@@ -10,8 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - run: git config --global user.name "actions[bot]"
+      - run: git config --global user.email "actions@medium.place"
       - run: git tag -a $VERSION -m "Release $VERSION"
-      - run: |
-          git config --global user.name "actions[bot]"
-          git config --global user.email "actions@medium.place"
-          git push
+      - run: git push
