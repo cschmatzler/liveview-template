@@ -64,7 +64,7 @@ defmodule Template.Web.Live.Landing do
         </.link>
       <% else %>
         <%= if ConfigCat.get_value("enableLogin", false) do %>
-          <span class="py-1.5 text-sm font-semibold leading-7 text-gray-900">
+          <span class="py-1.5 text-lg font-semibold leading-7 text-moss">
             <%= gettext("Sign in with") %>
           </span>
 
@@ -171,13 +171,13 @@ defmodule Template.Web.Live.Landing do
     <div class="pt-20">
       <div class="py-48 sm:py-64 lg:pb-40">
         <div class="mx-auto max-w-2xl text-center">
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          <h1 class="text-4xl font-bold tracking-tight text-moss sm:text-6xl">
             Products are more fun than landing pages.
           </h1>
-          <p class="mt-6 text-lg leading-8 text-gray-600">
+          <p class="mt-6 text-lg leading-8 text-moss/80">
             ... at least for now.
           </p>
-          <p class="mt-6 text-sm leading-8 text-gray-400">
+          <p class="mt-6 text-sm leading-8 text-moss/60">
             Version <%= to_string(Application.spec(:template, :vsn)) %>
           </p>
         </div>
