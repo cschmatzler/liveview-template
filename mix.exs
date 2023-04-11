@@ -91,10 +91,19 @@ defmodule Template.MixProject do
     ]
   end
 
+  @version_file "version"
   def version do
-    case System.cmd("git", ["describe", "--tags", "--abbrev=0"]) do
-      {version, 0} -> String.trim(version)
-      {_, _} -> "0.0.0-empty"
+    cond do
+      File.exists?(@version_file) ->
+        @version_file
+        |> File.read!()
+        |> String.trim()
+
+      System.get_env("REQUIRE_VERSION_FILE") == "true" ->
+        exit("Version file (`#{@version_file}`) doesn't exist but is required!")
+
+      true ->
+        "0.0.0-dev"
     end
   end
 
@@ -104,12 +113,11 @@ defmodule Template.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "assets.deploy": [
-        "assets.reset",
+        "phx.digest.clean",
         "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
-      ],
-      "assets.reset": ["cmd rm -rf priv/static/assets"]
+      ]
     ]
   end
 end

@@ -24,7 +24,7 @@ jobs:
           path: |
             deps
             _build
-          key: mix-${{ hashFiles('**/mix.exs', '**/mix.lock') }}
+          key: mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             mix-
       - run: mix deps.get
@@ -58,7 +58,7 @@ jobs:
             _build
           key: mix-${{ github.sha }}
           restore-keys: |
-            mix-${{ hashFiles('**/mix.exs', '**/mix.lock') }}
+            mix-${{ hashFiles('**/mix.lock') }}
       - run: mix ecto.reset
       - run: mix coveralls.json
       - uses: codecov/codecov-action@v3
@@ -82,7 +82,7 @@ jobs:
             _build
           key: mix-${{ github.sha }}
           restore-keys: |
-            mix-${{ hashFiles('**/mix.exs', '**/mix.lock') }}
+            mix-${{ hashFiles('**/mix.lock') }}
       - run: mix deps.unlock --check-unused
       - run: mix format --check-formatted
       - run: mix credo
@@ -104,7 +104,7 @@ jobs:
             _build
           key: mix-${{ github.sha }}
           restore-keys: |
-            mix-${{ hashFiles('**/mix.exs', '**/mix.lock') }}
+            mix-${{ hashFiles('**/mix.lock') }}
       - run: mix hex.audit
       - run: mix deps.audit
       - run: mix sobelow --config
