@@ -8,3 +8,4 @@
 /boundary/
 erl_crash.dump
 .env
+**/.DS_Store
