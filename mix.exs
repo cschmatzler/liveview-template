@@ -65,6 +65,7 @@ defmodule Template.MixProject do
       {:heroicons, "~> 0.5"},
       {:jason, "~> 1.4"},
       {:knigge, "~> 1.4"},
+      {:libcluster, "~> 3.3"},
       {:mix_audit, "~> 2.1"},
       {:oban, "~> 2.14"},
       {:paginator, "~> 1.2"},
