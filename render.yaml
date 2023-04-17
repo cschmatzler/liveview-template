@@ -5,6 +5,8 @@ services:
     region: frankfurt
     autoDeploy: false
     env: elixir
+    buildCommand: mix deploy
+    startCommand: _build/prod/rel/template/bin/start
     # domains:
     #   - template.io
     envVars:
