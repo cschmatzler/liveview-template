@@ -106,5 +106,9 @@ jobs:
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
       - run: mix hex.audit
-      - run: mix deps.audit
       - run: mix sobelow --config
+      - uses: aquasecurity/trivy-action@v0.9
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          trivy-config: trivy.yaml
