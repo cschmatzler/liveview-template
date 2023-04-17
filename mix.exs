@@ -121,7 +121,8 @@ defmodule Template.MixProject do
         "tailwind default --minify",
         "esbuild default --minify",
         "phx.digest"
-      ], deploy: ["deps.get", "assets.deploy", "release"]
+      ],
+      deploy: ["deps.get", "assets.deploy", "release"]
     ]
   end
 end
