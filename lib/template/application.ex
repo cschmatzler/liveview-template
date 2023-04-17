@@ -16,6 +16,11 @@ defmodule Template.Application do
 
     children = [
       {ConfigCat, configcat_config()},
+      {Cluster.Supervisor,
+       [
+         Application.fetch_env!(:libcluster, :topologies),
+         [name: Template.ClusterSupervisor]
+       ]},
       {Phoenix.PubSub, name: Template.PubSub},
       {Finch, name: Template.Finch},
       Template.Repo,

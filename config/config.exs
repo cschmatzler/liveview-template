@@ -5,6 +5,11 @@ import Config
 # -------------
 config :template, ConfigCat, data_governance: :eu_only
 
+# ----------
+# Clustering
+# ----------
+config :libcluster, topologies: []
+
 # --------
 # Database
 # --------
