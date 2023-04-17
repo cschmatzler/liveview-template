@@ -1,0 +1,15 @@
+format: table
+dependency-tree: false
+exit-code: 0
+severity:
+  - UNKNOWN
+  - MEDIUM
+  - HIGH
+  - CRITICAL
+scan:
+  scanners:
+    - vuln
+    - secret
+    - license
+license:
+  full: true
