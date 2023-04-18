@@ -12,14 +12,14 @@ variable "talos_version" {
 }
 
 locals {
-  image = "https://github.com/siderolabs/talos/releases/download/v${var.talos_version}/hcloud-arm64.raw.xz"
+  image = "https://github.com/siderolabs/talos/releases/download/v${var.talos_version}/hcloud-amd64.raw.xz"
 }
 
 source "hcloud" "talos" {
   image        = "debian-11"
   rescue       = "linux64"
   location     = "fsn1"
-  server_type  = "cax11"
+  server_type  = "cx11"
   ssh_username = "root"
 
   snapshot_name = "talos ${var.talos_version}"

@@ -1,5 +1,5 @@
 module "worker" {
-  source = "./node"
+  source   = "./node"
   for_each = local.worker_nodes
 
   role = "worker"

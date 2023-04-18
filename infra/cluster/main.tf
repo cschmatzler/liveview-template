@@ -38,16 +38,16 @@ locals {
   control_plane_nodes = {
     count         = 1
     name          = "control-plane",
-    node_type     = "cax11",
+    node_type     = "cx11",
     node_location = "fsn1",
   }
 
   worker_nodepools = [
     {
-      count       = 2
-      name        = "worker-cax11",
-      node_type = "cax11",
-      node_location    = "fsn1",
+      count         = 2
+      name          = "worker-cx11",
+      node_type     = "cx11",
+      node_location = "fsn1",
     },
   ]
 
