@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: manifests-manager
+  name: manifests
   namespace: flux-system
 spec:
   sourceRef:
