@@ -41,6 +41,8 @@ kind: postgresql
 metadata:
   name: liveview-template-cluster
   namespace: postgres-operator
+  labels:
+    team: acid
 spec:
   teamId: "acid"
   volume:
@@ -48,6 +50,8 @@ spec:
   numberOfInstances: 3
   postgresql:
     version: "15"
+  enableConnectionPooler: true
+  enableReplicaConnectionPooler: true
   preparedDatabases:
     liveview_template:
       defaultUsers: true
