@@ -28,7 +28,7 @@ talosctl --talosconfig infra/talosconfig config node <ip>
 - bootstrap flux
 ```
 flux bootstrap github \
-    --kubeconfig infra/kubeconfig
+    --kubeconfig infra/kubeconfig \
     --owner=cschmatzler \
     --repository=liveview-template \
     --branch master \
