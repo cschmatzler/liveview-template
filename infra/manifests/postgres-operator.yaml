@@ -55,3 +55,16 @@ spec:
   preparedDatabases:
     liveview_template:
       defaultUsers: true
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 500Mi
+  connectionPooler:
+     resources:
+       requests:
+         cpu: 100m
+         memory: 250Mi
+       limits:
+         memory: 250Mi
