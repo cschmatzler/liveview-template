@@ -13,6 +13,6 @@ metadata:
   name: zalando-postgres-operator-ui
   namespace: flux-system
 spec:
-  url: https://opensource.zalando.com/postgres-operator-ui/charts/postgres-operator-ui
+  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator-ui
   interval: 1m0s
 
