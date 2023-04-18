@@ -35,3 +35,18 @@ spec:
         name: zalando-postgres-operator-ui
         namespace: flux-system
       version: 1.9.0
+---
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: liveview-template-cluster
+spec:
+  teamId: "acid"
+  volume:
+    size: 10Gi
+  numberOfInstances: 3
+  postgresql:
+    version: "15"
+  preparedDatabases:
+    liveview_template:
+      defaultUsers: true
