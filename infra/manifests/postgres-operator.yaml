@@ -40,6 +40,7 @@ apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
   name: liveview-template-cluster
+  namespace: postgres-operator
 spec:
   teamId: "acid"
   volume:
