@@ -1,4 +1,0 @@
-resources:
-  - hcloud-ccm.yaml
-  - cert-manager.yaml
-  - clusterissuer.yaml
