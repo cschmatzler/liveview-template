@@ -1,18 +1,13 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: cert-manager
----
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: cert-manager
+  name: manifests-manager
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: "./infra/manifests/cert-manager"
+  path: "./infra/manifests"
   interval: 60m
   wait: true
   timeout: 3m0s
