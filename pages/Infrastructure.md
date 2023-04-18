@@ -23,6 +23,15 @@ talosctl --talosconfig infra/talosconfig config node <ip>
 ```
 - bootstrap - `talosctl --talosconfig infra/talosconfig bootstrap`
 - retrieve kubeconfig - `talosctl --talosconfig infra/talosconfig kubeconfig infra/kubeconfig`
+- generate secrets key - `age-keygen -o infra/secrets.agekey`
+- add secrets key to kubernetes
+```
+cat infra/secrets.agekey |
+kubectl create secret generic sops-age \
+--namespace flux-system \
+--from-file secrets.agekey=/dev/stdin \
+--kubeconfig infra/kubeconfig
+```
 - bootstrap flux
 ```
 flux bootstrap github \

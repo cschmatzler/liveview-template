@@ -1,24 +1,10 @@
 VERSION 0.7
 
-deps:
-    FROM elixir:1.10-alpine
-    COPY mix.exs .
-    COPY mix.lock .
-    RUN mix local.rebar --force \
-        && mix local.hex --force \
-        && mix deps.get
-
-build:
-    FROM +deps
-    COPY lib ./lib
-    ENV MIX_ENV=prod
-    RUN mix release
-    SAVE ARTIFACT _build/prod AS LOCAL _build/prod
-
-docker:
-    FROM alpine:3
-    WORKDIR /app
-    RUN apk add --no-cache --update bash openssl
-    COPY +build/prod/rel/earthly .
-    CMD ["/app/bin/earthly", "start"]
-    SAVE IMAGE --push earthly/examples:elixir
+setup-base:
+   ARG ELIXIR=1.14.4
+   ARG ERLANG=25.3
+   ARG ALPINE=3.17.2
+   FROM hexpm/elixir:$ELIXIR-erlang-$ERLANG-alpine-$ALPINE
+   RUN apk add --no-progress --update git build-base
+   ENV ELIXIR_ASSERT_TIMEOUT=10000
+   WORKDIR /src
