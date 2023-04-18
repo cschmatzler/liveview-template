@@ -22,9 +22,9 @@ locals {
 
   # SSH
   # ---
-  private_key   = trimspace(file(var.private_key_path))
-  public_key    = trimspace(file(var.public_key_path))
-  ssh_args      = "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${var.private_key_path}"
+  private_key = trimspace(file(var.private_key_path))
+  public_key  = trimspace(file(var.public_key_path))
+  ssh_args    = "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${var.private_key_path}"
 }
 
 resource "hcloud_server" "node" {
@@ -32,7 +32,7 @@ resource "hcloud_server" "node" {
 
   image              = var.image_id
   server_type        = var.node_type
-  location          = var.node_location
+  location           = var.node_location
   placement_group_id = var.placement_group_id
 
   ssh_keys = var.ssh_keys

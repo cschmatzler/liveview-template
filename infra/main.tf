@@ -2,7 +2,7 @@ module "network" {
   source = "./network"
 
   hcloud_token = var.hcloud_token
-  domain = var.domain
+  domain       = var.domain
 
   public_key_path = var.public_key_path
 }
@@ -10,9 +10,9 @@ module "network" {
 module "cluster" {
   source = "./cluster"
 
-  hcloud_token = var.hcloud_token
+  hcloud_token     = var.hcloud_token
   cloudflare_token = var.cloudflare_token
-  domain = var.domain
+  domain           = var.domain
 
   private_key_path = var.private_key_path
   public_key_path  = var.public_key_path
