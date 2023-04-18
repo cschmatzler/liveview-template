@@ -17,4 +17,5 @@ erl_crash.dump
 /infra/.terraform
 /infra/.terraform.lock.hcl
 /infra/secrets.agekey
+/infra/secrets/*.secret.*
 **/.DS_Store

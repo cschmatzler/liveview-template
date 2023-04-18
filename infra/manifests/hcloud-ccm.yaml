@@ -57,11 +57,11 @@ spec:
         - name: hcloud-ccm
           image: hetznercloud/hcloud-cloud-controller-manager:v1.15.0
           command:
-            - /bin/hcloud-cloud-controller-manager
-            - --cloud-provider=hcloud
-            - --leader-elect=false
-            - --allow-untagged-cloud
-            - --cluster-cidr=10.244.0.0/16
+            - "/bin/hcloud-cloud-controller-manager"
+            - "--allow-untagged-cloud"
+            - "--cloud-provider=hcloud"
+            - "--leader-elect=false"
+            - "--route-reconciliation-period=30s"
           env:
             - name: NODE_NAME
               valueFrom:
@@ -72,8 +72,3 @@ spec:
                 secretKeyRef:
                   name: hcloud
                   key: token
-            - name: HCLOUD_NETWORK
-              valueFrom:
-                secretKeyRef:
-                  name: hcloud
-                  key: network
