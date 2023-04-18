@@ -8,6 +8,10 @@ spec:
     kind: GitRepository
     name: flux-system
   path: "./infra/manifests"
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   interval: 60m
   wait: true
   timeout: 3m0s
