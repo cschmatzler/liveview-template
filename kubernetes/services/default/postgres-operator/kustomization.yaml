@@ -12,3 +12,20 @@ spec:
   interval: 15m
   retryInterval: 1m
   timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: services-default-postgres-clusters
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: services-default-postgres-operator
+  path: ./kubernetes/services/default/postgres-operator/clusters
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  interval: 15m
+  retryInterval: 1m
+  timeout: 5m
