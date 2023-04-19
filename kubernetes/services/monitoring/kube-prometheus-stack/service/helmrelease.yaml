@@ -57,22 +57,3 @@ spec:
           - sourceLabels: ["node"]
             targetLabel: instance
             action: replace
-    monitoring:
-      dashboards:
-        annotations:
-          kustomize.toolkit.fluxcd.io/substitute: disabled
-        labels:
-          grafana_dashboard: "true"
-      serviceMonitor:
-        enabled: false
-        metricsInstance:
-          enabled: false
-      selfMonitoring:
-        enabled: false
-        grafanaAgent:
-          installOperator: false
-      lokiCanary:
-        enabled: false
-    test:
-      enabled: false
-
