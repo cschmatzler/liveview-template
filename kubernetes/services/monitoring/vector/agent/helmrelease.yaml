@@ -28,9 +28,3 @@ spec:
     dataDir: /vector-data-dir
     existingConfigMaps:
       - vector-agent-config
-    extraVolumes:
-      - name: vector-data-dir
-        emptyDir: {}
-    extraVolumeMounts:
-      - name: vector-data-dir
-        mountPath: /vector-data-dir
