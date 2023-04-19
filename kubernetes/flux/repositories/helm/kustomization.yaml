@@ -4,5 +4,6 @@ resources:
   - metrics-server.yaml
   - external-secrets.yaml
   - onepassword-connect.yaml
+  - prometheus-community.yaml
   - jetstack.yaml
   - zalando.yaml
