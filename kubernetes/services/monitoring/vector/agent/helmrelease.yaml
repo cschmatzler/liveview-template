@@ -27,6 +27,9 @@ spec:
     role: Agent
     service:
       enabled: false
+    extraVolumes:
+      - name: vector-data-dir
+        emptyDir: {}
     customConfig:
       data_dir: /vector-data-dir
       sources:
