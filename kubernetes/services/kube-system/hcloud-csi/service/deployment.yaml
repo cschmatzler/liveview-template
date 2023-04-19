@@ -78,7 +78,7 @@ spec:
         volumeMounts:
         - mountPath: /run/csi
           name: socket-dir
-      serviceAccountName: hcloud-csi-controller
+      serviceAccountName: hcloud-csi
       volumes:
       - emptyDir: {}
         name: socket-dir
