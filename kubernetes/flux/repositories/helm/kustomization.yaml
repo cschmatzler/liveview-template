@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - metrics-server.yaml
   - external-secrets.yaml
+  - onepassword-connect.yaml
   - jetstack.yaml
   - zalando.yaml
