@@ -26,3 +26,4 @@ spec:
   values:
     connect:
       credentialsName: onepassword-credentials
+      credentialsKey: 1password-credentials.json
