@@ -107,6 +107,11 @@ spec:
       replicas: 2
     backend:
       replicas: 2
+      extraVolumes:
+        - name: rules
+          emptyDir: {}
+        - name: scratch
+          emptyDir: {}
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
