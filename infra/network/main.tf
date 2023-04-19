@@ -11,10 +11,6 @@ provider "hcloud" {
   token = var.hcloud_token
 }
 
-locals {
-  public_key = trimspace(file(var.public_key_path))
-}
-
 resource "hcloud_network" "network" {
   name     = "cluster.${var.domain}"
   ip_range = "10.0.0.0/16"
