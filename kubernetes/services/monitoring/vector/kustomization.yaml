@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-vector-aggregator
+    - name: services-monitoring-vector-aggregator
   path: ./kubernetes/services/monitoring/vector/agent
   prune: true
   sourceRef:
