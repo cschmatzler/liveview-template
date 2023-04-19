@@ -5,5 +5,6 @@ resources:
   - external-secrets.yaml
   - onepassword-connect.yaml
   - prometheus-community.yaml
+  - grafana.yaml
   - jetstack.yaml
   - zalando.yaml
