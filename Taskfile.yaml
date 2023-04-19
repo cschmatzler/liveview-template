@@ -1,0 +1,34 @@
+version: "3"
+
+vars:
+  INFRA_DIR: "{{.ROOT_DIR}}/infra"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+
+dotenv: [".env"]
+
+env:
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
+
+includes:
+  infra: .taskfiles/InfraTasks.yaml
+  cluster: .taskfiles/ClusterTasks.yaml
+
+tasks:
+  init:
+    cmds:
+      - brew install {{.DEPS}}
+    preconditions:
+      - sh: command -v brew
+        msg: |
+          Homebrew is not installed. Using MacOS, Linux or WSL?
+          Head over to https://brew.sh to get up and running.
+    vars:
+      DEPS: >-
+        age
+        fluxcd/tap/flux
+        go-task/tap/go-task
+        kubernetes-cli
+        sops
+        terraform
+
+

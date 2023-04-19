@@ -27,18 +27,8 @@ talosctl --talosconfig infra/talosconfig config node <ip>
 - generate hcloud secret - `scripts/gen-secret.sh infra/secrets/hcloud.yaml`
 - bootstrap flux
 ```
-flux bootstrap github \
-    --kubeconfig infra/kubeconfig \
-    --owner=cschmatzler \
-    --repository=liveview-template \
-    --branch master \
-    --path=infra/flux \
-    --personal \
-    --author-email=christoph@medium.place \
-    --author-name="Christoph Schmatzler" \
-    --components=source-controller,kustomize-controller,helm-controller,notification-controller
-           ```
 
+```
 - add secrets key to kubernetes
 ```
 cat infra/secrets.agekey |
