@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - repositories/
-  - secrets.yaml
-  - services.yaml
+  - calico.yaml
+  - jetstack.yaml
+  - zalando.yaml
