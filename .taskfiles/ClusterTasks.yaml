@@ -30,7 +30,10 @@ tasks:
     cmds:
       - k9s
 
-  refresh-git-repo:
-    desc: Refresh Flux's GitRepository source
+  sync-gr:
+    desc: Sync Flux GitRepositories
     cmds:
-      - flux reconcile source git liveview-template
+      - |
+        kubectl get gitrepositories --all-namespaces --no-headers | awk '{print $1, $2}' \
+          | xargs --max-procs=4 -l bash -c \
+            'kubectl -n $0 annotate gitrepository/$1 reconcile.fluxcd.io/requestedAt=$(date +%s) --field-manager=flux-client-side-apply --overwrite'
