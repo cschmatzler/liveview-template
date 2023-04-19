@@ -32,7 +32,7 @@ spec:
       enabled: false
     env:
       GF_DATABASE_TYPE: postgres
-      GF_DATABASE_HOST: postgres-cluster-pooler.default.svc.cluster.local:5432
+      GF_DATABASE_HOST: postgresql-cluster-pooler.default.svc.cluster.local:5432
       GF_DATABASE_NAME: monitoring_grafana
       GF_DATABASE_SSL_MODE: disable
     envValueFrom:
