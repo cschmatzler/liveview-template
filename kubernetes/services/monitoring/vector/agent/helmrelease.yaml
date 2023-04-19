@@ -27,7 +27,14 @@ spec:
     role: Agent
     service:
       enabled: false
+    extraVolumes:
+      - name: vector-data-dir
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: vector-data-dir
+        mountPath: /vector-data-dir
     customConfig:
+      data_dir: /vector-data-dir
       sources:
         kubernetes_source:
           type: kubernetes_logs
