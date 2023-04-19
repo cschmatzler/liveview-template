@@ -24,11 +24,6 @@ provider "cloudflare" {
 }
 
 locals {
-  # SSH
-  # ---
-  private_key = trimspace(file(var.private_key_path))
-  public_key  = trimspace(file(var.public_key_path))
-
   # Network
   # -------
   rdns_domain = "cluster.${var.domain}"

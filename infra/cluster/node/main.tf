@@ -16,15 +16,7 @@ resource "random_string" "server" {
 }
 
 locals {
-  # General
-  # -------
   name = "${var.role}-${random_string.server.id}"
-
-  # SSH
-  # ---
-  private_key = trimspace(file(var.private_key_path))
-  public_key  = trimspace(file(var.public_key_path))
-  ssh_args    = "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${var.private_key_path}"
 }
 
 resource "hcloud_server" "node" {
@@ -35,15 +27,12 @@ resource "hcloud_server" "node" {
   location           = var.node_location
   placement_group_id = var.placement_group_id
 
-  ssh_keys = var.ssh_keys
-
   labels    = var.labels
   user_data = var.user_data
 
   lifecycle {
     ignore_changes = [
       image,
-      ssh_keys,
       user_data
     ]
   }
