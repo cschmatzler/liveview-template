@@ -16,7 +16,7 @@ locals {
 }
 
 resource "hcloud_network" "network" {
-  name     = var.domain
+  name     = "cluster.${var.domain}"
   ip_range = "10.0.0.0/16"
 }
 
