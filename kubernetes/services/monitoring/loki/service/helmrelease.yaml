@@ -64,6 +64,18 @@ spec:
           ring:
             kvstore:
               store: memberlist
+        ruler:
+          enable_api: true
+          enable_alertmanager_v2: true
+          alertmanager_url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
+          storage:
+            type: local
+            local:
+              directory: /rules
+          rule_path: /tmp/scratch
+          ring:
+            kvstore:
+              store: memberlist
         distributor:
           ring:
             kvstore:
@@ -85,10 +97,21 @@ spec:
           reporting_enabled: false
     read:
       replicas: 2
+      extraVolumeMounts:
+        - name: rules
+          mountPath: /rules
+      extraVolumes:
+        - name: rules
+          emptyDir: {}
     write:
       replicas: 2
     backend:
       replicas: 2
+      extraVolumeMounts:
+        - name: rules
+          mountPath: /rules/fake
+        - name: scratch
+          mountPath: /tmp/scratch
     monitoring:
       dashboards:
         annotations:
