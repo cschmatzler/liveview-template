@@ -17,7 +17,7 @@
   ],
   "rebaseWhen": "conflicted",
   "schedule": [
-    "daily"
+    "before 8am"
   ],
   "flux": {
     "fileMatch": [
