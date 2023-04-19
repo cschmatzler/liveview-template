@@ -8,7 +8,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: liveview-template-kubernetes
+    name: liveview-template
   interval: 15m
   retryInterval: 1m
   timeout: 3m
