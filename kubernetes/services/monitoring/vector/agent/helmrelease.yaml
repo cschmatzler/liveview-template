@@ -41,4 +41,10 @@ spec:
             namespace_labels: ""
           node_annotation_fields:
             node_labels: ""
-
+      sinks:
+        kubernetes:
+          type: vector
+          compression: true
+          version: "2"
+          address: vector-aggregator.monitoring.svc.cluster.local:6000
+          inputs: ["kubernetes_source"]
