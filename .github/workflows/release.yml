@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: check
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
       - run: git config --global user.name "actions[bot]"
       - run: git config --global user.email "actions@medium.place"
@@ -24,7 +24,7 @@ jobs:
       - run: git push --tags
       - run: git commit -am "Release $VERSION"
       # - run: git push
-      - uses: johnbeynon/render-deploy-action@v0.0.8
+      - uses: johnbeynon/render-deploy-action@a0588f9aca995a15d69a72cb2bfbf37c12e5b540 # v0.0.8
         with:
           api-key: ${{ secrets.RENDER_API_KEY }}
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
