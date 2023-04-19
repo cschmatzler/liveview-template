@@ -14,3 +14,8 @@ tasks:
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
         msg: |
           Could not find age key.
+
+  refresh-git-repo:
+    desc: Refresh Flux's GitRepository source
+    cmds:
+      - flux reconcile source git liveview-template
