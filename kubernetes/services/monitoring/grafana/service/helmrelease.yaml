@@ -1,0 +1,48 @@
+piVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: grafana
+      version: 6.54.0
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    replicas: 2
+    rbac:
+      pspEnabled: false
+    testFramework:
+      enabled: false
+    env:
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: postgres-cluster-pooler.default.svc.cluster.local:5432
+      GF_DATABASE_NAME: monitoring_grafana
+      GF_DATABASE_SSL_MODE: disable
+    envValueFrom:
+      GF_DATABASE_USER:
+        secretRef:
+          name: monitoring-grafana-writer-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
+          namespace: default
+          key: username
+      GF_DATABASE_PASSWORD:
+        secretRef:
+          name: monitoring-grafana-writer-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
+          namespace: default
+          key: password
