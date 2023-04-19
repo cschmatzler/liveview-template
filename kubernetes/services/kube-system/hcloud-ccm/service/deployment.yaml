@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hcloud-ccm
-  namespace: kube-system
   labels:
     app.kubernetes.io/name: hcloud-ccm
     app.kubernetes.io/part-of: hcloud-ccm
