@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - services-default-postgres-clusters
+    - name: services-default-postgres-clusters
   path: ./kubernetes/services/monitoring/grafana/service
   prune: true
   sourceRef:
