@@ -49,6 +49,11 @@ resource "hcloud_server" "node" {
   }
 }
 
+resource "hcloud_server_network" "node" {
+  subnet_id = var.subnet_id
+  server_id = hcloud_server.node.id
+}
+
 resource "hcloud_rdns" "v4" {
   server_id  = hcloud_server.node.id
   ip_address = hcloud_server.node.ipv4_address
