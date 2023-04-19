@@ -21,9 +21,10 @@ spec:
     limits:
       memory: 500Mi
   connectionPooler:
-     resources:
-       requests:
-         cpu: 100m
-         memory: 250Mi
-       limits:
-         memory: 250Mi
+    mode: session
+    resources:
+      requests:
+        cpu: 100m
+        memory: 250Mi
+      limits:
+        memory: 250Mi
