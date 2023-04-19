@@ -38,11 +38,11 @@ spec:
     envValueFrom:
       GF_DATABASE_USER:
         secretKeyRef:
-          name: monitoring-grafana-writer-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
+          name: monitoring-grafana-owner-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
           namespace: default
           key: username
       GF_DATABASE_PASSWORD:
         secretKeyRef:
-          name: monitoring-grafana-writer-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
+          name: monitoring-grafana-owner-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
           namespace: default
           key: password
