@@ -26,8 +26,3 @@ resource "hcloud_network_subnet" "cluster" {
   network_zone = "eu-central"
   ip_range     = cidrsubnet(hcloud_network.network.ip_range, 8, 1)
 }
-
-resource "hcloud_ssh_key" "workstation" {
-  name       = "workstation"
-  public_key = local.public_key
-}

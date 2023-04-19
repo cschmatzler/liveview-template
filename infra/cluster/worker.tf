@@ -11,10 +11,6 @@ module "worker" {
 
   user_data = file("./worker.yaml")
 
-  ssh_keys         = [var.ssh_key_id]
-  private_key_path = var.private_key_path
-  public_key_path  = var.public_key_path
-
   network_id  = var.network_id
   subnet_id   = var.subnet_id
   rdns_domain = local.rdns_domain

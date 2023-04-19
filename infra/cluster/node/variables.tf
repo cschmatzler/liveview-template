@@ -31,19 +31,6 @@ variable "user_data" {
   type = string
 }
 
-variable "ssh_keys" {
-  type     = list(string)
-  nullable = true
-}
-
-variable "private_key_path" {
-  type = string
-}
-
-variable "public_key_path" {
-  type = string
-}
-
 variable "role" {
   type = string
 }
