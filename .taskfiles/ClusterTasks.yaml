@@ -1,0 +1,16 @@
+version: "3"
+tasks:
+  bootstrap:
+    desc: Bootstrap the Kubernetes cluster
+    cmds:
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
+      - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+      - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/flux/config
+    preconditions:
+      - sh: flux check --pre
+        msg: |
+          The cluster did not meet the minimum requirements for Flux.
+      - sh: test -f {{.SOPS_AGE_KEY_FILE}}
+        msg: |
+          Could not find age key.

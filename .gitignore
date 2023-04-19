@@ -12,10 +12,10 @@ erl_crash.dump
 /infra/controlplane.yaml
 /infra/worker.yaml
 /infra/talosconfig
-/infra/kubeconfig
 /infra/*tfstate*
 /infra/.terraform
 /infra/.terraform.lock.hcl
-/infra/secrets.agekey
-/infra/secrets/*.secret.*
+/kubernetes/kubeconfig
+/kubernetes/secrets.agekey
+/kubernetes/secrets/*.secret.*
 **/.DS_Store
