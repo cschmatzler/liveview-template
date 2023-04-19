@@ -1,3 +1,13 @@
+terraform {
+  cloud {
+    organization = "liveview-template"
+
+    workspaces {
+      name = "liveview-template"
+    }
+  }
+}
+
 module "network" {
   source = "./network"
 

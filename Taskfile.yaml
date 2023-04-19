@@ -28,7 +28,6 @@ tasks:
         fluxcd/tap/flux
         go-task/tap/go-task
         kubernetes-cli
+        pre-commit
         sops
         terraform
-
-
