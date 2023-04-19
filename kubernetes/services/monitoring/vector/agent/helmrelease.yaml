@@ -27,12 +27,6 @@ spec:
     role: Agent
     service:
       enabled: false
-    extraVolumes:
-      - name: data-dir
-        emptyDir: {}
-    extraVolumeMounts:
-      - name: data-dir
-        mountPath: /data-dir
     customConfig:
       data_dir: /data-dir
       sources:
