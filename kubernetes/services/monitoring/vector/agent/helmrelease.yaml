@@ -25,3 +25,12 @@ spec:
     keepHistory: false
   values:
     role: Agent
+    dataDir: /vector-data-dir
+    existingConfigMaps:
+      - name: vector-agent-config
+    extraVolumes:
+      - name: vector-data-dir
+        emptyDir: {}
+    extraVolumeMounts:
+      - name: vector-data-dir
+        mountPath: /vector-data-dir
