@@ -30,6 +30,9 @@ spec:
     extraVolumes:
       - name: vector-data-dir
         emptyDir: {}
+    extraVolumeMounts:
+      - name: vector-data-dir
+        mountPath: /vector-data-dir
     customConfig:
       data_dir: /vector-data-dir
       sources:
