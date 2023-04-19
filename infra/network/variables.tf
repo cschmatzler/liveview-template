@@ -6,7 +6,3 @@ variable "hcloud_token" {
 variable "domain" {
   type = string
 }
-
-variable "public_key_path" {
-  type = string
-}
