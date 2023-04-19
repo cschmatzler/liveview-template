@@ -7,7 +7,7 @@ module "worker" {
   node_type          = each.value.node_type
   node_location      = each.value.node_location
   placement_group_id = element(hcloud_placement_group.workers.*.id, ceil(each.value.index / 10))
-  image_id           = var.image_id
+  image_id           = each.value.image_id
 
   user_data = file("./worker.yaml")
 

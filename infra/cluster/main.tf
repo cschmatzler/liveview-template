@@ -38,8 +38,9 @@ locals {
   control_plane_nodes = {
     count         = 1
     name          = "control-plane",
-    node_type     = "cx11",
+    node_type     = "cax11",
     node_location = "fsn1",
+    image_id      = var.arm_image_id
   }
 
   worker_nodepools = [
@@ -48,6 +49,7 @@ locals {
       name          = "worker-cx11",
       node_type     = "cx11",
       node_location = "fsn1",
+      image_id      = var.x86_image_id
     },
   ]
 
@@ -61,7 +63,8 @@ locals {
         index : node_index,
         nodepool_name : nodepool.name,
         node_type : nodepool.node_type,
-        node_location : nodepool.node_location
+        node_location : nodepool.node_location,
+        image_id : nodepool.image_id
       }
     }
   ]...)

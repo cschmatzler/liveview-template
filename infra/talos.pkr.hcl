@@ -11,22 +11,27 @@ variable "talos_version" {
   type    = string
 }
 
+variable "arch" {
+  type = string
+}
+
 locals {
-  image = "https://github.com/siderolabs/talos/releases/download/v${var.talos_version}/hcloud-amd64.raw.xz"
+  image = "https://github.com/siderolabs/talos/releases/download/v${var.talos_version}/hcloud-${var.arch}.raw.xz"
 }
 
 source "hcloud" "talos" {
   image        = "debian-11"
   rescue       = "linux64"
   location     = "fsn1"
-  server_type  = "cx11"
+  server_type  = var.arch == "arm64" ? "cax11" : "cx11"
   ssh_username = "root"
 
-  snapshot_name = "talos ${var.talos_version}"
+  snapshot_name = "talos ${var.talos_version}-${var.arch}"
   snapshot_labels = {
     type    = "infra",
     os      = "talos",
     version = "${var.talos_version}",
+    arch = "${var.arch}"
   }
 }
 
