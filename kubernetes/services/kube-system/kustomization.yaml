@@ -5,3 +5,4 @@ resources:
   - ./hcloud-ccm/kustomization.yaml
   - ./hcloud-csi/kustomization.yaml
   - ./metrics-server/kustomization.yaml
+  - ./external-secrets/kustomization.yaml
