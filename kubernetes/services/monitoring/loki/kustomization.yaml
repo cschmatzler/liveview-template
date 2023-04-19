@@ -4,6 +4,8 @@ metadata:
   name: services-monitoring-loki
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: services-kube-system-external-secrets-stores
   path: ./kubernetes/services/monitoring/loki/service
   prune: true
   sourceRef:
