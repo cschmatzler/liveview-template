@@ -19,6 +19,8 @@ metadata:
   name: services-kube-system-external-secrets-stores
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: services-kube-system-onepassword-connect
   path: ./kubernetes/services/kube-system/external-secrets/stores
   prune: true
   sourceRef:
