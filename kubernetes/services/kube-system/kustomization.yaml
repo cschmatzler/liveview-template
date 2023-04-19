@@ -4,3 +4,4 @@ resources:
   - ./namespace.yaml
   - ./hcloud-ccm/kustomization.yaml
   - ./hcloud-csi/kustomization.yaml
+  - ./metrics-server/kustomization.yaml
