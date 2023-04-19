@@ -25,6 +25,8 @@ spec:
     keepHistory: false
   values:
     role: Agent
+    service:
+      enabled: false
     customConfig:
       sources:
         kubernetes_source:
