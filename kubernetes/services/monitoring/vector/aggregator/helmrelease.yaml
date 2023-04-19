@@ -54,6 +54,9 @@ spec:
             remove_label_fields: true
             remove_timestamp: true
             labels:
-              app: '{{ custom_app_name }}'
-              namespace: '{{ kubernetes.pod_namespace }}'
-              node: '{{ kubernetes.pod_node_name }}'
+              app: |-
+                {{ print "'{{ custom_app_name }}'" }}
+              namespace: |-
+                {{ print "'{{ kubernetes.pod_namespace }}'" }}
+              node: |-
+                {{ print "'{{ kubernetes.pod_node_name }}'" }}
