@@ -116,7 +116,11 @@ spec:
     - targetPath: loki.structuredConfig.common.storage.s3.endpoint
       kind: Secret
       name: loki-bucket
-      valuesKey: BUCKET_HOST
+      valuesKey: BUCKET_ENDPOINT
+    - targetPath: loki.structuredConfig.common.storage.s3.region
+      kind: Secret
+      name: loki-bucket
+      valuesKey: BUCKET_REGION
     - targetPath: loki.structuredConfig.common.storage.s3.access_key_id
       kind: Secret
       name: loki-bucket
