@@ -28,7 +28,7 @@ spec:
     service:
       enabled: false
     customConfig:
-      data_dir: /data-dir
+      data_dir: /vector-data-dir
       sources:
         kubernetes_source:
           type: kubernetes_logs
