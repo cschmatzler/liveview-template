@@ -1,0 +1,28 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: postgresql-cluster
+spec:
+  teamId: "acid"
+  volume:
+    size: 10Gi
+  numberOfInstances: 3
+  postgresql:
+    version: "15"
+  enableConnectionPooler: true
+  preparedDatabases:
+    monitoring-grafana:
+      defaultUsers: true
+  resources:
+    requests:
+      cpu: 200m
+      memory: 500Mi
+    limits:
+      memory: 500Mi
+  connectionPooler:
+     resources:
+       requests:
+         cpu: 100m
+         memory: 250Mi
+       limits:
+         memory: 250Mi
