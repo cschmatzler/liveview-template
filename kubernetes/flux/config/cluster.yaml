@@ -20,7 +20,7 @@ metadata:
   name: liveview-template
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 30s
   path: ./kubernetes/flux
   prune: true
   wait: false
