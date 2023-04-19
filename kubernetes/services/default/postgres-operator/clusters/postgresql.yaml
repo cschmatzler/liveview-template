@@ -13,6 +13,7 @@ spec:
   preparedDatabases:
     monitoring_grafana:
       defaultUsers: true
+      secretNamespace: monitoring
   resources:
     requests:
       cpu: 200m
