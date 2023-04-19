@@ -21,5 +21,6 @@ module "cluster" {
   network_id = module.network.network_id
   subnet_id  = module.network.cluster_subnet_id
 
-  image_id = var.image_id
+  x86_image_id = var.x86_image_id
+  arm_image_id = var.arm_image_id
 }

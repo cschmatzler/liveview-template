@@ -15,6 +15,12 @@ tasks:
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
         msg: |
           Could not find age key.
+      - sh: test =f {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml
+        msg: |
+          Could not find GitHub deploy key.
+      - sh: test =f {{.KUBERNETES_DIR}}/bootstrap/onepassword-credentials.sops.yaml
+        msg: |
+          Could not find 1Password credentials.
 
   refresh-git-repo:
     desc: Refresh Flux's GitRepository source

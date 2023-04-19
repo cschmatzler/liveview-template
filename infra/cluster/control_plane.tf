@@ -6,7 +6,7 @@ module "control_plane" {
   node_type          = local.control_plane_nodes.node_type
   node_location      = local.control_plane_nodes.node_location
   placement_group_id = hcloud_placement_group.control_plane.id
-  image_id           = var.image_id
+  image_id           = local.control_plane_nodes.image_id
 
   user_data = file("./controlplane.yaml")
 

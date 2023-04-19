@@ -20,7 +20,11 @@ variable "subnet_id" {
   type = string
 }
 
-variable "image_id" {
+variable "x86_image_id" {
+  type = string
+}
+
+variable "arm_image_id" {
   type = string
 }
 
