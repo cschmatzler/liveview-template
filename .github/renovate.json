@@ -17,7 +17,7 @@
   ],
   "rebaseWhen": "conflicted",
   "schedule": [
-    "every day"
+    "daily"
   ],
   "flux": {
     "fileMatch": [
