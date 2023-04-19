@@ -11,7 +11,7 @@ spec:
     version: "15"
   enableConnectionPooler: true
   preparedDatabases:
-    monitoring-grafana:
+    monitoring_grafana:
       defaultUsers: true
   resources:
     requests:
