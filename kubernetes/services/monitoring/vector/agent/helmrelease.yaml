@@ -27,7 +27,7 @@ spec:
     role: Agent
     dataDir: /vector-data-dir
     existingConfigMaps:
-      - name: vector-agent-config
+      - vector-agent-config
     extraVolumes:
       - name: vector-data-dir
         emptyDir: {}
