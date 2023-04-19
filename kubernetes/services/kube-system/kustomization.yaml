@@ -6,3 +6,4 @@ resources:
   - ./hcloud-csi/kustomization.yaml
   - ./metrics-server/kustomization.yaml
   - ./external-secrets/kustomization.yaml
+  - ./onepassword-connect/kustomization.yaml
