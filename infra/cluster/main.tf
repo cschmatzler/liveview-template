@@ -44,7 +44,7 @@ locals {
 
   worker_nodepools = [
     {
-      count         = 3
+      count         = 2
       name          = "worker-cx11",
       node_type     = "cx11",
       node_location = "fsn1",

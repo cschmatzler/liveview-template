@@ -5,3 +5,4 @@ metadata:
   namespace: kube-system
 stringData:
   token: {{ .Env.TOKEN }}
+  network: {{ .Env.NETWORK }}
