@@ -30,9 +30,28 @@ tasks:
     cmds:
       - k9s
 
+
   sync-gr:
     desc: Sync Flux GitRepositories
     cmds:
       - |
         kubectl get gitrepositories --all-namespaces --no-headers | awk '{print $1, $2}' \
-          | xargs bash -c 'kubectl -n $0 annotate gitrepository/$1 reconcile.fluxcd.io/requestedAt=$(date +%s) --field-manager=flux-client-side-apply --overwrite'
+          | xargs -P4 -L1 bash -c \
+            'kubectl -n $0 annotate gitrepository/$1 reconcile.fluxcd.io/requestedAt=$(date +%s) --field-manager=flux-client-side-apply --overwrite'
+
+  sync-es:
+    desc: Sync ExternalSecret resources
+    vars:
+      secret: '{{ .secret | default ""}}'
+      namespace: '{{.namespace | default "default"}}'
+    cmds:
+      - |
+        {{if eq .secret ""}}
+          kubectl get externalsecret.external-secrets.io --all-namespaces --no-headers -A | awk '{print $1, $2}' \
+            | xargs -P4 -L1 bash -c \
+              'kubectl -n $0 annotate externalsecret.external-secrets.io $1 force-sync=$(date +%s) --overwrite'
+        {{else}}
+          kubectl -n {{.namespace}} annotate externalsecret.external-secrets.io {{.secret}} force-sync=$(date +%s) --overwrite
+        {{end}}
+    preconditions:
+      - kubectl -n {{.namespace}} get es {{.secret}}
