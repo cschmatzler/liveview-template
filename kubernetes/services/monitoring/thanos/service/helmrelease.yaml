@@ -24,18 +24,22 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    queryFrontend:
-      enabled: true
-      replicaCount: 3
+    image:
+      registry: quay.io
+      repository: thanos/thanos
+      tag: v0.31.0
+    objstoreConfig:
+      type: s3
     query:
       enabled: true
       replicaCount: 3
       replicaLabel: ["__replica__"]
-    dnsDiscovery:
-      sidecarsService: kube-prometheus-stack-thanos-discovery
-      sidecarsNamespace: monitoring
-    objstoreConfig:
-      type: s3
+      dnsDiscovery:
+        sidecarsService: kube-prometheus-stack-thanos-discovery
+        sidecarsNamespace: monitoring
+    queryFrontend:
+      enabled: true
+      replicaCount: 3
     bucketweb:
       enabled: true
       replicaCount: 3
@@ -47,15 +51,9 @@ spec:
       retentionResolutionRaw: 14d
       retentionResolution5m: 14d
       retentionResolution1h: 14d
-      persistence:
-        enabled: true
-        size: 10Gi
     storegateway:
       enabled: true
       replicaCount: 3
-      persistence:
-        enabled: true
-        size: 10Gi
     ruler:
       enabled: true
       replicaCount: 3
@@ -76,9 +74,6 @@ spec:
                 for: 5m
                 labels:
                   severity: critical
-      persistence:
-        enabled: true
-        size: 10Gi
     metrics:
       enabled: true
       serviceMonitor:
