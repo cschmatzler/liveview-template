@@ -41,8 +41,8 @@ locals {
   worker_nodepools = [
     {
       count         = 3
-      name          = "worker-cx11",
-      node_type     = "cx11",
+      name          = "worker-cx21",
+      node_type     = "cx21",
       node_location = "fsn1",
       image_id      = var.x86_image_id
     },

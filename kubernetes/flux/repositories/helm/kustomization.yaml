@@ -7,5 +7,6 @@ resources:
   - grafana.yaml
   - vector.yaml
   - prometheus-community.yaml
+  - bitnami.yaml
   - jetstack.yaml
   - zalando.yaml
