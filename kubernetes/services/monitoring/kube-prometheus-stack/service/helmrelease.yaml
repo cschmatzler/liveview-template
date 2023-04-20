@@ -107,4 +107,6 @@ spec:
         walCompression: true
         thanos:
           image: quay.io/thanos/thanos:v0.31.0
-
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
