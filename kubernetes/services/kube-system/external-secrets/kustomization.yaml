@@ -4,6 +4,8 @@ metadata:
   name: services-kube-system-external-secrets
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: services-monitoring-kube-prometheus-stack
   path: ./kubernetes/services/kube-system/external-secrets/service
   prune: true
   sourceRef:
@@ -20,6 +22,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+    - name: services-kube-system-external-secrets
     - name: services-kube-system-onepassword-connect
   path: ./kubernetes/services/kube-system/external-secrets/stores
   prune: true
