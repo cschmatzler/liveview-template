@@ -19,6 +19,11 @@ variable "subnet_id" {
   type = string
 }
 
+variable "ipv4_enabled" {
+  type = bool
+  default = true
+}
+
 variable "rdns_domain" {
   type = string
 }
