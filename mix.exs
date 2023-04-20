@@ -58,7 +58,7 @@ defmodule Template.MixProject do
       {:ex_doc, "~> 0.29", runtime: false},
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.16", only: :test},
-      {:finch, "~> 0.15"},
+      {:finch, "~> 0.16"},
       {:floki, "~> 0.34", only: :test},
       {:gettext, "~> 0.22"},
       {:hammox, "~> 0.7", only: :test},
