@@ -15,8 +15,6 @@ module "worker" {
   subnet_id   = var.subnet_id
   rdns_domain = local.rdns_domain
 
-  ipv4_enabled = false
-
   labels = {
     "provisioner" = "terraform",
     "role"        = "worker"

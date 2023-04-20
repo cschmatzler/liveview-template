@@ -27,10 +27,6 @@ resource "hcloud_server" "node" {
   location           = var.node_location
   placement_group_id = var.placement_group_id
 
-  public_net {
-    ipv4_enabled = var.ipv4_enabled
-  }
-
   labels    = var.labels
   user_data = var.user_data
 
@@ -48,8 +44,6 @@ resource "hcloud_server_network" "node" {
 }
 
 resource "hcloud_rdns" "v4" {
-  count = var.ipv4_enabled ? 1 : 0
-
   server_id  = hcloud_server.node.id
   ip_address = hcloud_server.node.ipv4_address
   dns_ptr    = format("%s.%s", local.name, var.rdns_domain)

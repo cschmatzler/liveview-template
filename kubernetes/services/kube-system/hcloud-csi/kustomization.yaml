@@ -4,6 +4,8 @@ metadata:
   name: services-kube-system-hcloud-csi
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: services-kube-system-external-secrets-stores
   path: ./kubernetes/services/kube-system/hcloud-csi/service
   prune: true
   sourceRef:
