@@ -110,4 +110,10 @@ spec:
             name: thanos-objstore-secret
             key: objstore.yml
         retention: 2d
-        retentionSize: 15GB
+        retentionSize: 8GB
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              resources:
+                requests:
+                  storage: 10Gi
