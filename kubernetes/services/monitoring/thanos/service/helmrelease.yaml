@@ -34,7 +34,7 @@ spec:
     dnsDiscovery:
       sidecarsService: kube-prometheus-stack-thanos-discovery
       sidecarsNamespace: monitoring
-    objStore:
+    objstoreConfig:
       type: s3
     bucketweb:
       enabled: true
