@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kube-prometheus-stack/kustomization.yaml
+  - ./thanos/kustomization.yaml
   - ./loki/kustomization.yaml
   - ./vector/kustomization.yaml
   - ./grafana/kustomization.yaml
