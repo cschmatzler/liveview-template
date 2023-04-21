@@ -1,0 +1,22 @@
+name: "Kubernetes: Rebuild images"
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "kubernetes/images/**"
+
+jobs:
+  get-changes:
+    name: Collect changes
+    runs-on: ubuntu-latest
+    outputs:
+      addedOrModifiedImages: ${{ steps.collect-changes.outputs.addedOrModifiedImages }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Collect changes
+        id: collect-changes
+        uses: ./.github/actions/collect-changes
