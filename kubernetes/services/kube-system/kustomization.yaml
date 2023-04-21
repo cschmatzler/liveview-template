@@ -5,5 +5,6 @@ resources:
   - ./hcloud-ccm.yaml
   - ./hcloud-csi.yaml
   - ./metrics-server.yaml
-  - ./external-secrets.yaml
   - ./onepassword-connect.yaml
+  - ./external-secrets.yaml
+  - ./cert-manager.yaml
