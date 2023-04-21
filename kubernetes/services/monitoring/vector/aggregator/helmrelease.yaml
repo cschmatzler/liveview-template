@@ -37,10 +37,8 @@ spec:
           type: remap
           inputs: ["kubernetes_source"]
           source: |
-            # Standardize 'app' index
+            # Standardize 'app' label
             .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
-            # Drop pod_labels
-            del(.pod_labels)
       sinks:
         kubernetes:
             inputs: ["kubernetes_remap"]
@@ -52,8 +50,6 @@ spec:
             remove_label_fields: true
             remove_timestamp: true
             labels:
-              source_type: |-
-                {{ print "'{{ source_type }}"' }}
               node: |-
                 {{ print "'{{ kubernetes.pod_node_name }}'" }}
               app: |-
