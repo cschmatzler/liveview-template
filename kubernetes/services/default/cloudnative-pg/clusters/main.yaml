@@ -1,0 +1,11 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgresql-main
+spec:
+  instances: 3
+
+  primaryUpdateStrategy: unsupervised
+
+  storage:
+    size: 10Gi

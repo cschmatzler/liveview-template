@@ -15,3 +15,18 @@ spec:
       kind: HelmRelease
       name: cloudnative-pg
       namespace: default
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: services-default-cloudnative-pg-clusters
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: services-default-cloudnative-pg
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./kubernetes/services/default/cloudnative-pg/clusters
+  interval: 15m
+  prune: true
