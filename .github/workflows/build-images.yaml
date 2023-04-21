@@ -1,0 +1,25 @@
+name: "Action: Image Build"
+
+on:
+  workflow_call:
+    inputs:
+      images:
+        type: string
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    if: inputs.images != ''
+    strategy:
+      matrix:
+        image: ["${{ fromJson(inputs.images) }}"]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup vars
+        id: vars
+        shell: bash
+        run: |-
+          container_base=$(jq '.base' ./kubernetes/${{ matrix.image}}/metadata.json)
+          echo $container_base
