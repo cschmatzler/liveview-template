@@ -25,39 +25,35 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicas: 3
     rbac:
       pspEnabled: false
+    replicas: 3
+    extraInitContainers:
+      - name: init-db
+        image: ghcr.io/cschmatzler/postgresql-initdb:15.2
+        imagePullPolicy: IfNotPresent
+        imagePullSecrets:
+          - name: dockerconfig-github
+        envFrom:
+          - secretRef:
+              name: grafana-db
     persistence:
       enabled: false
     testFramework:
       enabled: false
     env:
-      GF_DATABASE_TYPE: postgres
-      GF_DATABASE_HOST: postgresql-cluster-pooler.default.svc.cluster.local:5432
-      GF_DATABASE_NAME: monitoring_grafana
-      GF_DATABASE_SSL_MODE: require
       GF_ANALYTICS_CHECK_FOR_UPDATES: false
-      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
-      GF_EXPLORE_ENABLED: true
-      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
-      GF_GRAFANA_NET_URL: https://grafana.net
-      GF_LOG_FILTERS: rendering:debug
-      GF_LOG_MODE: console
-      GF_PANELS_DISABLE_SANITIZE_HTML: true
-      GF_SECURITY_ALLOW_EMBEDDING: true
-      GF_SECURITY_COOKIE_SAMESITE: grafana
-    envValueFrom:
-      GF_DATABASE_USER:
-        secretKeyRef:
-          name: monitoring-grafana-owner-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
-          namespace: default
-          key: username
-      GF_DATABASE_PASSWORD:
-        secretKeyRef:
-          name: monitoring-grafana-owner-user.postgresql-cluster.credentials.postgresql.acid.zalan.do
-          namespace: default
-          key: password
+    envFromSecrets:
+      - name: grafana-db
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+    serviceMonitor:
+      enabled: true
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -110,13 +106,3 @@ spec:
         flux-logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
           datasource: Prometheus
-    sidecar:
-      dashboards:
-        enabled: true
-        searchNamespace: ALL
-      datasources:
-        enabled: true
-        searchNamespace: ALL
-    serviceMonitor:
-      enabled: true
-

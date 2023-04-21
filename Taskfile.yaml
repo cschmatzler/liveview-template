@@ -10,8 +10,8 @@ env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
 
 includes:
-  infra: .taskfiles/InfraTasks.yaml
-  cluster: .taskfiles/ClusterTasks.yaml
+  infra: .taskfiles/infra_tasks.yaml
+  cluster: .taskfiles/cluster_tasks.yaml
 
 tasks:
   init:
