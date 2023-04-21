@@ -4,8 +4,9 @@ metadata:
   name: postgresql-main
 spec:
   instances: 3
-
+  labels:
+    app.kubernetes.io/name: postgresql-main
+    app.kubernetes.io/instance: postgresql-main
   primaryUpdateStrategy: unsupervised
-
   storage:
     size: 10Gi
