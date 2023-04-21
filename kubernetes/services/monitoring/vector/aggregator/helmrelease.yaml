@@ -58,3 +58,5 @@ spec:
                 {{ print "'{{ kubernetes.pod_namespace }}'" }}
               node: |-
                 {{ print "'{{ kubernetes.pod_node_name }}'" }}
+              pod: |-
+                {{ print "'{{ kubernetes.pod_name }}'" }}
