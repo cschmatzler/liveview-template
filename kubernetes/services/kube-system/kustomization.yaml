@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./hcloud-ccm/kustomization.yaml
-  - ./hcloud-csi/kustomization.yaml
-  - ./metrics-server/kustomization.yaml
-  - ./external-secrets/kustomization.yaml
-  - ./onepassword-connect/kustomization.yaml
+  - ./hcloud-ccm.yaml
+  - ./hcloud-csi.yaml
+  - ./metrics-server.yaml
+  - ./external-secrets.yaml
+  - ./onepassword-connect.yaml
