@@ -8,7 +8,7 @@ on:
     #   - "kubernetes/images/**"
 
 jobs:
-  get-changes:
+  collect-changes:
     name: Collect changes
     runs-on: ubuntu-latest
     outputs:
@@ -36,45 +36,9 @@ jobs:
           OUTPUT=$(echo $PATHS | jq --raw-output -c 'map(. |= split("/")[2]) | unique')
           echo "addedOrModifiedImages=${OUTPUT}" >> $GITHUB_OUTPUT
 
-  generate-build-matrix:
-    name: Generate matrix for building images
-    runs-on: ubuntu-latest
+  build-images:
+    uses: ./.github/workflows/build-images.yaml
     needs:
-      - get-changes
-    outputs:
-      matrix: ${{ steps.get-changes.outputs.changes }}
-    if: ${{ needs.get-changes.outputs.addedOrModifiedImages }} != '[]'
-    steps:
-      - name: Install tools
-        run: sudo apt-get install moreutils jo
-
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - run: echo "${{ needs.get-changes.outputs.addedOrModifiedImages }}"
-
-      - name: Fetch modified images
-        id: get-changed
-        shell: bash
-        run: |
-          declare -a changes_array=()
-          while read -r app
-          do
-            while read -r channel
-            do
-              change="$(jo app="$app" channel="$channel")"
-              changes_array+=($change)
-            done < <(jq -r '.channels[] | .name' "./apps/$app/metadata.json")
-          done < <(echo '${{ needs.get-changes.outputs.addedOrModifiedImages }}' | jq --raw-output -c '.[]')
-
-          output="$(jo -a ${changes_array[*]})"
-          echo "changes=${output}" >> $GITHUB_OUTPUT
-
-  images-build:
-    needs:
-      - generate-build-matrix
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "${{ needs.generate-build-matrix.outputs.matrix }}"
+      - collect-changes
+    with:
+      images: "${{ needs.collect-changes.outputs.addedOrModifiedImages }}"
