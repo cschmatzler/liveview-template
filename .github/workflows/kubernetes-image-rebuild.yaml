@@ -25,16 +25,14 @@ jobs:
           filters: |
             addedOrModified:
               - added|modified: 'kubernetes/images/**'
-      - name: Collect changed containers
+
+      - name: Collect changed images
         if: |
           steps.filter.outputs.addedOrModified == 'true'
-        id: filter-containers
         shell: bash
         run: |
           PATHS='${{ steps.filter.outputs.addedOrModified_files }}'
-          echo $PATHS
-          OUTPUT=$(echo $PATHS | jq --raw-output -c 'map(. |= split("/")[1]) | unique')
-          echo $OUTPUT
+          OUTPUT=$(echo $PATHS | jq --raw-output -c 'map(. |= split("/")[2]) | unique')
           echo "addedOrModifiedImages=${OUTPUT}" >> $GITHUB_OUTPUT
 
   generate-build-matrix:
@@ -43,7 +41,7 @@ jobs:
     needs:
       - get-changes
     outputs:
-      matrix: ${{ steps.get-changed.outputs.changes }}
+      matrix: ${{ steps.get-changes.outputs.changes }}
     if: ${{ needs.get-changes.outputs.addedOrModifiedImages }} != '[]'
     steps:
       - name: Install tools
