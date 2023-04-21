@@ -12,7 +12,7 @@ jobs:
     name: Collect changes
     runs-on: ubuntu-latest
     outputs:
-      addedOrModifiedImages: ${{ steps.collect-changes.outputs.addedOrModifiedImages }}
+      addedOrModifiedImages: ${{ steps.collect-images.outputs.addedOrModifiedImages }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,6 +27,7 @@ jobs:
               - added|modified: 'kubernetes/images/**'
 
       - name: Collect changed images
+        id: collect-images
         if: |
           steps.filter.outputs.addedOrModified == 'true'
         shell: bash
