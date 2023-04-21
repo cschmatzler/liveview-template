@@ -33,18 +33,18 @@ locals {
   control_plane_nodes = {
     count         = 1
     name          = "control-plane",
-    node_type     = "cx21",
+    node_type     = "cax11",
     node_location = "fsn1",
-    image_id      = var.x86_image_id
+    image_id      = var.arm_image_id
   }
 
   worker_nodepools = [
     {
       count         = 3
-      name          = "worker-cx21",
-      node_type     = "cx21",
+      name          = "worker-cax11",
+      node_type     = "cax11",
       node_location = "fsn1",
-      image_id      = var.x86_image_id
+      image_id      = var.arm_image_id
     },
   ]
 

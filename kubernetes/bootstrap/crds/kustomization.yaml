@@ -5,7 +5,7 @@ resources:
   - ./crd-alertmanagers.yaml
   - ./crd-podmonitors.yaml
   - ./crd-probes.yaml
-  - ./crd-prometheuses.yaml
+  # - ./crd-prometheuses.yaml
   - ./crd-prometheusrules.yaml
   - ./crd-servicemonitors.yaml
   - ./crd-thanosrulers.yaml

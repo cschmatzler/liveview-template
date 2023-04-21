@@ -1,12 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - metrics-server.yaml
-  - external-secrets.yaml
-  - onepassword-connect.yaml
-  - grafana.yaml
-  - vector.yaml
-  - prometheus-community.yaml
   - bitnami.yaml
+  - cloudnative-pg.yaml
+  - external-secrets.yaml
+  - grafana.yaml
+  - jaegertracing.yaml
   - jetstack.yaml
+  - metrics-server.yaml
+  - onepassword-connect.yaml
+  - prometheus-community.yaml
+  - vector.yaml
   - zalando.yaml
