@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   check:
-    uses: ./.github/workflows/check.yml
+    uses: ./.github/workflows/check.yaml
     secrets: inherit
   release:
     runs-on: ubuntu-latest
