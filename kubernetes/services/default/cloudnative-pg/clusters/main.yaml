@@ -15,6 +15,10 @@ spec:
       shared_buffers: 256MB
       pg_stat_statements.max: '10000'
       pg_stat_statements.track: all
+  superuserSecret:
+    name: cloudnative-pg
+  monitoring:
+    enablePodMonitor: true
 
   # TODO: fetch superuser from secret instead of generating
   # TODO: add backup

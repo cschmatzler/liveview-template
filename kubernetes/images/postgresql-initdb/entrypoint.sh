@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 export PGHOST="${POSTGRES_HOST}"
-export PGUSER="${POSTGRES_SUPER_USER}"
-export PGPASSWORD="${POSTGRES_SUPER_PASS}"
+export PGUSER="${POSTGRES_SUPERUSER}"
+export PGPASSWORD="${POSTGRES_SUPERUSER_PASSWORD}"
 
-if [[ -z "${PGHOST}" || -z "${PGUSER}" || -z "${PGPASSWORD}" || -z "${POSTGRES_USER}" || -z "${POSTGRES_PASS}" || -z "${POSTGRES_DB}" ]]; then
+if [[ -z "${PGHOST}" || -z "${PGUSER}" || -z "${PGPASSWORD}" || -z "${POSTGRES_USER}" || -z "${POSTGRES_PASSWORD}" || -z "${POSTGRES_DB}" ]]; then
   echo "Invalid configuration..."
   exit 1
 fi
@@ -22,7 +22,7 @@ user_exists=$(\
 
 if [[ -z "${user_exists}" ]]; then
   createuser ${POSTGRES_USER_FLAGS} "${POSTGRES_USER}"
-  psql --command "alter user \"${POSTGRES_USER}\" with encrypted password '${POSTGRES_PASS}';"
+  psql --command "alter user \"${POSTGRES_USER}\" with encrypted password '${POSTGRES_PASSWORD}';"
 fi
 
 database_exists=$(\
