@@ -3,6 +3,6 @@
   "version": "15.2",
   "args": {
     "POSTGRES_VERSION": "15.2",
-    "TEST": 1
+    "TEST": "1"
   }
 }
