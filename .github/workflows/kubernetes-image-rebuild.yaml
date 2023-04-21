@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    # paths:
-    #   - "kubernetes/images/**"
+    paths:
+      - "kubernetes/images/**"
 
 jobs:
   collect-changes:
