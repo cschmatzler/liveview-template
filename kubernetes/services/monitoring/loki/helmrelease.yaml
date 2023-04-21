@@ -47,7 +47,7 @@ spec:
             enabled: true
         schema_config:
           configs:
-            - from: "2023-01-01" # quote
+            - from: "2023-01-01"
               store: boltdb-shipper
               object_store: s3
               schema: v12
@@ -96,7 +96,7 @@ spec:
         analytics:
           reporting_enabled: false
     read:
-      replicas: 2
+      replicas: 3
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
@@ -104,9 +104,9 @@ spec:
         - name: rules
           emptyDir: {}
     write:
-      replicas: 2
+      replicas: 3
     backend:
-      replicas: 2
+      replicas: 3
       extraVolumes:
         - name: rules
           emptyDir: {}
@@ -124,7 +124,7 @@ spec:
         labels:
           grafana_dashboard: "true"
       selfMonitoring:
-        enabled: false
+        enabled: true
         grafanaAgent:
           installOperator: false
       lokiCanary:
