@@ -27,7 +27,7 @@ spec:
   values:
     global:
       imagePullSecrets:
-        - dockerconfig-github
+        - dockerconfigjson-github
     rbac:
       pspEnabled: false
     replicas: 3
