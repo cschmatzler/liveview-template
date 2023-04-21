@@ -6,5 +6,4 @@ ENV POSTGRES_SUPER_USER="postgres"
 RUN apk add --no-cache ca-certificates postgresql15-client~"${POSTGRES_VERSION}"
 
 COPY . /entrypoint.sh
-
 CMD ["/entrypoint.sh"]
