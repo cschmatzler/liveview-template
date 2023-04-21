@@ -23,11 +23,17 @@ tasks:
         msg: |
           Could not find 1Password credentials.
 
+  approve-csr:
+    desc: Approve all outstanding CSR requests
+    cmds:
+      - |
+        kubectl get csr -o custom-columns=":metadata.name" \
+          | xargs -P4 -L1 kubectl certificate approve
+
   k9s:
     desc: Open k9s
     cmds:
       - k9s
-
 
   sync-gr:
     desc: Sync Flux GitRepositories
