@@ -2,11 +2,14 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: postgresql-main
-spec:
-  instances: 3
   labels:
     app.kubernetes.io/name: postgresql-main
     app.kubernetes.io/instance: postgresql-main
+spec:
+  instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
+
+  # TODO: fetch superuser from secret instead of generating
+  # TODO: add backup
