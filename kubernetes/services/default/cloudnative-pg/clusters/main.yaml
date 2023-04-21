@@ -10,6 +10,11 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 10Gi
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
 
   # TODO: fetch superuser from secret instead of generating
   # TODO: add backup
