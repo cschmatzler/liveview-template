@@ -37,6 +37,7 @@ jobs:
           echo "addedOrModifiedImages=${OUTPUT}" >> $GITHUB_OUTPUT
 
   build-images:
+    name: Build images
     uses: ./.github/workflows/build-images.yaml
     needs:
       - collect-changes
