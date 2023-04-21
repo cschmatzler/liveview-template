@@ -27,10 +27,10 @@ spec:
       endpointURL: http://s3.eu-central-2.wasabisys.com
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-secret
+          name: cloudnative-pg
           key: aws-access-key-id
         secretAccessKey:
-          name: cloudnative-pg-secret
+          name: cloudnative-pg
           key: aws-secret-access-key
   monitoring:
     enablePodMonitor: true
