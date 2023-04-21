@@ -22,9 +22,9 @@ jobs:
         id: vars
         shell: bash
         run: |-
-          version=$(jq -r '.version') ./kubernetes/images/${{ matrix.image }}/metadata.json && \
+          version=$(jq -r '.version' ./kubernetes/images/${{ matrix.image }}/metadata.json) && \
             echo "version=${version}" >> $GITHUB_OUTPUT
-          build_args=$(jq -r '.args | to_entries[] | "\(.key)=\(.value)"') ./kubernetes/images/${{ matrix.image }}/metadata.json && \
+          build_args=$(jq -r '.args | to_entries[] | "\(.key)=\(.value)"' ./kubernetes/images/${{ matrix.image }}/metadata.json) && \
             echo "build_args=${build_args}" >> $GITHUB_OUTPUT
 
       - name: Log into GHCR
