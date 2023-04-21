@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: default
 resources:
   - ./main.yaml
+  - ./pooler-main.yaml
