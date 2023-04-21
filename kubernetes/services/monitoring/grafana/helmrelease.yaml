@@ -28,12 +28,12 @@ spec:
     rbac:
       pspEnabled: false
     replicas: 3
+    imagePullSecrets:
+      - name: dockerconfig-github
     extraInitContainers:
       - name: init-db
         image: ghcr.io/cschmatzler/postgresql-initdb:15.2
         imagePullPolicy: IfNotPresent
-        imagePullSecrets:
-          - name: dockerconfig-github
         envFrom:
           - secretRef:
               name: grafana-db
