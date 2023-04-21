@@ -52,11 +52,15 @@ spec:
             remove_label_fields: true
             remove_timestamp: true
             labels:
+              source_type: |-
+                {{ print "'{{ source_type }}"' }}
+              node: |-
+                {{ print "'{{ kubernetes.pod_node_name }}'" }}
               app: |-
                 {{ print "'{{ custom_app_name }}'" }}
               namespace: |-
                 {{ print "'{{ kubernetes.pod_namespace }}'" }}
-              node: |-
-                {{ print "'{{ kubernetes.pod_node_name }}'" }}
               pod: |-
                 {{ print "'{{ kubernetes.pod_name }}'" }}
+              container: |-
+                {{ print "'{{ kubernetes.container_name }}'" }}
