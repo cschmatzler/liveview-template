@@ -4,14 +4,17 @@ metadata:
   name: services-default-postgres-operator
   namespace: flux-system
 spec:
-  path: ./kubernetes/services/default/postgres-operator/service
-  prune: true
   sourceRef:
     kind: GitRepository
     name: liveview-template
+  path: ./kubernetes/services/default/postgres-operator/service
   interval: 15m
-  retryInterval: 1m
-  timeout: 5m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: postgres-operator
+      namespace: default
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -21,11 +24,9 @@ metadata:
 spec:
   dependsOn:
     - name: services-default-postgres-operator
-  path: ./kubernetes/services/default/postgres-operator/clusters
-  prune: true
   sourceRef:
     kind: GitRepository
     name: liveview-template
+  path: ./kubernetes/services/default/postgres-operator/clusters
   interval: 15m
-  retryInterval: 1m
-  timeout: 5m
+  prune: true
