@@ -11,7 +11,7 @@ spec:
       version: 2.43.0
       sourceRef:
         kind: HelmRepository
-        name: jaeger-tracing
+        name: jaegertracing
         namespace: flux-system
   maxHistory: 2
   install:
