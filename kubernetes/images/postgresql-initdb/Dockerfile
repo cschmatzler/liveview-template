@@ -1,4 +1,4 @@
-FROM alpine:3.17.3
+FROM alpine:3.17.2
 
 ARG POSTGRES_VERSION
 ENV POSTGRES_SUPER_USER="postgres"
