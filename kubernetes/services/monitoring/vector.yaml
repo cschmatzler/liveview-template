@@ -4,14 +4,17 @@ metadata:
   name: services-monitoring-vector-aggregator
   namespace: flux-system
 spec:
-  path: ./kubernetes/services/monitoring/vector/aggregator
-  prune: true
   sourceRef:
     kind: GitRepository
     name: liveview-template
+  path: ./kubernetes/services/monitoring/vector/aggregator
   interval: 15m
-  retryInterval: 1m
-  timeout: 3m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: vector-aggregator
+      namespace: monitoring
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -21,11 +24,14 @@ metadata:
 spec:
   dependsOn:
     - name: services-monitoring-vector-aggregator
-  path: ./kubernetes/services/monitoring/vector/agent
-  prune: true
   sourceRef:
     kind: GitRepository
     name: liveview-template
+  path: ./kubernetes/services/monitoring/vector/agent
   interval: 15m
-  retryInterval: 1m
-  timeout: 3m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: vector-agent
+      namespace: monitoring
