@@ -10,6 +10,7 @@ spec:
     kind: GitRepository
     name: liveview-template
   path: ./kubernetes/services/monitoring/kube-prometheus-stack
+  interval: 15m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
