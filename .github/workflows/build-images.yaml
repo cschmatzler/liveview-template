@@ -44,9 +44,9 @@ jobs:
           context: .
           file: ./kubernetes/images/${{ matrix.image }}/Dockerfile
           build-args: |
-            ${{ steps.vars.output.build_args }}
+            ${{ steps.vars.outputs.build_args }}
           platforms: linux/arm64
-          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ steps.vars.output.version }}
+          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ steps.vars.outputs.version }}
           push: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
