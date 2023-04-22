@@ -1,6 +1,26 @@
 version: "3"
 
 tasks:
+  generate-cilium-manifest:
+    desc: Generate the most recent Cilium manifest
+    cmds:
+      - helm repo add cilium https://helm.cilium.io --force-update
+      - helm repo update
+      - |-
+        helm template \
+          cilium \
+          cilium/cilium \
+          --version {{.CILIUM_VERSION}} \
+          --namespace kube-system \
+          --set ipam.mode=kubernetes \
+          --set=kubeProxyReplacement=strict \
+          --set=securityContext.capabilities.ciliumAgent="{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}" \
+          --set=securityContext.capabilities.cleanCiliumState="{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}" \
+          --set=cgroup.autoMount.enabled=false \
+          --set=cgroup.hostRoot=/sys/fs/cgroup \
+          --set=k8sServiceHost=cluster.{{.BASE_DOMAIN}} \
+          --set=k8sServicePort="6443" > ./kubernetes/bootstrap/cilium.yaml
+
   bootstrap:
     desc: Bootstrap the Kubernetes cluster
     cmds:

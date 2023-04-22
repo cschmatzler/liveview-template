@@ -1,8 +1,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: zalando-postgres-operator
+  name: cilium
   namespace: flux-system
 spec:
-  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
   interval: 1h
+  url: https://helm.cilium.io/

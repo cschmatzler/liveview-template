@@ -5,4 +5,3 @@ output "network_id" {
 output "cluster_subnet_id" {
   value = hcloud_network_subnet.cluster.id
 }
-
