@@ -16,24 +16,114 @@ spec:
   interval: 30m
 
   values:
-    bgp:
+    autoDirectNodeRoutes: true
+
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+
+
+    containerRuntime:
+      integration: containerd
+
+    endpointRoutes:
       enabled: true
 
     hubble:
+      enabled: true
+
       metrics:
+        enabled:
+          - dns:query;ignoreAAAA,
+          - drop
+          - tcp
+          - flow
+          - http
+          - icmp
+          - port-distribution
         serviceMonitor:
           enabled: true
 
-      relay:
-        prometheus:
-          serviceMonitor:
-            enabled: true
+    relay:
+      enabled: true
+      rollOutPods: true
+
+      prometheus:
+        serviceMonitor:
+          enabled: true
+
+      ui:
+        enabled: true
+        ingress:
+          enabled: false
+        rollOutPods: true
+
+    ipam:
+      mode: kubernetes
+
+    ipv4NativeRoutingCIDR: 10.244.0.0/16
+
+    k8sServiceHost: cluster.liveview-template.app
+    k8sServicePort: 6443
+
+    kubeProxyReplacement: strict
+
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+    loadBalancer:
+      algorithm: maglev
+      mode: hybrid
+
+    localRedirectPolicy: false
+
+    operator:
+      enabled: true
+      rollOutPods: true
+      prometheus:
+        serviceMonitor:
+          enabled: true
+
+    rollOutCiliumPods: false
+
+    securityContext:
+      privileged: false
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        mountCgroup:
+          - SYS_ADMIN
+          - SYS_CHROOT
+          - SYS_PTRACE
+        applySysctlOverwrites:
+          - SYS_ADMIN
+          - SYS_CHROOT
+          - SYS_PTRACE
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+
+    tunnel: "disabled"
+
+    bgp:
+      enabled: true
+
+      announce:
+        loadbalancerIP: true
+        podCIDR: false
+
 
     prometheus:
       serviceMonitor:
         enabled: true
-
-    operator:
-      prometheus:
-        serviceMonitor:
-          enabled: true
