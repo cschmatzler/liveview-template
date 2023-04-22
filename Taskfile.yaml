@@ -1,8 +1,9 @@
 version: "3"
 
 vars:
-  INFRA_DIR: "{{.ROOT_DIR}}/infra"
+  INFRASTRUCTURE_DIR: "{{.ROOT_DIR}}/infrastructure"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  BASE_DOMAIN: liveview-template.app
 
 dotenv: [".env"]
 
@@ -10,7 +11,7 @@ env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
 
 includes:
-  infra: .taskfiles/infra_tasks.yaml
+  infra: .taskfiles/infrastructure_tasks.yaml
   cluster: .taskfiles/cluster_tasks.yaml
 
 tasks:

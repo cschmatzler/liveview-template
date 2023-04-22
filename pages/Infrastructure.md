@@ -9,8 +9,8 @@
 
 ## Steps
 
-- Generate Talos secrets - `talosctl gen secrets -o infra/secrets.yaml`
-- Generate Talos configuration - `talosctl gen config --with-secrets infra/secrets.yaml --with-examples=false --with-docs=false -o infra liveview-template https://cluster.liveview-template.app:6443`
+- Generate Talos secrets - `talosctl gen secrets -o infrastructure/secrets.yaml`
+- Generate Talos configuration - `talosctl gen config --with-secrets infrastructure/talos/secrets.yaml --config-patch-control-plane @infrastructure/talos/cni.yaml --with-examples false --with-docs false -o infra liveview-template https://cluster.liveview-template.app:6443`
 - Init terraform - `terraform -chdir=infra init`
 - Build Talos image - `packer build -var talos_version=1.4.0 infra`
 - Add image ID returned to .env

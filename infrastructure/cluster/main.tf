@@ -31,7 +31,7 @@ locals {
   # Nodes
   # -----
   control_plane_nodes = {
-    count         = 1
+    count         = 3
     name          = "control-plane",
     node_type     = "cax11",
     node_location = "fsn1",
@@ -86,7 +86,7 @@ resource "cloudflare_record" "control_plane_v4" {
   type    = "A"
   ttl     = 60
   name    = "cluster"
-  value   = module.control_plane.ipv4_address
+  value   = module.control_plane[0].ipv4_address
 }
 
 resource "cloudflare_record" "control_plane_v6" {
@@ -94,5 +94,5 @@ resource "cloudflare_record" "control_plane_v6" {
   type    = "AAAA"
   ttl     = 60
   name    = "cluster"
-  value   = module.control_plane.ipv6_address
+  value   = module.control_plane[0].ipv6_address
 }

@@ -2,18 +2,18 @@ version: "3"
 tasks:
   init:
     desc: Initialize Terraform
-    dir: "{{.INFRA_DIR}}"
+    dir: "{{.INFRASTRUCTURE_DIR}}"
     cmds:
       - terraform init {{.CLI_ARGS}}
 
   plan:
     desc: Show the changes Terraform will make
-    dir: "{{.INFRA_DIR}}"
+    dir: "{{.INFRASTRUCTURE_DIR}}"
     cmds:
       - terraform plan {{.CLI_ARGS}}
 
   apply:
     desc: Apply the changes
-    dir: "{{.INFRA_DIR}}"
+    dir: "{{.INFRASTRUCTURE_DIR}}"
     cmds:
       - terraform apply {{.CLI_ARGS}}

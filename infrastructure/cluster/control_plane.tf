@@ -1,5 +1,6 @@
 module "control_plane" {
   source = "./node"
+  count  = local.control_plane_nodes.count
 
   role = "control-plane"
 
@@ -8,7 +9,7 @@ module "control_plane" {
   placement_group_id = hcloud_placement_group.control_plane.id
   image_id           = local.control_plane_nodes.image_id
 
-  user_data = file("./controlplane.yaml")
+  user_data = file("./talos/controlplane.yaml")
 
   network_id  = var.network_id
   subnet_id   = var.subnet_id
