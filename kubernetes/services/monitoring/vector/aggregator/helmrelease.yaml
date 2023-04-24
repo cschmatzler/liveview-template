@@ -25,6 +25,7 @@ spec:
     keepHistory: false
   values:
     role: Aggregator
+    replicas: 3
     customConfig:
       data_dir: /vector-data-dir
       sources:

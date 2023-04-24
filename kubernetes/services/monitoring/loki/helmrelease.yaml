@@ -95,6 +95,8 @@ spec:
                 store: memberlist
         analytics:
           reporting_enabled: false
+    gateway:
+      replicas: 3
     read:
       replicas: 3
       extraVolumeMounts:
