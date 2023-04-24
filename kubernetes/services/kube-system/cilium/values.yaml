@@ -36,6 +36,7 @@ securityContext:
       - SYS_RESOURCE
 # ---
 autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: 10.244.0.0/16
 endpointRoutes:
   enabled: true
 operator:
