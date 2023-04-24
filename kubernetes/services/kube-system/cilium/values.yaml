@@ -35,6 +35,7 @@ securityContext:
       - SYS_ADMIN
       - SYS_RESOURCE
 # ---
+autoDirectNodeRoutes: false
 endpointRoutes:
   enabled: true
 operator:
