@@ -24,7 +24,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicas: 3
     connect:
+      replicas: 3
       credentialsName: onepassword-credentials
       credentialsKey: 1password-credentials.json

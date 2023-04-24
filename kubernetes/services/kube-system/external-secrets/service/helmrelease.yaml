@@ -25,14 +25,14 @@ spec:
     keepHistory: false
   values:
     installCRDs: true
-    replicas: 3
+    replicaCount: 3
     serviceMonitor:
       enabled: true
     webhook:
-      replicas: 3
+      replicaCount: 3
       serviceMonitor:
         enabled: true
     certController:
-      replicas: 3
+      replicaCount: 3
       serviceMonitor:
         enabled: true
