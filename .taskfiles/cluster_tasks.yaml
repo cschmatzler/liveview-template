@@ -1,30 +1,23 @@
 version: "3"
 
+vars:
+  TALOS_DIR: "{{.ROOT_DIR}}/infrastructure/talos"
+
 tasks:
-  generate-cilium-manifest:
-    desc: Generate the most recent Cilium manifest
+  init:
+    desc: Generate secret and configuration files
     cmds:
-      - helm repo add cilium https://helm.cilium.io --force-update
-      - helm repo update
-      - |-
-        helm template \
-          cilium \
-          cilium/cilium \
-          --version {{.CILIUM_VERSION}} \
-          --namespace kube-system \
-          --set ipam.mode=kubernetes \
-          --set=kubeProxyReplacement=strict \
-          --set=securityContext.capabilities.ciliumAgent="{CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID}" \
-          --set=securityContext.capabilities.cleanCiliumState="{NET_ADMIN,SYS_ADMIN,SYS_RESOURCE}" \
-          --set=cgroup.autoMount.enabled=false \
-          --set=cgroup.hostRoot=/sys/fs/cgroup \
-          --set=k8sServiceHost=cluster.{{.BASE_DOMAIN}} \
-          --set=k8sServicePort="6443" > ./kubernetes/bootstrap/cilium.yaml
+      - talosctl gen secrets -o {{.TALOS_DIR}}/secrets.yaml
+      - talosctl gen config --with-secrets {{.TALOS_DIR}}/secrets.yaml --config-patch-control-plane @{{.TALOS_DIR}}/cni.yaml --with-examples=false --with-docs=false -o {{.TALOS_DIR}} liveview-template https://cluster.$DOMAIN:6443
+    preconditions:
+      - sh: "! test -f infrastructure/secrets.yaml"
+        msg: |
+          Configuration already exists.
 
   bootstrap:
     desc: Bootstrap the Kubernetes cluster
     cmds:
-      - kubectl apply --server-side --kustomize {{.KUBERNETES_DIR}}/bootstrap
+      - kustomize build --enable-helm {{.KUBERNETES_DIR}}/bootstrap | kubectl apply --server-side -f -
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
       - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/dockerconfig-github.sops.yaml | kubectl apply -f -
