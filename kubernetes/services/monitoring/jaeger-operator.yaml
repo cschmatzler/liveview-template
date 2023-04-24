@@ -15,3 +15,18 @@ spec:
       kind: HelmRelease
       name: jaeger-operator
       namespace: monitoring
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: services-monitoring-jaeger-operator-instances
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: services-monitoring-jaeger-operator
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./kubernetes/services/monitoring/jaeger-operator/instances
+  interval: 15m
+  prune: true
