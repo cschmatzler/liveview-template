@@ -86,7 +86,7 @@ resource "cloudflare_record" "control_plane_v4" {
   type    = "A"
   ttl     = 60
   name    = "cluster"
-  value   = module.control_plane[0].ipv4_address
+  value   = hcloud_load_balancer.control_plane.ipv4
 }
 
 resource "cloudflare_record" "control_plane_v6" {
@@ -94,5 +94,5 @@ resource "cloudflare_record" "control_plane_v6" {
   type    = "AAAA"
   ttl     = 60
   name    = "cluster"
-  value   = module.control_plane[0].ipv6_address
+  value   = hcloud_load_balancer.control_plane.ipv6
 }

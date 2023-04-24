@@ -20,3 +20,29 @@ module "control_plane" {
     "role"        = "control-plane"
   }
 }
+
+resource "hcloud_load_balancer" "control_plane" {
+  name               = "cluster.liveview-template.app"
+  load_balancer_type = "lb11"
+  location           = "fsn1"
+}
+
+resource "hcloud_load_balancer_service" "control_plane" {
+  load_balancer_id = hcloud_load_balancer.control_plane.id
+  protocol         = "tcp"
+  listen_port      = 6443
+  destination_port = 6443
+}
+
+resource "hcloud_load_balancer_network" "control_plane" {
+  load_balancer_id = hcloud_load_balancer.control_plane.id
+  network_id       = var.network_id
+}
+
+resource "hcloud_load_balancer_target" "control_plane" {
+  count = local.control_plane_nodes.count
+
+  type             = "server"
+  load_balancer_id = hcloud_load_balancer.control_plane.id
+  server_id        = module.control_plane[count.index].server_id
+}
