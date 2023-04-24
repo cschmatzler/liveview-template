@@ -34,3 +34,36 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+# ---
+autoDirectNodeRoutes: true
+endpointRoutes:
+  enabled: true
+operator:
+  enabled: true
+  prometheus:
+    serviceMonitor:
+      enabled: true
+prometheus:
+  serviceMonitor:
+    enabled: true
+hubble:
+  enabled: true
+  metrics:
+    enabled:
+      - dns:query;ignoreAAAA,
+      - drop
+      - tcp
+      - flow
+      - http
+      - icmp
+      - port-distribution
+    serviceMonitor: true
+  relay:
+    enabled: true
+    rollOutPods: true
+    prometheus:
+      serviceMonitor:
+        enabled: true
+  ui:
+    enabled: true
+    rollOutPods: true
