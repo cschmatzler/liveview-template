@@ -57,7 +57,8 @@ hubble:
       - http
       - icmp
       - port-distribution
-    serviceMonitor: true
+    serviceMonitor:
+      enabled: true
   relay:
     enabled: true
     rollOutPods: true
