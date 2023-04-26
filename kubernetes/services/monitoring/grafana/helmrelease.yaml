@@ -95,6 +95,10 @@ spec:
               implementation: prometheus
     dashboards:
       default:
+        cilium-operator:
+          gnetId: 16612
+          revision: 1
+          datasource: Prometheus
         cilium-agent:
           gnetId: 16611
           revision: 1
