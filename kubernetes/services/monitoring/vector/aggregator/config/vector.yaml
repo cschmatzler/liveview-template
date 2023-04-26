@@ -19,7 +19,6 @@ transforms:
         parse_common_log(.message) ??
         parse_klog(.message) ??
         parse_syslog!(.message)
-      ., err = merge(., structured)
       .custom_level = .level || structured.severity || structured.level || "unknown"
       coerced_level, err = to_syslog_level(.custom_level)
       if err == null {
