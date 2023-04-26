@@ -1,32 +1,32 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-default-cloudnative-pg
+  name: services-database-cloudnative-pg
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/default/cloudnative-pg/service
+  path: ./kubernetes/services/database/cloudnative-pg/service
   interval: 15m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: cloudnative-pg
-      namespace: default
+      namespace: database
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-default-cloudnative-pg-clusters
+  name: services-database-cloudnative-pg-clusters
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-default-cloudnative-pg
+    - name: services-database-cloudnative-pg
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/default/cloudnative-pg/clusters
+  path: ./kubernetes/services/database/cloudnative-pg/clusters
   interval: 15m
   prune: true
