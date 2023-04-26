@@ -32,3 +32,4 @@ sinks:
       pod: '{{ kubernetes.pod_name }}'
       container: '{{ kubernetes.container_name }}'
       filename: '{{ kubernetes.file }}'
+      stream: '{{ stream }}'
