@@ -34,5 +34,3 @@ spec:
         - name: kubernetes-sink
           protocol: TCP
           port: 6000
-
-
