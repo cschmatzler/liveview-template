@@ -22,7 +22,7 @@ transforms:
       ., err = merge(., structured)
       .custom_level = .level || structured.severity || structured.level || "unknown"
       coerced_level, err = to_syslog_level(.custom_level)
-      if err == nil {
+      if err == null {
         .custom_level = coerced_level
       }
       .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
