@@ -13,8 +13,10 @@ transforms:
     inputs:
       - kubernetes_source
     source: |
-      structured = parse_json(.message) ??
-            parse_common_log(.message)
+      structured =
+        parse_syslog(.message) ??
+        parse_common_log(.message) ??
+        parse_json!(.message)
       . = merge(., structured)
       .custom_level = .severity || .level
       .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
