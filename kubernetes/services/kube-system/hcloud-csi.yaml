@@ -11,4 +11,5 @@ spec:
     name: liveview-template
   path: ./kubernetes/services/kube-system/hcloud-csi
   interval: 15m
+  timeout: 5m
   prune: true

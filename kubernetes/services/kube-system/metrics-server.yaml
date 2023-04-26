@@ -9,6 +9,7 @@ spec:
     name: liveview-template
   path: ./kubernetes/services/kube-system/metrics-server
   interval: 15m
+  timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
