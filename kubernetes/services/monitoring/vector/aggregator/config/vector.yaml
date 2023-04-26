@@ -41,3 +41,4 @@ sinks:
       container: "{{ kubernetes.container_name }}"
       filename: "{{ kubernetes.file }}"
       stream: "{{ stream }}"
+      level: "{{ custom_level }}"
