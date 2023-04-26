@@ -23,5 +23,5 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-values:
-  replicaCount: 3
+  values:
+    replicaCount: 3
