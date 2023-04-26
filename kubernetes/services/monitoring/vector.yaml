@@ -9,6 +9,7 @@ spec:
     name: liveview-template
   path: ./kubernetes/services/monitoring/vector/aggregator
   interval: 15m
+  timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -29,6 +30,7 @@ spec:
     name: liveview-template
   path: ./kubernetes/services/monitoring/vector/agent
   interval: 15m
+  timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1

@@ -9,4 +9,5 @@ spec:
     name: liveview-template
   path: ./kubernetes/services/flux-system/monitoring
   interval: 15m
+  timeout: 5m
   prune: true
