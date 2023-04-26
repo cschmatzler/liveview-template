@@ -63,6 +63,7 @@ hubble:
       enabled: true
   relay:
     enabled: true
+    replicas: 3
     rollOutPods: true
     prometheus:
       enabled: true
