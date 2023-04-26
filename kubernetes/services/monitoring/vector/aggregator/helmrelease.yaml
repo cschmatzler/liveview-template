@@ -29,3 +29,10 @@ spec:
     dataDir: /vector-data-dir
     existingConfigMaps:
       - vector-aggregator-config
+    service:
+      ports:
+        - name: kubernetes-sink
+          protocol: TCP
+          port: 6000
+
+
