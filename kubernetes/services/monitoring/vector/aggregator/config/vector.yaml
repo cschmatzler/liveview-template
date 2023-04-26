@@ -10,13 +10,19 @@ sources:
 transforms:
   kubernetes_remap:
     type: remap
-    inputs: ["kubernetes_source"]
+    inputs:
+      - kubernetes_source
     source: |
+      structured = parse_json(.message) ??
+            parse_common_log(.message)
+      . = merge(., structured)
+      .custom_level = .severity || .level
       .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
       del(.pod_labels)
 sinks:
   kubernetes:
-    inputs: ["kubernetes_remap"]
+    inputs:
+      - kubernetes_remap
     type: loki
     endpoint: http://loki-gateway.monitoring.svc.cluster.local
     encoding:
@@ -25,12 +31,12 @@ sinks:
     remove_label_fields: true
     remove_timestamp: true
     labels:
-      cluster: 'cluster.liveview-template.app'
-      hostname: '{{ kubernetes.pod_node_name }}'
-      node: '{{ kubernetes.pod_node_name }}'
-      namespace: '{{ kubernetes.pod_namespace }}'
-      app: '{{ custom_app_name }}'
-      pod: '{{ kubernetes.pod_name }}'
-      container: '{{ kubernetes.container_name }}'
-      filename: '{{ kubernetes.file }}'
-      stream: '{{ stream }}'
+      cluster: "cluster.liveview-template.app"
+      hostname: "{{ kubernetes.pod_node_name }}"
+      node: "{{ kubernetes.pod_node_name }}"
+      namespace: "{{ kubernetes.pod_namespace }}"
+      app: "{{ custom_app_name }}"
+      pod: "{{ kubernetes.pod_name }}"
+      container: "{{ kubernetes.container_name }}"
+      filename: "{{ kubernetes.file }}"
+      stream: "{{ stream }}"
