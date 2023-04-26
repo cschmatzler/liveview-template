@@ -1,13 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-kube-system-cert-manager
+  name: services-cert-manager-cert-manager
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/kube-system/cert-manager/service
+  path: ./kubernetes/services/cert-manager/cert-manager/service
   interval: 15m
   timeout: 5m
   prune: true
@@ -15,4 +15,4 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: cert-manager
-      namespace: kube-system
+      namespace: cert-manager
