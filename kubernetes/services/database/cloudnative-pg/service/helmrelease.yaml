@@ -10,15 +10,17 @@ spec:
         name: cloudnative-pg
         namespace: flux-system
       chart: cloudnative-pg
-      version: 0.17.2
+      version: 0.17.1
   interval: 1h
   maxHistory: 3
   install:
     createNamespace: true
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
