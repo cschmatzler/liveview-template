@@ -3,3 +3,9 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: vector-aggregator-config
+    files:
+      - vector.yaml=./config/vector.yaml
+configurations:
+  - ./kustomizeconfig.yaml
