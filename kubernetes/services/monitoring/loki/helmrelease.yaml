@@ -120,11 +120,6 @@ spec:
         - name: scratch
           mountPath: /tmp/scratch
     monitoring:
-      dashboards:
-        annotations:
-          kustomize.toolkit.fluxcd.io/substitute: disabled
-        labels:
-          grafana_dashboard: "true"
       selfMonitoring:
         enabled: true
         grafanaAgent:

@@ -33,13 +33,11 @@ sinks:
     remove_label_fields: true
     remove_timestamp: true
     labels:
-      cluster: "cluster.liveview-template.app"
       hostname: "{{ kubernetes.pod_node_name }}"
       node: "{{ kubernetes.pod_node_name }}"
       namespace: "{{ kubernetes.pod_namespace }}"
       app: "{{ custom_app_name }}"
       pod: "{{ kubernetes.pod_name }}"
       container: "{{ kubernetes.container_name }}"
-      filename: "{{ kubernetes.file }}"
       stream: "{{ stream }}"
       level: "{{ custom_level }}"
