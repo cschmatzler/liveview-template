@@ -4,6 +4,8 @@ metadata:
   name: services-monitoring-jaeger-operator
   namespace: flux-system
 spec:
+  dependsOn:
+    - services-kube-system-cert-manager
   sourceRef:
     kind: GitRepository
     name: liveview-template

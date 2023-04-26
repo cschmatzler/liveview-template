@@ -35,7 +35,8 @@ spec:
       sinks:
         kubernetes:
           type: vector
-          compression: true
           version: "2"
+          inputs:
+            - kubernetes_source
+          compression: true
           address: vector-aggregator.monitoring.svc.cluster.local:6000
-          inputs: ["kubernetes_source"]
