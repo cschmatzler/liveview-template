@@ -4,3 +4,4 @@ resources:
   - ./namespace.yaml
   - ./onepassword-connect.yaml
   - ./external-secrets.yaml
+  - ./cert-manager.yaml

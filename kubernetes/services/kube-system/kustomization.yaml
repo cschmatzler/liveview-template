@@ -5,4 +5,3 @@ resources:
   - ./hcloud-ccm.yaml
   - ./hcloud-csi.yaml
   - ./metrics-server.yaml
-  - ./cert-manager.yaml
