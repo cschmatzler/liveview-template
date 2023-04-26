@@ -25,6 +25,7 @@ metadata:
 spec:
   dependsOn:
     - name: services-database-cloudnative-pg
+    - name: services-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template

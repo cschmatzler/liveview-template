@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-default-cloudnative-pg-clusters
+    - name: services-database-cloudnative-pg-clusters
   sourceRef:
     kind: GitRepository
     name: liveview-template

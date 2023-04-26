@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-kube-system-external-secrets-stores
+    - name: services-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
