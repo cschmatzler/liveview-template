@@ -38,14 +38,16 @@ securityContext:
 autoDirectNodeRoutes: false
 endpointRoutes:
   enabled: true
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
 operator:
   enabled: true
   prometheus:
+    enabled: true
     serviceMonitor:
       enabled: true
-prometheus:
-  serviceMonitor:
-    enabled: true
 hubble:
   enabled: true
   metrics:
@@ -63,6 +65,7 @@ hubble:
     enabled: true
     rollOutPods: true
     prometheus:
+      enabled: true
       serviceMonitor:
         enabled: true
   ui:
