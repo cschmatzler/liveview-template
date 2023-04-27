@@ -1,12 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services
+  name: service-flux-system-monitoring
   namespace: flux-system
 spec:
-  interval: 10m
-  path: ./kubernetes/services
-  prune: true
   sourceRef:
     kind: GitRepository
     name: liveview-template
+  path: ./k8s/services/flux-system/monitoring
+  interval: 15m
+  timeout: 5m
+  prune: true

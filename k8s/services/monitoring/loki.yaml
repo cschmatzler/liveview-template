@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/monitoring/loki
+  path: ./k8s/services/monitoring/loki
   interval: 15m
   timeout: 5m
   prune: true

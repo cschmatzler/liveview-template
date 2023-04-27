@@ -1,35 +1,39 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-database-cloudnative-pg
+  name: services-monitoring-vector-aggregator
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/database/cloudnative-pg/service
+  path: ./k8s/services/monitoring/vector/aggregator
   interval: 15m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: cloudnative-pg
-      namespace: database
+      name: vector-aggregator
+      namespace: monitoring
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-database-cloudnative-pg-clusters
+  name: services-monitoring-vector-agent
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-database-cloudnative-pg
-    - name: services-security-external-secrets-stores
+    - name: services-monitoring-vector-aggregator
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/database/cloudnative-pg/clusters
+  path: ./k8s/services/monitoring/vector/agent
   interval: 15m
   timeout: 5m
   prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: vector-agent
+      namespace: monitoring

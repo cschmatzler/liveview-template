@@ -1,8 +1,8 @@
 version: "3"
 
 vars:
-  INFRASTRUCTURE_DIR: "{{.ROOT_DIR}}/infrastructure"
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  INFRASTRUCTURE_DIR: "{{.ROOT_DIR}}/infra"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/k8s"
   BASE_DOMAIN: liveview-template.app
 
 dotenv: [".env"]

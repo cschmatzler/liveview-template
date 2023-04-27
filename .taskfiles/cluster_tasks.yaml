@@ -1,7 +1,7 @@
 version: "3"
 
 vars:
-  TALOS_DIR: "{{.ROOT_DIR}}/infrastructure/talos"
+  TALOS_DIR: "{{.INFRASTRUCTURE_DIR}}/talos"
 
 tasks:
   init:
@@ -10,7 +10,7 @@ tasks:
       - talosctl gen secrets -o {{.TALOS_DIR}}/secrets.yaml
       - talosctl gen config --with-secrets {{.TALOS_DIR}}/secrets.yaml --config-patch-control-plane @{{.TALOS_DIR}}/cni.yaml --with-examples=false --with-docs=false -o {{.TALOS_DIR}} liveview-template https://cluster.$DOMAIN:6443
     preconditions:
-      - sh: "! test -f infrastructure/secrets.yaml"
+      - sh: "! test -f infra/secrets.yaml"
         msg: |
           Configuration already exists.
 

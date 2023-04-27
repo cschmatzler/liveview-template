@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-monitoring-thanos
+  name: services-kube-system-hcloud-ccm
   namespace: flux-system
 spec:
   dependsOn:
@@ -9,12 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/monitoring/thanos
+  path: ./k8s/services/kube-system/hcloud-ccm
   interval: 15m
   timeout: 5m
   prune: true
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: thanos
-      namespace: monitoring

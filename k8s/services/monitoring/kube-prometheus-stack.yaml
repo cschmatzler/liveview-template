@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/monitoring/kube-prometheus-stack
+  path: ./k8s/services/monitoring/kube-prometheus-stack
   interval: 15m
   timeout: 5m
   prune: true

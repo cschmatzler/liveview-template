@@ -1,34 +1,36 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-security-external-secrets
+  name: services-monitoring-jaeger-operator
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: services-kube-system-cert-manager
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/security/external-secrets/service
+  path: ./k8s/services/monitoring/jaeger-operator/service
   interval: 15m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: external-secrets
-      namespace: security
+      name: jaeger-operator
+      namespace: monitoring
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-security-external-secrets-stores
+  name: services-monitoring-jaeger-operator-instances
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-security-onepassword-connect
+    - name: services-monitoring-jaeger-operator
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/security/external-secrets/stores
+  path: ./k8s/services/monitoring/jaeger-operator/instances
   interval: 15m
   timeout: 5m
   prune: true

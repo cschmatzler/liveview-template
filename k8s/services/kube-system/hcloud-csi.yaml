@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./kubernetes/services/kube-system/hcloud-csi
+  path: ./k8s/services/kube-system/hcloud-csi
   interval: 15m
   timeout: 5m
   prune: true

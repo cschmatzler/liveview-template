@@ -21,24 +21,24 @@
   ],
   "flux": {
     "fileMatch": [
-      "kubernetes/.+\\.ya?ml$"
+      "k8s/.+\\.ya?ml$"
     ]
   },
   "helm-values": {
     "fileMatch": [
-      "kubernetes/.+\\.ya?ml$"
+      "k8s/.+\\.ya?ml$"
     ]
   },
   "kubernetes": {
     "fileMatch": [
-      "kubernetes/.+\\.ya?ml$"
+      "k8s/.+\\.ya?ml$"
     ]
   },
   "regexManagers": [
     {
       "description": "Process various other dependencies",
       "fileMatch": [
-        "kubernetes/.+\\.ya?ml$"
+        "k8s/.+\\.ya?ml$"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
