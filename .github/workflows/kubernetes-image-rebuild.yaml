@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - collect-changes
-    if: ${{ needs.collect-changes.outputs.addedOrModifiedImages }} != ''
+    if: ${{ needs.collect-images.outputs.addedOrModifiedImages }} != ''
     strategy:
       matrix:
         image: ["${{ fromJson(needs.collect-changes.outputs.addedOrModifiedImages) }}"]
