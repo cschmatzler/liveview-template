@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: services-networking-tailscale
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./k8s/services/networking/tailscale
+  interval: 15m
+  timeout: 5m
+  prune: true
