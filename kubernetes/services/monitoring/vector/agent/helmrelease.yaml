@@ -32,6 +32,10 @@ spec:
       sources:
         kubernetes_source:
           type: kubernetes_logs
+        metrics_source:
+          type: prometheus_scrape
+          endpoints:
+            - http://localhost:9090/metrics
       sinks:
         kubernetes:
           type: vector

@@ -19,3 +19,4 @@ erl_crash.dump
 /kubernetes/secrets.agekey
 /kubernetes/secrets/*.secret.*
 **/.DS_Store
+Session.vim
