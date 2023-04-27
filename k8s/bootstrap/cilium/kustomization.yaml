@@ -7,7 +7,7 @@ helmCharts:
     repo: https://helm.cilium.io/
     version: 1.13.2
     releaseName: cilium
-    namespace: kube-system
+    namespace: networking
     includeCRDs: true
     valuesFile: ./values.yaml
 

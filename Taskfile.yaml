@@ -1,7 +1,8 @@
 version: "3"
 
 vars:
-  INFRASTRUCTURE_DIR: "{{.ROOT_DIR}}/infra"
+  INFRA_DIR: "{{.ROOT_DIR}}/infra"
+  TALOS_DIR: "{{.INFRA_DIR}}/talos"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/k8s"
   BASE_DOMAIN: liveview-template.app
 
@@ -9,26 +10,8 @@ dotenv: [".env"]
 
 env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/kubeconfig"
+  TALOSCONFIG: "{{.TALOS_DIR}}/talosconfig"
 
 includes:
-  infra: .taskfiles/infrastructure_tasks.yaml
-  cluster: .taskfiles/cluster_tasks.yaml
-
-tasks:
-  init:
-    cmds:
-      - brew install {{.DEPS}}
-    preconditions:
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
-    vars:
-      DEPS: >-
-        age
-        fluxcd/tap/flux
-        go-task/tap/go-task
-        kubernetes-cli
-        pre-commit
-        sops
-        terraform
+  infra: .taskfiles/infra_tasks.yaml
+  k8s: .taskfiles/k8s_tasks.yaml
