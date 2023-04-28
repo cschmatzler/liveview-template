@@ -93,7 +93,7 @@ dashboards:
 ingress:
   enabled: true
   annotations:
-    - kubernetes.io/ingress.class: private
+    kubernetes.io/ingress.class: private
   hosts:
     - &host grafana.liveview-template.app
   tls:
