@@ -76,3 +76,16 @@ hubble:
   ui:
     enabled: true
     rollOutPods: true
+    ingress:
+      enabled: true
+      className: private
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        external-dns.alpha.kubernetes.io/target: liveview-template-app.manticore-hippocampus.ts.net
+        ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - &host hubble.liveview-template.app
+      tls:
+        - secretName: hubble-tls
+          hosts:
+            - *host
