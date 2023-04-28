@@ -11,3 +11,7 @@ subjects:
   - kind: ServiceAccount
     name: tailscale
     namespace: networking
+  - kind: ServiceAccount
+    name: contour-private-envoy
+    namespace: networking
+
