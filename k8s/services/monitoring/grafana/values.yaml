@@ -4,7 +4,7 @@ extraInitContainers:
     imagePullPolicy: Always
     envFrom:
       - secretRef:
-          name: grafana-db
+          name: grafana-config
 sidecar:
   dashboards:
     enabled: true
@@ -21,7 +21,7 @@ testFramework:
 env:
   GF_ANALYTICS_CHECK_FOR_UPDATES: false
 envFromSecrets:
-  - name: grafana-db
+  - name: grafana-config
 
 dashboardProviders:
   dashboardproviders.yaml:
@@ -106,3 +106,9 @@ ingress:
 
 serviceMonitor:
   enabled: true
+
+admin:
+  existingSecret: grafana-config
+  userKey: GF_USERNAME
+  passwordKey: GF_PASSWORD
+
