@@ -1,0 +1,13 @@
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: external-dns
+        key: CF_API_TOKEN
+
+extraArgs:
+  - --source=ingress
+  - --provider=cloudflare
+
+serviceMonitor:
+  enabled: true

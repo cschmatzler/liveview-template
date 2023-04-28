@@ -4,6 +4,8 @@ metadata:
   name: services-networking-tailscale
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: services-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
