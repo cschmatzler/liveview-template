@@ -6,6 +6,7 @@ contour:
     name: private
     default: true
 envoy:
+  serviceAccountName: tailscale
   sidecars:
     - name: tailscale
       image: ghcr.io/tailscale/tailscale:v1.40.0
