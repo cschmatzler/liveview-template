@@ -4,8 +4,11 @@ metadata:
   name: clickhouse-main
 spec:
   configuration:
+    zookeeper:
+      nodes:
+        - host: zookeeper.database.svc.cluster.local
     clusters:
-      - name: shard1-repl2
+      - name: main
         layout:
-          shardsCount: 1
-          replicasCount: 2
+          shardsCount: 3
+          replicasCount: 3
