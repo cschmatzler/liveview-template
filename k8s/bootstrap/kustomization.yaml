@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - ./crds
   - ./namespace.yaml
+  - ./cilium
   - github.com/fluxcd/flux2/manifests/install?ref=v2.0.0-rc.1
