@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./cilium.yaml
+  - ./external-dns.yaml
   - ./tailscale.yaml
   - ./contour.yaml

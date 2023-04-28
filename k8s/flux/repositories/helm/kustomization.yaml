@@ -5,6 +5,7 @@ resources:
   - ./cilium.yaml
   - ./clickhouse-operator.yaml
   - ./cloudnative-pg.yaml
+  - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./grafana.yaml
   - ./jaegertracing.yaml
