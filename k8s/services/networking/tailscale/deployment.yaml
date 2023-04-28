@@ -21,7 +21,7 @@ spec:
       serviceAccountName: tailscale
       containers:
         - name: tailscale
-          image: ghcr.io/tailscale/tailscale:v1.40.0
+          image: ghcr.io/tailscale/tailscale:v1.32.2
           securityContext:
             capabilities:
               add:
