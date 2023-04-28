@@ -1,28 +1,26 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-private
+  name: nginx-ingress-controller-private
 spec:
   chart:
     spec:
       sourceRef:
         kind: HelmRepository
-        name: ingress-nginx
+        name: bitnami
         namespace: flux-system
-      version: 4.6.0
-      chart: ingress-nginx
+      chart: nginx-ingress-controller
+      version: 9.6.0
   interval: 30m
   install:
-    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
   valuesFrom:
     - kind: ConfigMap
-      name: ingress-nginx-private-values
+      name: nginx-ingress-controller-private-values
