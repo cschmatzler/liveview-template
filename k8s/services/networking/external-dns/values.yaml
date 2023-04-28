@@ -1,9 +1,14 @@
 env:
-  - name: CF_API_TOKEN
+  - name: CF_API_KEY
     valueFrom:
       secretKeyRef:
         name: external-dns
-        key: CF_API_TOKEN
+        key: CF_API_KEY
+  - name: CF_API_EMAIL
+    valueFrom:
+      secretKeyRef:
+        name: external-dns
+        key: CF_API_EMAIL
 
 logLevel: debug
 
