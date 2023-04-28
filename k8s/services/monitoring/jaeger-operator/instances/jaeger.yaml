@@ -10,3 +10,14 @@ spec:
       es:
         server-urls: https://opensearch-cluster-master.database.svc.cluster.local:9200
         index-prefix: jaeger
+        tls:
+          crt: /os/certificates/tls.crt
+          key: /os/certificates/tls.key
+  volumeMounts:
+    - name: opensearch-tls
+      mountPath: /os/certificates/
+      readOnly: true
+  volumes:
+    - name: opensearch-tls
+      secret:
+        secretName: opensearch-tls
