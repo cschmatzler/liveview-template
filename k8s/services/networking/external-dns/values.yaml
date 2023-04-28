@@ -5,9 +5,9 @@ env:
         name: external-dns
         key: CF_API_TOKEN
 
+provider: cloudflare
 extraArgs:
   - --source=ingress
-  - --provider=cloudflare
 
 serviceMonitor:
   enabled: true
