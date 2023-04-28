@@ -49,7 +49,7 @@ defmodule Template.MixProject do
       {:opentelemetry_liveview, "~> 1.0-rc.4"},
       {:bandit, "~> 0.7"},
       {:boundary, "~> 0.9", runtime: false},
-      {:carbonite, "~> 0.8"},
+      {:carbonite, "~> 0.9"},
       {:configcat, "~> 2.0"},
       {:corsica, "~> 1.3"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
