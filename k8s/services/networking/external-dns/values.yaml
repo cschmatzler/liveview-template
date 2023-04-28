@@ -5,6 +5,8 @@ env:
         name: external-dns
         key: CF_API_TOKEN
 
+logLevel: debug
+
 provider: cloudflare
 extraArgs:
   - --source=ingress
