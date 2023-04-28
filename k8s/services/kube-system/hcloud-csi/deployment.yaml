@@ -72,7 +72,7 @@ spec:
         volumeMounts:
         - mountPath: /run/csi
           name: socket-dir
-      - image: registry.k8s.io/sig-storage/livenessprobe:v2.9.0
+      - image: registry.k8s.io/sig-storage/livenessprobe:v2.10.0
         imagePullPolicy: Always
         name: liveness-probe
         volumeMounts:
