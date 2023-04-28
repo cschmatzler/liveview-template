@@ -14,5 +14,6 @@ spec:
       - dns01:
           cloudflare:
             apiTokenSecretRef:
-              name: security-cert-manager
+              name: cert-manager
+              namespace: security
               key: CF_API_TOKEN
