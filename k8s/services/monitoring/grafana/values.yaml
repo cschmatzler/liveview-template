@@ -109,6 +109,6 @@ serviceMonitor:
 
 admin:
   existingSecret: grafana-config
-  userKey: GF_USERNAME
-  passwordKey: GF_PASSWORD
+  userKey: GRAFANA_USERNAME
+  passwordKey: GRAFANA_PASSWORD
 
