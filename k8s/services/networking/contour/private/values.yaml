@@ -9,4 +9,3 @@ envoy:
   service:
     type: ClusterIP
     externalTrafficPolicy: ''
-    clusterIP: 10.96.0.60
