@@ -22,9 +22,6 @@ spec:
       containers:
         - name: tailscale
           image: ghcr.io/tailscale/tailscale:v1.40.0
-          args:
-            - --accept-routes
-            - --advertise-routes=10.96.0.0/12
           securityContext:
             capabilities:
               add:
@@ -42,4 +39,4 @@ spec:
             - name: TS_DEST_IP
               value: 10.96.0.60
             - name: TS_EXTRA_ARGS
-              value: --hostname=liveview-template-app
+              value: --hostname=liveview-template-app --accept-routes --advertise-routes=10.96.0.0/12
