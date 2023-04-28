@@ -8,5 +8,5 @@ spec:
     type: elasticsearch
     options:
       es:
-        server-urls: http://opensearch-cluster-master.database.svc.cluster.local:9200
+        server-urls: https://opensearch-cluster-master.database.svc.cluster.local:9200
         index-prefix: jaeger
