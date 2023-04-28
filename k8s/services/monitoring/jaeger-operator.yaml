@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-kube-system-cert-manager
+    - name: services-security-cert-manager
   sourceRef:
     kind: GitRepository
     name: liveview-template
