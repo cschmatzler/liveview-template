@@ -95,7 +95,7 @@ ingress:
   ingressClassName: private
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    external-dns.alpha.kubernetes.io/target: manticore-hippocampus.ts.net
+    external-dns.alpha.kubernetes.io/target: liveview-template-app.manticore-hippocampus.ts.net
     ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:
     - &host grafana.liveview-template.app
