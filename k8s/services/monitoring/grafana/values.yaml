@@ -93,6 +93,8 @@ dashboards:
 ingress:
   enabled: true
   ingressClassName: private
+  annotations:
+    external-dns.alpha.kubernetes.io/target: manticore-hippocampus.ts.net
   hosts:
     - &host grafana.liveview-template.app
   tls:
