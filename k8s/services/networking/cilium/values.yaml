@@ -83,7 +83,6 @@ hubble:
         cert-manager.io/cluster-issuer: letsencrypt
         external-dns.alpha.kubernetes.io/target: liveview-template-app.manticore-hippocampus.ts.net
         ingress.kubernetes.io/force-ssl-redirect: "true"
-        projectcontour.io/websocket-routes: /api/ui.UI/GetControlStream
       hosts:
         - &host hubble.liveview-template.app
       tls:
