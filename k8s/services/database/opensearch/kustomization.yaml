@@ -3,3 +3,9 @@ kind: Kustomization
 namespace: database
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: opensearch-values
+    files:
+      - values.yaml=./values.yaml
+configurations:
+  - kustomizeconfig.yaml
