@@ -25,7 +25,7 @@ envFromSecrets:
 
 dashboardProviders:
   dashboardproviders.yaml:
-    apiVersion: 1
+    apiVersion: 1grafa
     providers:
       - name: default
         orgId: 1
@@ -94,7 +94,9 @@ ingress:
   enabled: true
   ingressClassName: private
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     external-dns.alpha.kubernetes.io/target: manticore-hippocampus.ts.net
+    ingress.kubernetes.io/force-ssl-redirect: true
   hosts:
     - &host grafana.liveview-template.app
   tls:
