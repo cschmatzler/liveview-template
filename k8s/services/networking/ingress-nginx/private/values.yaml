@@ -1,0 +1,19 @@
+controller:
+  replicaCount: 3
+  service:
+    enabled: true
+    type: ClusterIP
+    loadBalancerIP: 10.96.0.60
+    externalTrafficPolicy: ""
+  publishService:
+    enabled: true
+  ingressClassResource:
+    name: private
+    default: true
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: networking
+      namespaceSelector:
+        any: true
