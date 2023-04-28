@@ -17,3 +17,5 @@ controller:
       namespace: networking
       namespaceSelector:
         any: true
+defaultBackend:
+  enabled: true
