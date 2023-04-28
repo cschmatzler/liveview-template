@@ -1,5 +1,9 @@
 ingressClassResource:
   name: private
+controller:
+  replicaCount: 3
+defaultBackend:
+  replicaCount: 3
 service:
   type: ClusterIP
   clusterIP: 10.96.0.60
