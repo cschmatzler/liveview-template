@@ -2,4 +2,4 @@ ingressClassResource:
   name: private
 service:
   type: ClusterIP
-  clusterIP: 10.96.0.10
+  clusterIP: 10.96.0.60
