@@ -25,7 +25,7 @@ spec:
       containers:
       - args:
         - --kubelet-registration-path=/var/lib/kubelet/plugins/csi.hetzner.cloud/socket
-        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.7.0
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
         name: csi-node-driver-registrar
         volumeMounts:
         - mountPath: /run/csi
