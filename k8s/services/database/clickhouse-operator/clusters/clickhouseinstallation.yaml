@@ -6,7 +6,7 @@ spec:
   configuration:
     zookeeper:
       nodes:
-        - host: zookeeper.database.svc.cluster.local
+        - host: clickhouse-operator-zookeeper.database.svc.cluster.local
     clusters:
       - name: main
         layout:
