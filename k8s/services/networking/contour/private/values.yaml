@@ -10,6 +10,10 @@ envoy:
     create: false
     name: tailscale
     automountServiceAccountToken: true
+  service:
+    type: ClusterIP
+    externalTrafficPolicy: ''
+    clusterIP: 10.96.0.60
   sidecars:
     - name: tailscale
       image: ghcr.io/tailscale/tailscale:v1.40.0
