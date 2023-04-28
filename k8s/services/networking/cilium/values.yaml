@@ -39,6 +39,8 @@ securityContext:
 autoDirectNodeRoutes: false
 endpointRoutes:
   enabled: true
+loadBalancer:
+  algorithm: maglev
 prometheus:
   enabled: true
   serviceMonitor:
