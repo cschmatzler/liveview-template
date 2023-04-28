@@ -35,7 +35,7 @@ spec:
                   name: tailscale
                   key: TS_AUTH_KEY
             - name: TS_KUBE_SECRET
-              value: tailscale
+              value: tailscale-state
             - name: TS_DEST_IP
               value: 10.96.0.60
             - name: TS_EXTRA_ARGS
