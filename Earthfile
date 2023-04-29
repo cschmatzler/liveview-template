@@ -33,8 +33,6 @@ build-base:
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
   DO github.com/earthly/lib+INSTALL_DIND
 
-  SAVE IMAGE --cache-hint
-
 build-deps:
   FROM +build-base
 
@@ -81,7 +79,7 @@ test-image:
 
   RUN mix compile --warnings-as-errors
 
-  SAVE IMAGE ghcr.io/cschmatzler/liveview-template:test
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:test
 
 release:
   FROM +build-deps
@@ -112,7 +110,7 @@ prod-image:
 
   ENTRYPOINT ["bin/start"]
 
-  SAVE IMAGE ghcr.io/cschmatzler/liveview-template:latest
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:latest
 
 ci:
   BUILD +test-image
