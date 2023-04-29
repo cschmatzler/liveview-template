@@ -80,6 +80,8 @@ test-image:
 
   RUN mix compile --warnings-as-errors
 
+  SAVE IMAGE ghcr.io/cschmatzler/liveview-template:test
+
 release:
   FROM +build-deps
 
@@ -117,34 +119,28 @@ ci:
   BUILD +analyze
 
 postgres:
-    FROM postgres:15.2
+  FROM postgres:15.2
 
-    ENV POSTGRES_USER=postgres
-    ENV POSTGRES_PASSWORD=postgres
+  ENV POSTGRES_USER=postgres
+  ENV POSTGRES_PASSWORD=postgres
 
-    EXPOSE 5432
-
-    SAVE IMAGE --cache-hint
+  EXPOSE 5432
 
 test:
-  FROM earthly/dind
+  FROM +test-image
 
   COPY docker-compose.test.yaml ./docker-compose.yaml
 
   WITH DOCKER \
     --load postgres:latest=+postgres \
-    --load liveview-template:latest=+test-image \
     --compose docker-compose.yaml \
     --service postgres
-    RUN docker-compose run liveview-template /bin/sh -c "task app:test"
+    RUN task app:test
   END
 
   # SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
 
 analyze:
-  FROM earthly/dind
+  FROM +test-image
 
-  WITH DOCKER \
-    --load liveview-template:latest=+test-image
-    RUN docker run liveview-template /bin/sh -c "task app:analyze"
-  END
+  RUN task app:analyze
