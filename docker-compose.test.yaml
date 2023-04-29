@@ -13,7 +13,7 @@ services:
       timeout: 5s
       retries: 20
 
-  test:
+  liveview-template:
     image: liveview-template:latest
     environment:
       - MIX_ENV=test
