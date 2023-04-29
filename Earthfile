@@ -34,10 +34,7 @@ build-base:
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
 
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:build-base
-
 build-deps:
-  BUILD +build-base
   FROM +build-base
 
   ENV HOME=$APP_DIR
@@ -48,8 +45,6 @@ build-deps:
 
   RUN mix 'do' local.hex --force, local.rebar --force
   RUN mix deps.get
-
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:build-deps
 
 prod-base:
   FROM ${PROD_BASE_IMAGE_NAME}:${PROD_BASE_IMAGE_TAG}
@@ -67,6 +62,8 @@ prod-base:
       ca-certificates \
       locales && \
     locale-gen
+
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:prod-base
 
 test-image:
   FROM +build-deps
@@ -86,7 +83,6 @@ test-image:
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:test
 
 release:
-  BUILD +build-deps
   FROM +build-deps
 
   ENV MIX_ENV=prod
@@ -112,6 +108,7 @@ release:
 
 prod-image:
   BUILD +release
+  BUILD +prod-base
 
   ARG --required IMAGE_TAG
 
@@ -124,7 +121,6 @@ prod-image:
 
   ENTRYPOINT ["bin/start"]
 
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:latest
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:${IMAGE_TAG}
 
 ci:
