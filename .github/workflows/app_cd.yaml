@@ -1,0 +1,31 @@
+name: Deploy app
+on:
+  push:
+    branches:
+      - master
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - run: git config --global user.name "actions[bot]"
+      - run: git config --global user.email "actions@liveview-template.app"
+      - run: echo $VERSION > version
+      - run: git tag -a $VERSION -m "Release $VERSION"
+      - run: git push --tags
+      - run: git commit -am "Release $VERSION"
+      - run: git push
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+
+      - run: cat version

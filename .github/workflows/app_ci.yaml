@@ -1,18 +1,16 @@
-name: Check
+name: Test and analyze app
 on:
   pull_request:
-  workflow_call:
-    secrets:
-      CODECOV_TOKEN:
-        required: true
 
 jobs:
   check:
     runs-on: buildjet-2vcpu-ubuntu-2204-arm
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
 
-      - uses: earthly/actions-setup@v1
+      - name: Install Earthly
+        uses: earthly/actions-setup@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version: 0.7.4
@@ -24,13 +22,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: earthly -P --strict --push --use-inline-cache --save-inline-cache +ci
-        if: github.ref_name == 'master'
+      - name: Run Earthly +ci
+        run: earthly -P --strict --use-inline-cache +ci
 
-      - run: earthly -P --strict --use-inline-cache +ci
-        if: github.ref_name != 'master'
-
-      - uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3
         with:
           os: aarch64
           token: ${{ secrets.CODECOV_TOKEN }}
