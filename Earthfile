@@ -67,6 +67,7 @@ test-image:
   FROM +build-deps
 
   ENV MIX_ENV=test
+
   WORKDIR $APP_DIR
 
   RUN mix deps.compile
@@ -102,13 +103,7 @@ release:
   RUN task ci:deploy-assets
 
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:release
-  SAVE ARTIFACT _build/prod/rel/template /release
-
-build-prod-image:
-  ARG --required IMAGE_TAG
-
-  BUILD +release
-  BUILD +prod-image --build-arg IMAGE_TAG=$IMAGE_TAG
+  #SAVE ARTIFACT _build/prod/rel/template /release
 
 prod-image:
   ARG --required IMAGE_TAG

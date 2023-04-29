@@ -39,7 +39,7 @@ jobs:
         run: echo $VERSION > version
 
       - name: Run earthly +prod-image
-        run: earthly --ci --push --use-inline-cache --save-inline-cache --build-arg IMAGE_TAG=$VERSION +release
+        run: earthly -P --ci --push --output --use-inline-cache --save-inline-cache --build-arg IMAGE_TAG=$VERSION +release
 
   release:
     name: Release
