@@ -54,6 +54,8 @@ build-deps:
   RUN mix 'do' local.rebar --force, local.hex --force
   RUN mix deps.get
 
+  SAVE IMAGE --cache-hint
+
 prod-base:
   FROM ${PROD_BASE_IMAGE_NAME}:${PROD_BASE_IMAGE_TAG}
 
@@ -82,7 +84,7 @@ prod-base:
 
   SAVE IMAGE --cache-hint
 
-test-image:
+test-base:
   FROM +build-deps
 
   ENV MIX_ENV=test
@@ -96,6 +98,8 @@ test-image:
   COPY --dir lib priv test .taskfiles ./
 
   RUN mix compile --warnings-as-errors
+
+  SAVE IMAGE --cache-hint
 
 release:
   FROM +build-deps
@@ -129,18 +133,17 @@ prod-image:
   SAVE IMAGE liveview-template:latest
 
 test:
-  FROM earthly/dind
+  FROM +test-base
 
   COPY docker-compose.test.yaml ./docker-compose.yaml
 
   WITH DOCKER \
-    --load liveview-template:latest=+test-image \
     --compose docker-compose.yaml \
     --service postgres
-    RUN docker-compose run liveview-template /bin/sh -c "task app:test"
+    RUN task app:test
   END
 
-  # SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
+  SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
 
 analyze:
   FROM earthly/dind
@@ -149,5 +152,3 @@ analyze:
     --load liveview-template:latest=+test-image
     RUN docker run liveview-template /bin/sh -c "task app:analyze"
   END
-
-
