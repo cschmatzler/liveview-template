@@ -12,12 +12,3 @@ services:
       interval: 2s
       timeout: 5s
       retries: 20
-
-  liveview-template:
-    image: liveview-template:latest
-    environment:
-      - MIX_ENV=test
-      - DB_HOST=postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
