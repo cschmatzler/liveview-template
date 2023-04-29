@@ -33,10 +33,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@4b4e9c3e2d4531116a6f8ba8e71fc6e2cb6e6c8c # v2
-
       - run: earthly -P --ci --push --remote-cache=ghcr.io/cschmatzler/liveview-template:cache-ci +ci
         if: github.ref_name == 'master'
 

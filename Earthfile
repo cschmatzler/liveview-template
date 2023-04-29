@@ -46,8 +46,6 @@ build-deps:
   RUN mix 'do' local.rebar --force, local.hex --force
   RUN mix deps.get
 
-  SAVE IMAGE --cache-hint
-
 prod-base:
   FROM ${PROD_BASE_IMAGE_NAME}:${PROD_BASE_IMAGE_TAG}
 
