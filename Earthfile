@@ -117,21 +117,12 @@ ci:
   BUILD +test
   BUILD +analyze
 
-postgres:
-  FROM postgres:15.2
-
-  ENV POSTGRES_USER=postgres
-  ENV POSTGRES_PASSWORD=postgres
-
-  EXPOSE 5432
-
 test:
   FROM +test-image
 
   COPY docker-compose.test.yaml ./docker-compose.yaml
 
   WITH DOCKER \
-    --load postgres:latest=+postgres \
     --compose docker-compose.yaml \
     --service postgres
     RUN task app:test
