@@ -108,6 +108,7 @@ prod-image:
   ARG --required IMAGE_TAG
 
   FROM +prod-base
+  BUILD +release
 
   WORKDIR $APP_DIR
   USER $APP_USER
