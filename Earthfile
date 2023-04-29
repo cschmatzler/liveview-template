@@ -1,8 +1,8 @@
 VERSION 0.7
 
 ARG --global ELIXIR_VER=1.14.3
-ARG --global OTP_VER=25.2.2
-ARG --global ELIXIR_DEBIAN_VER=bullseye-20230109-slim
+ARG --global OTP_VER=25.3.1
+ARG --global ELIXIR_DEBIAN_VER=bullseye-20230227-slim
 ARG --global DEBIAN_VER=bullseye-slim
 
 ARG --global BUILD_BASE_IMAGE_NAME=hexpm/elixir
@@ -34,7 +34,6 @@ build-base:
       curl
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
-  DO github.com/earthly/lib+INSTALL_DIND
 
 build-deps:
   FROM +build-base
@@ -45,7 +44,7 @@ build-deps:
   COPY --dir config ./
   COPY mix.exs mix.lock ./
 
-  RUN mix 'do' local.rebar --force, local.hex --force
+  RUN mix 'do' local.hex --force, local.rebar --force
   RUN mix deps.get
 
 prod-base:
@@ -131,7 +130,7 @@ test:
     RUN task app:test
   END
 
-  # SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
+  SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
 
 analyze:
   FROM +test-image
