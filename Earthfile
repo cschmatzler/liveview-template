@@ -86,13 +86,15 @@ release:
   FROM +build-deps
 
   ENV MIX_ENV=prod
+  ENV REQUIRE_VERSION_FILE=true
+
   WORKDIR $APP_DIR
 
   RUN mix deps.compile
   RUN mix esbuild.install --if-missing
   RUN mix tailwind.install --if-missing
 
-  COPY Taskfile.yaml .
+  COPY Taskfile.yaml version .
   COPY --dir .taskfiles assets lib priv rel ./
 
   RUN mix compile --warnings-as-errors

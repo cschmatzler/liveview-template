@@ -13,6 +13,7 @@ concurrency:
 
 jobs:
   build:
+    name: Build production image
     runs-on: buildjet-2vcpu-ubuntu-2204-arm
     steps:
       - name: Checkout
@@ -34,19 +35,30 @@ jobs:
       - name: Set environment
         run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
 
-      - name: Run Earthly +prod-image
+      - name: Update version file
+        run: echo $VERSION > version
+
+      - name: Run earthly +prod-image
         run: earthly --ci --push --build-arg IMAGE_TAG=$VERSION +prod-image
 
-  bump-version:
+  release:
+    name: Releases a new version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
-      - run: git config --global user.name "actions[bot]"
-      - run: git config --global user.email "actions@liveview-template.app"
-      - run: echo $VERSION > version
-      - run: git tag -a $VERSION -m "Release $VERSION"
-      - run: git push --tags
-      - run: git commit -am "Release $VERSION"
-      - run: git push
+
+      - name: Set environment
+        run: echo "VERSION=$(date '+%y.%-m.%-d')-${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Update version file
+        run: echo $VERSION > version
+
+      - name: Push new version and tag
+        run: |
+          git config --global user.name "release[bot]"
+          git config --global user.email "actions@liveview-template.app"
+          git commit -am "Release $VERSION"
+          git push
+          git tag -a $VERSION -m "Release $VERSION"
+          git push --tags
