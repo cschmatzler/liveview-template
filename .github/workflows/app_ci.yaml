@@ -1,9 +1,10 @@
-name: Test and analyze app
+name: "App: Test and analyze"
 on:
   pull_request:
 
 jobs:
-  check:
+  test-and-analyze:
+    name: Test and analyze
     runs-on: buildjet-2vcpu-ubuntu-2204-arm
     steps:
       - name: Checkout
