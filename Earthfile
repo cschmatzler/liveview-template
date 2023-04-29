@@ -117,7 +117,7 @@ prod-image:
 
   ENTRYPOINT ["bin/start"]
 
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:${IMAGE_TAG}
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:${IMAGE_TAG} ghcr.io/cschmatzler/liveview-template:latest
 
 ci:
   BUILD +test-image
