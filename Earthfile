@@ -109,8 +109,12 @@ prod-image:
 
   SAVE IMAGE ghcr.io/cschmatzler/liveview-template:latest
 
-test:
+ci:
   BUILD +test-image
+  BUILD +test
+  BUILD +analyze
+
+test:
   FROM earthly/dind
 
   COPY docker-compose.test.yaml ./docker-compose.yaml
