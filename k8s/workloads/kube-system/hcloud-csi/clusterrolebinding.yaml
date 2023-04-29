@@ -7,5 +7,5 @@ roleRef:
   kind: ClusterRole
   name: hcloud-csi
 subjects:
-- kind: ServiceAccount
-  name: hcloud-csi
+  - kind: ServiceAccount
+    name: hcloud-csi

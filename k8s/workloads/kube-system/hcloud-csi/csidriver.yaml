@@ -7,4 +7,4 @@ spec:
   fsGroupPolicy: File
   podInfoOnMount: true
   volumeLifecycleModes:
-  - Persistent
+    - Persistent
