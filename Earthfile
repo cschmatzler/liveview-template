@@ -97,7 +97,7 @@ release:
 
   RUN mix compile --warnings-as-errors
   RUN mix release
-  RUN task app:deploy-assets
+  RUN task ci:deploy-assets
 
   SAVE ARTIFACT _build/prod/rel/template /release
 
@@ -126,12 +126,12 @@ test:
   WITH DOCKER \
     --compose docker-compose.yaml \
     --service postgres
-    RUN task app:test
+    RUN task ci:test
   END
 
-  SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
+  SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report.json
 
 analyze:
   FROM +test-image
 
-  RUN task app:analyze
+  RUN task ci:analyze

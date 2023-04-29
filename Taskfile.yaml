@@ -16,3 +16,4 @@ includes:
   infra: .taskfiles/infra_tasks.yaml
   k8s: .taskfiles/k8s_tasks.yaml
   app: .taskfiles/app_tasks.yaml
+  ci: .taskfiles/ci_tasks.yaml
