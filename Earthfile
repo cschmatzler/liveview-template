@@ -90,11 +90,13 @@ release:
 
   WORKDIR $APP_DIR
 
+  COPY version .
+
   RUN mix deps.compile
   RUN mix esbuild.install --if-missing
   RUN mix tailwind.install --if-missing
 
-  COPY Taskfile.yaml version .
+  COPY Taskfile.yaml .
   COPY --dir .taskfiles assets lib priv rel ./
 
   RUN mix compile --warnings-as-errors
