@@ -29,6 +29,7 @@ build-base:
       build-essential \
       ca-certificates \
       curl \
+      docker-engine \
       jq
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
