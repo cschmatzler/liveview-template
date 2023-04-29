@@ -63,8 +63,6 @@ prod-base:
       locales && \
     locale-gen
 
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:prod-base
-
 test-image:
   FROM +build-deps
 
@@ -106,10 +104,13 @@ release:
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:release
   SAVE ARTIFACT _build/prod/rel/template /release
 
-prod-image:
-  BUILD +release
-  BUILD +prod-base
+build-prod-image:
+  ARG --required IMAGE_TAG
 
+  BUILD +release
+  BUILD +prod-image --build-arg IMAGE_TAG=$IMAGE_TAG
+
+prod-image:
   ARG --required IMAGE_TAG
 
   FROM +prod-base
@@ -121,6 +122,7 @@ prod-image:
 
   ENTRYPOINT ["bin/start"]
 
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:latest
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:${IMAGE_TAG}
 
 ci:
