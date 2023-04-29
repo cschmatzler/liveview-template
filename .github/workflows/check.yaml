@@ -8,7 +8,7 @@ on:
 
 jobs:
   check:
-    runs-on: buildjet-8vcpu-ubuntu-2204-arm
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
 
@@ -29,3 +29,8 @@ jobs:
 
       - run: earthly -P --ci --use-inline-cache +ci
         if: github.ref_name != 'master'
+
+      - uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: excoveralls-report.json
