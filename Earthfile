@@ -118,12 +118,23 @@ ci:
   BUILD +test
   BUILD +analyze
 
+postgres:
+    FROM postgres:15.2
+
+    ENV POSTGRES_USER=postgres
+    ENV POSTGRES_PASSWORD=postgres
+
+    EXPOSE 5432
+
+    SAVE IMAGE --cache-hint
+
 test:
   FROM earthly/dind
 
   COPY docker-compose.test.yaml ./docker-compose.yaml
 
   WITH DOCKER \
+    --load postgres:latest=+postgres \
     --load liveview-template:latest=+test-image \
     --compose docker-compose.yaml \
     --service postgres
