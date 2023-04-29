@@ -1,15 +1,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-networking-tailscale
+  name: workloads-kube-system-hcloud-ccm
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-security-external-secrets-stores
+    - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/networking/tailscale
+  path: ./k8s/workloads/kube-system/hcloud-ccm
   interval: 15m
   timeout: 5m
   prune: true

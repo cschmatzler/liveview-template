@@ -1,18 +1,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-kube-system-metrics-server
+  name: workloads-networking-external-dns
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/kube-system/metrics-server
+  path: ./k8s/workloads/networking/external-dns
   interval: 15m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: metrics-server
-      namespace: kube-system
+      name: external-dns
+      namespace: networking

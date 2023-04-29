@@ -1,0 +1,31 @@
+version: "3"
+tasks:
+  analyze:
+    desc: Lints the project
+    env:
+      MIX_ENV: test
+    cmds:
+      - mix deps.unlock --check-unused
+      - mix hex.audit
+      - mix format --check-formatted
+      - mix credo
+      - mix excellent_migrations.check_safety
+      - mix sobelow --config
+
+  test:
+    desc: Tests the project
+    env:
+      MIX_ENV: test
+    cmds:
+      - mix ecto.drop
+      - mix ecto.create
+      - mix ecto.migrate
+      - mix coveralls.json
+
+  deploy-assets:
+    desc: Deploys the project's assets
+    cmds:
+      - mix phx.digest.clean
+      - mix tailwind default --minify
+      - mix esbuild default --minify
+      - mix phx.digest

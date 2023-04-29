@@ -1,15 +1,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-kube-system-hcloud-csi
+  name: workloads-networking-tailscale
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-security-external-secrets-stores
+    - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/kube-system/hcloud-csi
+  path: ./k8s/workloads/networking/tailscale
   interval: 15m
   timeout: 5m
   prune: true

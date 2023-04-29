@@ -1,20 +1,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-monitoring-kube-prometheus-stack
+  name: workloads-monitoring-loki
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-security-external-secrets-stores
+    - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/monitoring/kube-prometheus-stack
+  path: ./k8s/workloads/monitoring/loki
   interval: 15m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: kube-prometheus-stack
+      name: loki
       namespace: monitoring

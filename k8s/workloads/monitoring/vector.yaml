@@ -1,36 +1,39 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-monitoring-jaeger-operator
+  name: workloads-monitoring-vector-aggregator
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: services-security-cert-manager
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/monitoring/jaeger-operator/service
+  path: ./k8s/workloads/monitoring/vector/aggregator
   interval: 15m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: jaeger-operator
+      name: vector-aggregator
       namespace: monitoring
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-monitoring-jaeger-operator-instances
+  name: workloads-monitoring-vector-agent
   namespace: flux-system
 spec:
   dependsOn:
-    - name: services-monitoring-jaeger-operator
+    - name: workloads-monitoring-vector-aggregator
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/monitoring/jaeger-operator/instances
+  path: ./k8s/workloads/monitoring/vector/agent
   interval: 15m
   timeout: 5m
   prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: vector-agent
+      namespace: monitoring

@@ -6,91 +6,19 @@ on:
       CODECOV_TOKEN:
         required: true
 
-env:
-  MIX_ENV: test
-
 jobs:
-  compile:
+  build-test-image:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
-        with:
-          otp-version: "25.3"
-          elixir-version: "1.14-otp-25"
-      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
-        id: deps-cache
-        with:
-          path: |
-            deps
-            _build
-          key: mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            mix-
-      - run: mix deps.get
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-      - run: mix deps.compile
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-      - run: mix compile --warnings-as-errors
+      - uses: earthly/actions-setup@v1
+      - run: |
+          branch=""
+          if [ -n "$GITHUB_HEAD_REF" ]; then
+            branch="$GITHUB_HEAD_REF"
+          else
+            branch="${GITHUB_REF##*/}"
+          fi
+          git checkout -b "$branch" || true
+      - run: earthly -P +test-image
 
-  test:
-    runs-on: ubuntu-latest
-    needs: compile
-    env:
-      POSTGRES_HOST: localhost
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-    steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
-        with:
-          otp-version: "25.3"
-          elixir-version: "1.14-otp-25"
-      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
-        with:
-          path: |
-            deps
-            _build
-          key: mix-${{ github.sha }}
-          restore-keys: |
-            mix-${{ hashFiles('**/mix.lock') }}
-      - run: mix ecto.reset
-      - run: mix coveralls.json
-      - uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: cover/excoveralls.json
-
-  lint:
-    runs-on: ubuntu-latest
-    needs: compile
-    steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
-        with:
-          otp-version: "25.3"
-          elixir-version: "1.14-otp-25"
-      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
-        with:
-          path: |
-            deps
-            _build
-          key: mix-${{ github.sha }}
-          restore-keys: |
-            mix-${{ hashFiles('**/mix.lock') }}
-      - run: mix deps.unlock --check-unused
-      - run: mix hex.audit
-      - run: mix format --check-formatted
-      - run: mix credo
-      - run: mix excellent_migrations.check_safety
-      - run: mix sobelow --config
-      - uses: aquasecurity/trivy-action@e5f43133f6e8736992c9f3c1b3296e24b37e17f2 # 0.10.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          trivy-config: trivy.yaml

@@ -1,18 +1,18 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: services-database-opensearch
+  name: workloads-networking-nginx-ingress-controller-private
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/services/database/opensearch
+  path: ./k8s/workloads/networking/nginx-ingress-controller/private
   interval: 15m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: opensearch
-      namespace: database
+      name: nginx-ingress-controller-private
+      namespace: networking
