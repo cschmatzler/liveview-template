@@ -19,6 +19,9 @@ ARG --global APP_GROUP=$APP_USER
 ARG --global APP_USER_ID=65532
 ARG --global APP_GROUP_ID=$APP_USER_ID
 
+run-ci:
+  BUILD --platform=linux/amd64 --platform=linux/arm64 +ci
+
 build-base:
   FROM ${BUILD_BASE_IMAGE_NAME}:${BUILD_BASE_IMAGE_TAG}
 

@@ -33,8 +33,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: earthly -P --ci --push --use-inline-cache --save-inline-cache +ci
+      - run: earthly -P --ci --push --use-inline-cache --save-inline-cache +run-ci
         if: github.ref_name == 'master'
 
-      - run: earthly -P --ci --use-inline-cache +ci
+      - run: earthly -P --ci --use-inline-cache +run-ci
         if: github.ref_name != 'master'
