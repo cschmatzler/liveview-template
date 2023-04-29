@@ -30,6 +30,8 @@ build-base:
       ca-certificates \
       curl
 
+  DO github.com/earthly/lib+INSTALL_DIND
+
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
 
 build-deps:
