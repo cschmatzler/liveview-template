@@ -102,6 +102,8 @@ release:
   SAVE ARTIFACT _build/prod/rel/template /release
 
 prod-image:
+  ARG --required IMAGE_TAG
+
   FROM +prod-base
 
   WORKDIR $APP_DIR
@@ -111,7 +113,7 @@ prod-image:
 
   ENTRYPOINT ["bin/start"]
 
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:latest
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:${IMAGE_TAG}
 
 ci:
   BUILD +test-image
