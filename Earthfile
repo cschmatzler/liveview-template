@@ -34,7 +34,10 @@ build-base:
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
 
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:build-base
+
 build-deps:
+  BUILD +build-base
   FROM +build-base
 
   ENV HOME=$APP_DIR
@@ -45,6 +48,8 @@ build-deps:
 
   RUN mix 'do' local.hex --force, local.rebar --force
   RUN mix deps.get
+
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:build-deps
 
 prod-base:
   FROM ${PROD_BASE_IMAGE_NAME}:${PROD_BASE_IMAGE_TAG}
@@ -81,6 +86,7 @@ test-image:
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:test
 
 release:
+  BUILD +build-deps
   FROM +build-deps
 
   ENV MIX_ENV=prod
@@ -101,14 +107,15 @@ release:
   RUN mix release
   RUN task ci:deploy-assets
 
-  SAVE ARTIFACT _build/prod/rel/template /release
   SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:release
+  SAVE ARTIFACT _build/prod/rel/template /release
 
 prod-image:
+  BUILD +release
+
   ARG --required IMAGE_TAG
 
   FROM +prod-base
-  BUILD +release
 
   WORKDIR $APP_DIR
   USER $APP_USER
