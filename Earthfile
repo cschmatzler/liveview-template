@@ -104,6 +104,7 @@ release:
   RUN task ci:deploy-assets
 
   SAVE ARTIFACT _build/prod/rel/template /release
+  SAVE IMAGE --cache-hint
 
 prod-image:
   ARG --required IMAGE_TAG

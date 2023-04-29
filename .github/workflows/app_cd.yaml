@@ -39,7 +39,7 @@ jobs:
         run: echo $VERSION > version
 
       - name: Run earthly +prod-image
-        run: earthly --ci --push --use-inline-cache --save-inline-cache --build-arg IMAGE_TAG=$VERSION +prod-image
+        run: earthly --ci --push --remote-cache=ghcr.io/cschmatzler/liveview-template:app-cd-build --build-arg IMAGE_TAG=$VERSION +prod-image
 
   release:
     name: Release
