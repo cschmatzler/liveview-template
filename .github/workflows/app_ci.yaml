@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run earthly +ci
-        run: earthly -P --ci --push --output --remote-cache=ghcr.io/cschmatzler/liveview-template:app-ci-test-and-analyze -+ci
+        run: earthly -P --ci --push --output --use-inline-cache --save-inline-cache +ci
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3

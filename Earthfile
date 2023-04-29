@@ -34,8 +34,6 @@ build-base:
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
 
-  SAVE IMAGE --cache-hint
-
 build-deps:
   FROM +build-base
 
@@ -47,8 +45,6 @@ build-deps:
 
   RUN mix 'do' local.hex --force, local.rebar --force
   RUN mix deps.get
-
-  SAVE IMAGE --cache-hint
 
 prod-base:
   FROM ${PROD_BASE_IMAGE_NAME}:${PROD_BASE_IMAGE_TAG}
@@ -66,8 +62,6 @@ prod-base:
       ca-certificates \
       locales && \
     locale-gen
-
-  SAVE IMAGE --cache-hint
 
 test-image:
   FROM +build-deps
@@ -108,7 +102,7 @@ release:
   RUN task ci:deploy-assets
 
   SAVE ARTIFACT _build/prod/rel/template /release
-  SAVE IMAGE --cache-hint
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:release
 
 prod-image:
   ARG --required IMAGE_TAG
