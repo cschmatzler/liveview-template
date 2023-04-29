@@ -28,11 +28,10 @@ build-base:
     apt-get -y install -y -qq --no-install-recommends \
       build-essential \
       ca-certificates \
-      curl \
-      docker-engine \
-      jq
+      curl
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
+  DO github.com/earthly/lib+INSTALL_DIND
 
   SAVE IMAGE --cache-hint
 
