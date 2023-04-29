@@ -23,14 +23,6 @@ build-base:
   FROM ${BUILD_BASE_IMAGE_NAME}:${BUILD_BASE_IMAGE_TAG}
 
   RUN set -exu && \
-    rm -f /etc/apt/apt.conf.d/docker-clean && \
-    echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
-    echo 'Acquire::CompressionTypes::Order:: "gz";' > /etc/apt/apt.conf.d/99use-gzip-compression
-
-  RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,id=apt-lib,target=/var/lib/apt,sharing=locked \
-    --mount=type=cache,id=debconf,target=/var/cache/debconf,sharing=locked \
-    set -exu && \
     apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install -y -qq --no-install-recommends \
@@ -39,8 +31,6 @@ build-base:
       curl
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
-
-  SAVE IMAGE --cache-hint
 
 build-deps:
   FROM +build-base
@@ -54,8 +44,6 @@ build-deps:
   RUN mix 'do' local.rebar --force, local.hex --force
   RUN mix deps.get
 
-  SAVE IMAGE --cache-hint
-
 prod-base:
   FROM ${PROD_BASE_IMAGE_NAME}:${PROD_BASE_IMAGE_TAG}
 
@@ -63,18 +51,9 @@ prod-base:
 
   RUN if ! grep -q "$APP_USER" /etc/passwd; \
     then groupadd -g "$APP_GROUP_ID" "$APP_GROUP" && \
-    useradd -l -u "$APP_USER_ID" -g "$APP_GROUP" -s /usr/sbin/nologin "$APP_USER" && \
-    rm /var/log/lastlog && rm /var/log/faillog; fi
+    useradd -l -u "$APP_USER_ID" -g "$APP_GROUP" -s /usr/sbin/nologin "$APP_USER"; fi
 
   RUN set -exu && \
-    rm -f /etc/apt/apt.conf.d/docker-clean && \
-    echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
-    echo 'Acquire::CompressionTypes::Order:: "gz";' > /etc/apt/apt.conf.d/99use-gzip-compression
-
-  RUN --mount=type=cache,id=apt-cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,id=apt-lib,target=/var/lib/apt,sharing=locked \
-    --mount=type=cache,id=debconf,target=/var/cache/debconf,sharing=locked \
-    set -exu && \
     apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get -y install -y -qq --no-install-recommends \
@@ -82,9 +61,7 @@ prod-base:
       locales && \
     locale-gen
 
-  SAVE IMAGE --cache-hint
-
-test-base:
+test-image:
   FROM +build-deps
 
   ENV MIX_ENV=test
@@ -99,7 +76,7 @@ test-base:
 
   RUN mix compile --warnings-as-errors
 
-  SAVE IMAGE --cache-hint
+  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:test
 
 release:
   FROM +build-deps
@@ -130,20 +107,22 @@ prod-image:
 
   ENTRYPOINT ["bin/start"]
 
-  SAVE IMAGE liveview-template:latest
+  SAVE IMAGE ghcr.io/cschmatzler/liveview-template:latest
 
 test:
-  FROM +test-base
+  BUILD +test-image
+  FROM earthly/dind
 
   COPY docker-compose.test.yaml ./docker-compose.yaml
 
   WITH DOCKER \
+    --load liveview-template:latest=+test-image \
     --compose docker-compose.yaml \
     --service postgres
-    RUN task app:test
+    RUN docker-compose run liveview-template /bin/sh -c "task app:test"
   END
 
-  SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
+  # SAVE ARTIFACT cover/excoveralls.json AS LOCAL excoveralls-report
 
 analyze:
   FROM earthly/dind
