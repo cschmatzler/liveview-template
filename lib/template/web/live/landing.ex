@@ -41,7 +41,6 @@ defmodule Template.Web.Live.Landing do
               class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             >
               <span class="sr-only"><%= gettext("Open menu") %></span>
-              <Heroicons.bars_3 class="h-6 w-6" />
             </button>
           </div>
           <.sidebar user={@user} />
@@ -117,7 +116,6 @@ defmodule Template.Web.Live.Landing do
             class="-m-2.5 rounded-md p-2.5 text-gray-700"
           >
             <span class="sr-only"><%= gettext("Close menu") %></span>
-            <Heroicons.x_mark class="h-6 w-6" />
           </button>
         </div>
         <div class="mt-6 flow-root">

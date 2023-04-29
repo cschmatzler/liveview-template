@@ -61,7 +61,6 @@ defmodule Template.MixProject do
       {:floki, "~> 0.34", only: :test},
       {:gettext, "~> 0.22"},
       {:hammox, "~> 0.7", only: :test},
-      {:heroicons, "~> 0.5"},
       {:jason, "~> 1.4"},
       {:knigge, "~> 1.4"},
       {:libcluster, "~> 3.3"},
