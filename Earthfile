@@ -28,7 +28,8 @@ build-base:
     apt-get -y install -y -qq --no-install-recommends \
       build-essential \
       ca-certificates \
-      curl
+      curl \
+      jq
 
   RUN sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d
 
