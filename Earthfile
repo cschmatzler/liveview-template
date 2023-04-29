@@ -82,8 +82,6 @@ test-image:
 
   RUN mix compile --warnings-as-errors
 
-  SAVE IMAGE --push ghcr.io/cschmatzler/liveview-template:test
-
 release:
   FROM +build-deps
 
