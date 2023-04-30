@@ -8,10 +8,6 @@ spec:
     group: cert-manager.io
     kind: ClusterIssuer
     name: selfsigned
-  commonName: opensearch.liveview-template.app
-  dnsNames:
-    - opensearch.liveview-template.app
-    - opensearch-cluster-master.database.svc.cluster.local
   privateKey:
     algorithm: RSA
     encoding: PKCS8
@@ -19,3 +15,13 @@ spec:
   usages:
     - server auth
     - client auth
+  commonName: opensearch.liveview-template.app
+  dnsNames:
+    - opensearch.liveview-template.app
+    - opensearch-cluster-master.database.svc.cluster.local
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "monitoring"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "monitoring"
