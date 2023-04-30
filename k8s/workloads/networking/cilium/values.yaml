@@ -35,13 +35,11 @@ securityContext:
       - SYS_ADMIN
       - SYS_RESOURCE
 # ---
-autoDirectNodeRoutes: false
-endpointRoutes:
-  enabled: true
-bpf:
-  lbExternalClusterIP: true
-loadBalancer:
-  algorithm: maglev
+# autoDirectNodeRoutes: false
+# endpointRoutes:
+#   enabled: true
+# loadBalancer:
+#   algorithm: maglev
 prometheus:
   enabled: true
   serviceMonitor:
