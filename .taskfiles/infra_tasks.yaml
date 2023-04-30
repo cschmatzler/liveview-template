@@ -18,6 +18,18 @@ tasks:
     cmds:
       - terraform apply {{.CLI_ARGS}}
 
+
+  # TODO: rename this and integrate it into init
+  init-talos:
+    desc: Generate secret and configuration files
+    cmds:
+      - talosctl gen secrets -o {{.TALOS_DIR}}/secrets.yaml
+      - talosctl gen config --with-secrets {{.TALOS_DIR}}/secrets.yaml --config-patch-control-plane @{{.TALOS_DIR}}/cni.yaml --with-examples=false --with-docs=false -o {{.TALOS_DIR}} liveview-template https://cluster.$DOMAIN:6443
+    preconditions:
+      - sh: "! test -f infra/secrets.yaml"
+        msg: |
+          Configuration already exists.
+
   set-talosconfig:
     desc: Adds the currently existing nodes as talosconfig nodes
     dir: "{{.INFRA_DIR}}"

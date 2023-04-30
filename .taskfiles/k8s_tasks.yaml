@@ -6,24 +6,16 @@ tasks:
     cmds:
       - talosctl kubeconfig $KUBECONFIG -e $(terraform -chdir={{.INFRA_DIR}} output -json | jq -r '.control_plane_ip_addresses.value[0]') -n $(terraform -chdir={{.INFRA_DIR}} output -json | jq -r '.control_plane_ip_addresses.value[0]')
 
-  init:
-    desc: Generate secret and configuration files
-    cmds:
-      - talosctl gen secrets -o {{.TALOS_DIR}}/secrets.yaml
-      - talosctl gen config --with-secrets {{.TALOS_DIR}}/secrets.yaml --config-patch-control-plane @{{.TALOS_DIR}}/cni.yaml --with-examples=false --with-docs=false -o {{.TALOS_DIR}} liveview-template https://cluster.$DOMAIN:6443
-    preconditions:
-      - sh: "! test -f infra/secrets.yaml"
-        msg: |
-          Configuration already exists.
 
   bootstrap:
     desc: Bootstrap the Kubernetes cluster
     cmds:
       - kustomize build --enable-helm {{.KUBERNETES_DIR}}/bootstrap | kubectl apply --server-side -f -
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
-      - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
-      - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/dockerconfig-github.sops.yaml | kubectl apply -f -
-      - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/onepassword-credentials.sops.yaml | kubectl apply -f -
+      - sops -d {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
+      - sops -d {{.KUBERNETES_DIR}}/bootstrap/dockerconfig-github.sops.yaml | kubectl apply -f -
+      - sops -d {{.KUBERNETES_DIR}}/bootstrap/onepassword-credentials.sops.yaml | kubectl apply -f -
+      - sops -d {{.KUBERNETES_DIR}}/bootstrap/hcloud.sops.yaml | kubectl apply -f -
     preconditions:
       - sh: flux check --pre
         msg: |
