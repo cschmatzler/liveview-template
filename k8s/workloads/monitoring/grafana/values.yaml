@@ -21,9 +21,16 @@ testFramework:
 env:
   GF_ANALYTICS_CHECK_FOR_UPDATES: false
   GF_DATABASE_TYPE: postgres
-  GF_DATABASE_SSL_MODE: require
+  GF_DATABASE_SSL_MODE: verify-full
+  GF_DATABASE_CA_CERT_PATH: /certs/ca.crt
 envFromSecrets:
   - name: grafana-config
+extraSecretMounts:
+  - name: postgresql-main-tls
+    secretName: postgresql-main-tls
+    mountPath: /certs
+    readOnly: true
+    subPath: ca.crt
 
 dashboardProviders:
   dashboardproviders.yaml:
