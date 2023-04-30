@@ -11,7 +11,7 @@ spec:
         name: emberstack
         namespace: flux-system
       chart: reflector
-      version: 0.1.0
+      version: 7.0.151
   maxHistory: 3
   install:
     createNamespace: true
