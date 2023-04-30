@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - workloads-security-cert-manager
+    - name: workloads-security-cert-manager
   sourceRef:
     kind: GitRepository
     name: liveview-template
