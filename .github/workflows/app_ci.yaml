@@ -65,7 +65,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: cover/excoveralls.json
 
-  lint:
+  analyze:
     runs-on: ubuntu-latest
     needs: compile
     steps:
@@ -86,7 +86,7 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
-      - run: task ci:lint
+      - run: task ci:analyze
       - uses: aquasecurity/trivy-action@e5f43133f6e8736992c9f3c1b3296e24b37e17f2 # 0.10.0
         with:
           scan-type: 'fs'
