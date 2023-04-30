@@ -10,6 +10,8 @@ spec:
     name: ca
   usages:
     - server auth
+    - client auth
+  commonName: postgresql-main
   dnsNames:
     - postgresql-main-r.database.svc.cluster.local
     - postgresql-main-ro.database.svc.cluster.local
