@@ -4,3 +4,4 @@ resources:
   - ./namespace.yaml
   - ./hcloud-csi.yaml
   - ./metrics-server.yaml
+  - ./reflector.yaml
