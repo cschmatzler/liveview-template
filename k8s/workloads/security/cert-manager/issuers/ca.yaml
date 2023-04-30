@@ -10,7 +10,6 @@ spec:
   duration: 2160h
   renewBefore: 360h
   commonName: ca
-  keySize: 2048
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
