@@ -4,6 +4,7 @@ ARG RUNNER_IMAGE="ubuntu:jammy-20230126"
 FROM ${BUILDER_IMAGE} as builder
 
 RUN apt-get update -y && \
+    apt-get upgrade -y && \
     apt-get install -y build-essential git && \
     apt-get clean && \
     rm -f /var/lib/apt/lists/*_*

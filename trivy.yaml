@@ -9,7 +9,6 @@ severity:
 scan:
   scanners:
     - vuln
+    - config
     - secret
     - license
-license:
-  full: true
