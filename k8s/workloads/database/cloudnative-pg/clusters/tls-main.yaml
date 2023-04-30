@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: postgresql-main-tls
+spec:
+  secretName: postgresql-main-tls
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: selfsigned
+  usages:
+    - server auth
+  dnsNames:
+    - postgresql-main-r.database.svc.cluster.local
+    - postgresql-main-ro.database.svc.cluster.local
+    - postgresql-main-rw.database.svc.cluster.local

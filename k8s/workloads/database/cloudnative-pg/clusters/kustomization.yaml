@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: database
 resources:
   - ./externalsecret.yaml
+  - ./tls-main.yaml
   - ./main.yaml
   - ./pooler-main.yaml

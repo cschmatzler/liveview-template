@@ -20,6 +20,8 @@ testFramework:
 
 env:
   GF_ANALYTICS_CHECK_FOR_UPDATES: false
+  GF_DATABASE_TYPE: postgres
+  GF_DATABASE_SSL_MODE: require
 envFromSecrets:
   - name: grafana-config
 
@@ -108,6 +110,8 @@ serviceMonitor:
   enabled: true
 
 admin:
+  # These are only applied by Grafana during initial bootstrap - changing them in the
+  # secret will not update an existing database.
   existingSecret: grafana-config
   userKey: GRAFANA_USERNAME
   passwordKey: GRAFANA_PASSWORD
