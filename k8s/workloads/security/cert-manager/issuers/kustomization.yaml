@@ -4,4 +4,5 @@ namespace: security
 resources:
   - ./externalsecret.yaml
   - ./self-signed.yaml
+  - ./ca.yaml
   - ./letsencrypt.yaml
