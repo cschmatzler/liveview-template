@@ -11,7 +11,7 @@ spec:
   commonName: opensearch.liveview-template.app
   dnsNames:
     - opensearch.liveview-template.app
-    - opensearch-cluster-master.database.svc.cluster.local 
+    - opensearch-cluster-master.database.svc.cluster.local
   privateKey:
     algorithm: RSA
     encoding: PKCS8
