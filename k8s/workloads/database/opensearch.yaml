@@ -4,6 +4,8 @@ metadata:
   name: workloads-database-opensearch
   namespace: flux-system
 spec:
+  dependsOn:
+    - workloads-security-cert-manager
   sourceRef:
     kind: GitRepository
     name: liveview-template
