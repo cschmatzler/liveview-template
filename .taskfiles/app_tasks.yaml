@@ -1,2 +1,5 @@
 version: "3"
 tasks:
+  dev:
+    cmds:
+      - mix phx.server
