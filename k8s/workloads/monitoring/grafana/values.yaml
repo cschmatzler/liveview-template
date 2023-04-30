@@ -27,9 +27,9 @@ envFromSecrets:
   - name: grafana-config
 extraSecretMounts:
   - name: postgresql-main-tls
-    secretName: postgresql-main-tls
-    mountPath: /certs
+    mountPath: /certs/ca.crt
     readOnly: true
+    secretName: postgresql-main-tls
     subPath: ca.crt
 
 dashboardProviders:
