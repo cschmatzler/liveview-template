@@ -1,11 +1,10 @@
-ARG BUILDER_IMAGE="hexpm/elixir:1.14.4-erlang-25.3-ubuntu-jammy-20230126"
+ARG BUILDER_IMAGE="hexpm/elixir:1.14.4-erlang-25.3.1-debian-bullseye-20230227-slim"
 ARG RUNNER_IMAGE="ubuntu:jammy-20230126"
 
 FROM ${BUILDER_IMAGE} as builder
 
 RUN apt-get update -y && apt-get install -y build-essential git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
-RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d
 
 WORKDIR /app
 ENV MIX_ENV="prod"
@@ -24,7 +23,7 @@ COPY priv priv
 COPY lib lib
 COPY assets assets
 
-RUN task ci:deploy-assets
+RUN mix do tailwind default --minify, esbuild default --minify, phx.digest
 RUN mix compile
 
 COPY config/runtime.exs config/
