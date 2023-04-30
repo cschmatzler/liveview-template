@@ -4,6 +4,7 @@ resources:
   - ./bitnami.yaml
   - ./cilium.yaml
   - ./cloudnative-pg.yaml
+  - ./emberstack.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./grafana.yaml
