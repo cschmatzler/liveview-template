@@ -10,6 +10,7 @@ spec:
       es:
         server-urls: https://opensearch-cluster-master.database.svc.cluster.local:9200
         index-prefix: jaeger
+        secretName: opensearch-creds
         tls:
           ca: /os/certificates/ca.crt
   volumes:

@@ -14,7 +14,7 @@ metadata:
   name: annotations
 annotations:
   meta.helm.sh/release-name: cilium
-  meta.helm.sh/release-namespace: networking
+  meta.helm.sh/release-namespace: kube-system
 fieldSpecs:
   - path: metadata/annotations
     create: true
