@@ -17,6 +17,9 @@ spec:
       pg_stat_statements.track: all
   superuserSecret:
     name: cloudnative-pg
+  certificates:
+    serverTLSSecret: postgresql-main-tls
+    serverCASecret: postgresql-main-tls
   backup:
     retentionPolicy: 30d
     barmanObjectStore:

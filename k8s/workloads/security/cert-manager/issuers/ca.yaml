@@ -8,10 +8,14 @@ spec:
     kind: ClusterIssuer
     name: selfsigned
   secretName: ca
+  commonName: ca
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
   isCA: true
   duration: 2160h
   renewBefore: 360h
-  commonName: ca
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
