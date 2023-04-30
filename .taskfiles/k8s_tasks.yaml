@@ -24,7 +24,6 @@ tasks:
       - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/dockerconfig-github.sops.yaml | kubectl apply -f -
       - sops --decrypt {{.KUBERNETES_DIR}}/bootstrap/onepassword-credentials.sops.yaml | kubectl apply -f -
-      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/flux/config
     preconditions:
       - sh: flux check --pre
         msg: |
@@ -38,6 +37,14 @@ tasks:
       - sh: test -f {{.KUBERNETES_DIR}}/bootstrap/onepassword-credentials.sops.yaml
         msg: |
           Could not find 1Password credentials.
+
+  bootstrap-workloads:
+    cmds:
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/flux/config
+    preconditions:
+      - sh: flux check
+        msg: |
+          Flux has not yet been installed or is not yet ready.
 
   approve-csr:
     desc: Approve all outstanding CSR requests
