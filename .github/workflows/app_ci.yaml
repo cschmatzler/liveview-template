@@ -7,7 +7,7 @@ env:
 
 jobs:
   compile:
-    runs-on: buildjet-4vcpu-ubuntu-2204-arm
+    runs-on: buildjet-4vcpu-ubuntu-2204
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
@@ -30,7 +30,7 @@ jobs:
       - run: mix compile --warnings-as-errors
 
   test:
-    runs-on: buildjet-4vcpu-ubuntu-2204-arm
+    runs-on: buildjet-4vcpu-ubuntu-2204
     needs: compile
     env:
       POSTGRES_HOST: localhost
@@ -66,7 +66,7 @@ jobs:
           files: cover/excoveralls.json
 
   analyze:
-    runs-on: buildjet-4vcpu-ubuntu-2204-arm
+    runs-on: buildjet-4vcpu-ubuntu-2204
     needs: compile
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
