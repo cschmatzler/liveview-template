@@ -20,8 +20,6 @@ spec:
   certificates:
     serverTLSSecret: postgresql-main-tls
     serverCASecret: postgresql-main-tls
-    clientCASecret: postgresql-main-tls
-    replicationTLSSecret: postgresql-main-tls
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
