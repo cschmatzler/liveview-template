@@ -4,7 +4,7 @@ metadata:
   name: ca
 spec:
   issuerRef:
-    name: selfsigned-issuer
+    name: selfsigned
   secretName: ca
   isCA: true
   duration: 2160h
