@@ -8,14 +8,6 @@ variable "cloudflare_token" {
   sensitive = true
 }
 
-variable "domain" {
-  type = string
-}
-
-variable "x86_image_id" {
-  type = string
-}
-
-variable "arm_image_id" {
+variable "image_id" {
   type = string
 }

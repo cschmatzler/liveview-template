@@ -1,3 +1,10 @@
+resource "hcloud_placement_group" "workers" {
+  count = ceil(local.worker_count / 10)
+
+  name = "workers-${count.index + 1}"
+  type = "spread"
+}
+
 module "worker" {
   source   = "./node"
   for_each = local.worker_nodes
@@ -11,8 +18,8 @@ module "worker" {
 
   user_data = file("./talos/worker.yaml")
 
-  network_id  = var.network_id
-  subnet_id   = var.subnet_id
+  network_id  = hcloud_network.network.id
+  subnet_id   = hcloud_network_subnet.cluster.id
   rdns_domain = local.rdns_domain
 
   labels = {

@@ -6,25 +6,66 @@ terraform {
       name = "liveview-template"
     }
   }
+
+  required_providers {
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = ">= 1.0.0"
+    }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = ">= 3.0.0"
+    }
+  }
 }
 
-module "network" {
-  source = "./network"
-
-  hcloud_token = var.hcloud_token
-  domain       = var.domain
+provider "hcloud" {
+  token = var.hcloud_token
 }
 
-module "cluster" {
-  source = "./cluster"
+provider "cloudflare" {
+  api_token = var.cloudflare_token
+}
 
-  hcloud_token     = var.hcloud_token
-  cloudflare_token = var.cloudflare_token
-  domain           = var.domain
+locals {
+  # Network
+  # -------
+  domain      = "liveview-template.app"
+  rdns_domain = "cluster.${local.domain}"
 
-  network_id = module.network.network_id
-  subnet_id  = module.network.cluster_subnet_id
+  # Nodes
+  # -----
+  control_plane_nodes = {
+    count         = 3
+    name          = "control-plane",
+    node_type     = "cax11",
+    node_location = "fsn1",
+    image_id      = var.image_id
+  }
 
-  x86_image_id = var.x86_image_id
-  arm_image_id = var.arm_image_id
+  worker_nodepools = [
+    {
+      count         = 3
+      name          = "worker-cax21",
+      node_type     = "cax21",
+      node_location = "fsn1",
+      image_id      = var.image_id
+    },
+  ]
+
+  # Servers
+  # -----
+  worker_count = sum([for v in local.worker_nodepools : v.count])
+  worker_nodes = merge([
+    for pool_index, nodepool in local.worker_nodepools : {
+      for node_index in range(nodepool.count) :
+      format("%s-%s-%s", pool_index, node_index, nodepool.name) => {
+        index : node_index,
+        nodepool_name : nodepool.name,
+        node_type : nodepool.node_type,
+        node_location : nodepool.node_location,
+        image_id : nodepool.image_id
+      }
+    }
+  ]...)
 }
