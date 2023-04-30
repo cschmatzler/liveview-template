@@ -47,6 +47,10 @@ jobs:
         with:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
+      - uses: arduino/setup-task@v1
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         with:
           path: |
@@ -55,8 +59,7 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
-      - run: mix ecto.reset
-      - run: mix coveralls.json
+      - run: task ci:test
       - uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -71,6 +74,10 @@ jobs:
         with:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
+      - uses: arduino/setup-task@v1
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         with:
           path: |
@@ -79,12 +86,7 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
-      - run: mix deps.unlock --check-unused
-      - run: mix hex.audit
-      - run: mix format --check-formatted
-      - run: mix credo
-      - run: mix excellent_migrations.check_safety
-      - run: mix sobelow --config
+      - run: task ci:lint
       - uses: aquasecurity/trivy-action@e5f43133f6e8736992c9f3c1b3296e24b37e17f2 # 0.10.0
         with:
           scan-type: 'fs'
