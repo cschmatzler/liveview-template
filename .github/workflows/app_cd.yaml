@@ -3,9 +3,8 @@ on:
   push:
     branches:
       - master
-    paths-ignore:
-      - infra/
-      - k8s/
+    paths:
+      - template
 
 concurrency:
   group: ${{ github.workflow }}
@@ -38,7 +37,7 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
         with:
-          context: .
+          context: template
           tags: ghcr.io/cschmatzler/liveview-template:latest,ghcr.io/cschmatzler/liveview-template:${{ env.VERSION }}
           push: true
           cache-from: type=gha

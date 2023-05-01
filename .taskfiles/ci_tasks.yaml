@@ -2,6 +2,7 @@ version: "3"
 tasks:
   analyze:
     desc: Lints the project
+    dir: template
     env:
       MIX_ENV: test
     cmds:
@@ -14,6 +15,7 @@ tasks:
 
   test:
     desc: Tests the project
+    dir: template
     env:
       MIX_ENV: test
     cmds:

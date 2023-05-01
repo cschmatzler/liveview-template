@@ -1,0 +1,7 @@
+*tfstate*
+.terraform
+.terraform.lock.hcl
+talos/secrets.yaml
+talos/controlplane.yaml
+talos/worker.yaml
+talos/talosconfig

@@ -1,0 +1,9 @@
+/deps/
+/assets/node_modules/
+/_build/
+/priv/static/assets/
+/priv/static/cache_manifest.json
+/cover/
+/doc/
+/boundary/
+erl_crash.dump
