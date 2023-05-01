@@ -28,6 +28,10 @@ provider "cloudflare" {
 }
 
 locals {
+  # Packer
+  # ------
+  image_id = 109031096
+
   # Network
   # -------
   domain      = "liveview-template.app"
@@ -40,7 +44,7 @@ locals {
     name          = "control-plane",
     node_type     = "cax11",
     node_location = "fsn1",
-    image_id      = var.image_id
+    image_id      = local.image_id
   }
 
   worker_nodepools = [
@@ -49,7 +53,7 @@ locals {
       name          = "worker-cax21",
       node_type     = "cax21",
       node_location = "fsn1",
-      image_id      = var.image_id
+      image_id      = local.image_id
     },
   ]
 

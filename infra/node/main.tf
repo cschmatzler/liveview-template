@@ -7,16 +7,16 @@ terraform {
   }
 }
 
-resource "random_string" "server" {
-  length  = 5
+locals {
+  name = "${var.role}-${random_string.slug.id}"
+}
+
+resource "random_string" "slug" {
+  length  = 4
   lower   = true
   upper   = false
   numeric = true
   special = false
-}
-
-locals {
-  name = "${var.role}-${random_string.server.id}"
 }
 
 resource "hcloud_server" "node" {

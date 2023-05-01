@@ -15,16 +15,23 @@ resource "hcloud_network_subnet" "cluster" {
 }
 
 resource "hcloud_load_balancer" "control_plane" {
-  name               = "cluster.liveview-template.app"
+  name               = "cluster.${local.domain}"
   load_balancer_type = "lb11"
   location           = "fsn1"
 }
 
-resource "hcloud_load_balancer_service" "control_plane" {
+resource "hcloud_load_balancer_service" "kubernetes" {
   load_balancer_id = hcloud_load_balancer.control_plane.id
   protocol         = "tcp"
   listen_port      = 6443
   destination_port = 6443
+}
+
+resource "hcloud_load_balancer_service" "talos" {
+  load_balancer_id = hcloud_load_balancer.control_plane.id
+  protocol         = "tcp"
+  listen_port      = 50000
+  destination_port = 50000
 }
 
 resource "hcloud_load_balancer_network" "control_plane" {

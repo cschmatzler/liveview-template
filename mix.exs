@@ -82,15 +82,19 @@ defmodule Template.MixProject do
     ]
   end
 
-  @extras Path.wildcard("pages/**/*.md")
   defp docs do
     [
-      extras: @extras
+      formatters: ["html"],
+      extras: Path.wildcard("docs/**/*.md") |> Enum.flat_map(&extract_title/1),
+      groups_for_extras: [
+        Infrastructure: ~r/infrastructure/,
+        Architecture: ~r/architecture/
+      ]
     ]
   end
 
   @version_file "version"
-  def version do
+  defp version do
     cond do
       Mix.env() in [:dev, :test] ->
         "0.0.0-dev"
@@ -106,5 +110,19 @@ defmodule Template.MixProject do
       true ->
         "0.0.0-dev"
     end
+  end
+
+  defp extract_title(path) do
+    [_, filename] = Regex.split(~r/.*\//, path)
+
+    title =
+      Regex.named_captures(~r/^(?:\d+_)?(?<title>.+)\.md$/, filename)
+      |> Map.get("title")
+      |> String.split("_")
+      |> Enum.map_join(" ", &String.capitalize/1)
+
+    # While `String.to_atom/1` should generally be avoided, its usage is acceptable here since it will never be called
+    # while the actual application is running, and never with user-generated input.
+    [{String.to_atom(path), [title: title]}]
   end
 end

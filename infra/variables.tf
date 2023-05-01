@@ -7,7 +7,3 @@ variable "cloudflare_token" {
   type      = string
   sensitive = true
 }
-
-variable "image_id" {
-  type = string
-}
