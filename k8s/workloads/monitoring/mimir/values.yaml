@@ -3,17 +3,17 @@ mimir:
     common:
       storage:
         backend: s3
+    blocks_storage:
+      s3:
+        bucket_name: liveview-template-app-mimir-blocks
+    alertmanager_storage:
+      s3:
+        bucket_name: liveview-template-app-mimir-alertmanager
+    ruler_storage:
+      s3:
+        bucket_name: liveview-template-app-mimir-ruler
 minio:
   enabled: false
-blocks_storage:
-  s3:
-    bucket_name: mimir-blocks
-alertmanager_storage:
-  s3:
-    bucket_name: mimir-alertmanager
-ruler_storage:
-  s3:
-    bucket_name: mimir-ruler
 distributor:
   replicas: 2
 ingester:
