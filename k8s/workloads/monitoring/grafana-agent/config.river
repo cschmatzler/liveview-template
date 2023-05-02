@@ -4,7 +4,7 @@ logging {
 }
 
 discovery.kubernetes "services_logs" {
-  role = "service"
+  role = "pod"
 }
 
 loki.source.kubernetes "logs" {
