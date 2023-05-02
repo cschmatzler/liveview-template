@@ -10,10 +10,20 @@ discovery.kubernetes "pods" {
 discovery.relabel "kubernetes_logs" {
   targets = discovery.kubernetes.pods.targets
 
+  rule = {
+    source_labels = ["__meta_kubernetes_pod_node_name"]
+    action = "replace"
+    target_label = "node"
+  }
   rule {
     source_labels = ["__meta_kubernetes_namespace"]
     action = "replace"
     target_label = "namespace"
+  }
+  rule {
+    source_labels = ["__meta_kubernetes_pod_label_app.kubernetes.io/name"]
+    action = "replace"
+    target_label = "app"
   }
 }
 
