@@ -7,11 +7,6 @@ discovery.kubernetes "pods" {
   role = "pod"
 }
 
-loki.source.kubernetes "pods" {
-  targets    = discovery.kubernetes.pods.targets
-  forward_to = [loki.relabel.kubernetes.receiver]
-}
-
 discovery.relabel "kubernetes_logs" {
   targets = loki.source.kubernetes.pods.targets
 
@@ -21,6 +16,12 @@ discovery.relabel "kubernetes_logs" {
     target_label = "namespace"
   }
 }
+
+loki.source.kubernetes "pods" {
+  targets    = discovery.relabel.kubernetes_logs.output
+  forward_to = [loki.write.local.receiver]
+}
+
 
 loki.write "local" {
   endpoint {
