@@ -9,7 +9,7 @@ loki:
       ring:
         kvstore:
           store: memberlist
-      path_prefix: /loki
+      path_prefix: /var/loki
       replication_factor: 3
       storage:
         s3:
