@@ -6,9 +6,7 @@ mimir:
           store: memberlist
       path_prefix: /var/loki
       storage:
-        s3:
-          s3: null
-          s3forcepathstyle: true
+        backend: s3
     memberlist:
       join_members:
         - mimir-memberlist.monitoring.svc.cluster.local
