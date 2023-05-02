@@ -65,7 +65,7 @@ discovery.relabel "kubernetes_logs" {
 }
 
 prometheus.scrape "metrics" {
-  targets = discovery.relabel.kubernetes_metrics.output
+  targets = discovery.kubernetes.pods.targets
 
   scrape_interval = "15s"
 
