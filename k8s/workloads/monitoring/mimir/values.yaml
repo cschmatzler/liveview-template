@@ -1,2 +1,39 @@
+distributor:
+  replicas: 2
+
+ingester:
+  replicas: 2
+
+admin-cache:
+  enabled: true
+
+chunks-cache:
+  enabled: true
+
+index-cache:
+  enabled: true
+  replicas: 2
+
+metadata-cache:
+  enabled: true
+
+results-cache:
+  enabled: true
+
+querier:
+  replicas: 1
+
+query_frontend:
+  replicas: 1
+
+ruler:
+  replicas: 1
+
+store_gateway:
+  replicas: 2
+
+nginx:
+  replicas: 1
+
 minio:
   enabled: false
