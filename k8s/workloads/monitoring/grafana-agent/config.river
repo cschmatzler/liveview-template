@@ -76,7 +76,7 @@ loki.source.kubernetes "pods" {
 
 prometheus.remote_write "local" {
   endpoint {
-    url = "http://mimir-distributor.monitoring.svc.cluster.local/api/prom/push"
+    url = "http://mimir-distributor.monitoring.svc.cluster.local:8080/api/prom/push"
   }
 }
 
