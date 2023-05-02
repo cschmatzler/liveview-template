@@ -1,15 +1,8 @@
 mimir:
   structuredConfig:
     common:
-      ring:
-        kvstore:
-          store: memberlist
-      path_prefix: /var/loki
       storage:
         backend: s3
-    memberlist:
-      join_members:
-        - mimir-memberlist.monitoring.svc.cluster.local
 minio:
   enabled: false
 blocks_storage:
