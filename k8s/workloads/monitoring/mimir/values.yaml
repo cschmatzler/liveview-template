@@ -30,8 +30,7 @@ store_gateway:
   replicas: 2
   zoneAwareReplication:
     enabled: false
-gateway:
-  enabledNonEnterprise: true
-  replicas: 2
+query_scheduler:
+  enabled: false
 nginx:
   enabled: false
