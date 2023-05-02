@@ -67,7 +67,7 @@ discovery.relabel "kubernetes_logs" {
 prometheus.scrape "metrics" {
   targets = discovery.relabel.kubernetes_metrics.output
 
-  scrape_interval = 15s
+  scrape_interval = "15s"
 
   forward_to = [prometheus.remote_write.local.receiver]
 }
