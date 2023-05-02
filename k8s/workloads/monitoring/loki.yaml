@@ -5,6 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+    - name: workloads-kube-system-hcloud-csi
     - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
