@@ -4,7 +4,7 @@ namespace: security
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: onepassword-connect-values
+  - name: cert-manager-values
     files:
       - values.yaml=./values.yaml
 configurations:

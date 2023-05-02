@@ -8,6 +8,3 @@ env:
 provider: cloudflare
 extraArgs:
   - --source=ingress
-
-serviceMonitor:
-  enabled: true

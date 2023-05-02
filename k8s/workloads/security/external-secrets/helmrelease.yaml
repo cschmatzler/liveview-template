@@ -3,15 +3,15 @@ kind: HelmRelease
 metadata:
   name: external-secrets
 spec:
-  interval: 10m
   chart:
     spec:
-      chart: external-secrets
-      version: 0.8.1
       sourceRef:
         kind: HelmRepository
         name: external-secrets
         namespace: flux-system
+      chart: external-secrets
+      version: 0.8.1
+  interval: 10m
   maxHistory: 2
   install:
     createNamespace: true
@@ -25,16 +25,3 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    installCRDs: true
-    replicaCount: 1
-    serviceMonitor:
-      enabled: true
-    webhook:
-      replicaCount: 3
-      serviceMonitor:
-        enabled: true
-    certController:
-      replicaCount: 3
-      serviceMonitor:
-        enabled: true

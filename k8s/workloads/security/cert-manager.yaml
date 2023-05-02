@@ -7,7 +7,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/workloads/security/cert-manager/service
+  path: ./k8s/workloads/security/cert-manager
   interval: 10m
   timeout: 5m
   prune: true

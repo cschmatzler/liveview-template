@@ -112,9 +112,6 @@ ingress:
       hosts:
         - *host
 
-serviceMonitor:
-  enabled: true
-
 admin:
   # These are only applied by Grafana during initial bootstrap - changing them in the
   # secret will not update an existing database.

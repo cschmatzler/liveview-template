@@ -9,8 +9,8 @@ spec:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
-      version: 1.12.2
       chart: external-dns
+      version: 1.12.2
   interval: 10m
   install:
     remediation:

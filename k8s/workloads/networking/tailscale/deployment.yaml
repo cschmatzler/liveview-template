@@ -7,6 +7,7 @@ metadata:
     app.kubernetes.io/name: tailscale
     app.kubernetes.io/part-of: tailscale
 spec:
+  # This can never be higher than 1 since sharing an authentication key does not work.
   replicas: 1
   selector:
     matchLabels:
@@ -39,4 +40,4 @@ spec:
             - name: TS_DEST_IP
               value: 10.96.0.60
             - name: TS_EXTRA_ARGS
-              value: --hostname=liveview-template-app --accept-routes --advertise-routes=10.96.0.0/12
+              value: --hostname=liveview-template-app

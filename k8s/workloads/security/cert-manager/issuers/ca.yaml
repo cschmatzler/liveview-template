@@ -6,9 +6,9 @@ spec:
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
-    name: selfsigned
-  secretName: ca
-  commonName: ca
+    name: self-signed
+  secretName: ca.liveview-template.app
+  commonName: ca.liveview-template.app
   privateKey:
     algorithm: RSA
     encoding: PKCS8
@@ -20,7 +20,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: ca
+  name: ca.liveview-template.app
 spec:
   ca:
-    secretName: ca
+    secretName: ca.liveview-template.app

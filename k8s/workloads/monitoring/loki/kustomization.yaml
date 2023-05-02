@@ -4,3 +4,9 @@ namespace: monitoring
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: loki-values
+    files:
+      - values.yaml=./values.yaml
+configurations:
+  - kustomizeconfig.yaml

@@ -25,8 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    connect:
-      replicas: 3
-      credentialsName: onepassword-credentials
-      credentialsKey: 1password-credentials.json
+  valuesFrom:
+    - kind: ConfigMap
+      name: onepassword-connect-values

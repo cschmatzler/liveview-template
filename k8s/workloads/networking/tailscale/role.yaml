@@ -2,11 +2,12 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: tailscale
-  namespace: networking
 rules:
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["create"]
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "patch", "update"]
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - get
+      - update
