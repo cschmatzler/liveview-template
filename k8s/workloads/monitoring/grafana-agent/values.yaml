@@ -1,0 +1,5 @@
+agent:
+  configMap:
+    create: false
+    name: grafana-agent-config
+    key: config.river

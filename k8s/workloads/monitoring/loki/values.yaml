@@ -52,7 +52,7 @@ backend:
   replicas: 3
 monitoring:
   selfMonitoring:
-    enabled: false
+    enabled: true
     grafanaAgent:
       installOperator: false
   lokiCanary:
