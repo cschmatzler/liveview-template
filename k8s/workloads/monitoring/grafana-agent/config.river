@@ -3,12 +3,17 @@ logging {
   format = "logfmt"
 }
 
-discovery.kubernetes "services_logs" {
-  role = "pod"
+discovery.kubernetes "service_logs" {
+  role = "service"
+
+  selectors {
+    role  = "service"
+    label = "grafana-agent/collect-logs"
+  }
 }
 
 loki.source.kubernetes "logs" {
-  targets = discovery.kubernetes.services_logs.targets
+  targets = discovery.kubernetes.service_logs.targets
   forward_to = [loki.write.local.receiver]
 }
 
