@@ -8,7 +8,6 @@ resources:
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./grafana.yaml
-  - ./jaegertracing.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./onepassword-connect.yaml

@@ -1,6 +1,9 @@
 name: "App: Test and analyze"
 on:
   pull_request:
+    paths-ignore:
+      - infra/
+      - k8s/
 
 env:
   MIX_ENV: test

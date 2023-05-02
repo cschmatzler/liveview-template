@@ -7,4 +7,3 @@ resources:
   - ./loki.yaml
   - ./vector.yaml
   - ./grafana.yaml
-  - ./jaeger-operator.yaml
