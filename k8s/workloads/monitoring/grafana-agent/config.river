@@ -12,6 +12,10 @@ loki.source.kubernetes "pods" {
   forward_to = [loki.write.local.receiver]
 }
 
+loki.source.kubernetes_events "events" {
+  forward_to = [loki.write.local.receiver]
+}
+
 loki.relabel "kubernetes" {
   forward_to = [loki.write.local.receiver]
 
