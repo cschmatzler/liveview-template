@@ -11,7 +11,7 @@ spec:
         namespace: flux-system
       chart: cloudnative-pg
       version: 0.18.0
-  interval: 1h
+  interval: 10m
   maxHistory: 3
   install:
     createNamespace: true

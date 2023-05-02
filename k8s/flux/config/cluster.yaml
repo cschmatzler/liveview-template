@@ -4,7 +4,7 @@ metadata:
   name: liveview-template
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 10m
   url: ssh://git@github.com/cschmatzler/liveview-template
   ref:
     branch: master
@@ -20,7 +20,7 @@ metadata:
   name: liveview-template
   namespace: flux-system
 spec:
-  interval: 30s
+  interval: 10m
   path: ./k8s/flux
   prune: true
   wait: false

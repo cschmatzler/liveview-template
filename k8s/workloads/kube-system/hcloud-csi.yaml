@@ -8,6 +8,6 @@ spec:
     kind: GitRepository
     name: liveview-template
   path: ./k8s/workloads/kube-system/hcloud-csi
-  interval: 15m
+  interval: 10m
   timeout: 5m
   prune: true

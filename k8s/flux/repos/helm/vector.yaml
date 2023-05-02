@@ -5,4 +5,4 @@ metadata:
   namespace: flux-system
 spec:
   url: https://helm.vector.dev
-  interval: 1h
+  interval: 10m

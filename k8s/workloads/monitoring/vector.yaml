@@ -8,7 +8,7 @@ spec:
     kind: GitRepository
     name: liveview-template
   path: ./k8s/workloads/monitoring/vector/aggregator
-  interval: 15m
+  interval: 10m
   timeout: 5m
   prune: true
   healthChecks:
@@ -29,7 +29,7 @@ spec:
     kind: GitRepository
     name: liveview-template
   path: ./k8s/workloads/monitoring/vector/agent
-  interval: 15m
+  interval: 10m
   timeout: 5m
   prune: true
   healthChecks:

@@ -8,7 +8,7 @@ spec:
     kind: GitRepository
     name: liveview-template
   path: ./k8s/workloads/database/cloudnative-pg
-  interval: 15m
+  interval: 10m
   timeout: 5m
   prune: true
   healthChecks:
@@ -20,16 +20,17 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: workloads-database-cloudnative-pg-clusters
+  name: workloads-database-cloudnative-pg-cluster-main
   namespace: flux-system
 spec:
   dependsOn:
+    - name: workloads-kube-system-hcloud-csi
     - name: workloads-database-cloudnative-pg
     - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/workloads/database/cloudnative-pg/clusters
-  interval: 15m
+  path: ./k8s/workloads/database/cloudnative-pg/main
+  interval: 10m
   timeout: 5m
   prune: true

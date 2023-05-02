@@ -5,4 +5,3 @@ resources:
   - ./cilium.yaml
   - ./hcloud-csi.yaml
   - ./metrics-server.yaml
-  - ./reflector.yaml

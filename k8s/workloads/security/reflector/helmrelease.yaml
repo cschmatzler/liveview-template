@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: reflector
 spec:
-  interval: 15m
+  interval: 10m
   chart:
     spec:
       sourceRef:

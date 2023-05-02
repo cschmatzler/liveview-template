@@ -10,7 +10,7 @@ spec:
     kind: GitRepository
     name: liveview-template
   path: ./k8s/workloads/networking/external-dns
-  interval: 15m
+  interval: 10m
   timeout: 5m
   prune: true
   healthChecks:

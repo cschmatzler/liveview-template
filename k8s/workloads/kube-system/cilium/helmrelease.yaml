@@ -11,7 +11,7 @@ spec:
         namespace: flux-system
       version: 1.13.2
       chart: cilium
-  interval: 30m
+  interval: 10m
   valuesFrom:
     - kind: ConfigMap
       name: cilium-values

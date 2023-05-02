@@ -11,7 +11,7 @@ spec:
         namespace: flux-system
       version: 1.12.2
       chart: external-dns
-  interval: 30m
+  interval: 10m
   install:
     remediation:
       retries: 3

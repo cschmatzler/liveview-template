@@ -11,7 +11,7 @@ spec:
         namespace: flux-system
       chart: nginx-ingress-controller
       version: 9.5.1
-  interval: 30m
+  interval: 10m
   install:
     remediation:
       retries: 3

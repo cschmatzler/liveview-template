@@ -5,3 +5,4 @@ resources:
   - ./onepassword-connect.yaml
   - ./external-secrets.yaml
   - ./cert-manager.yaml
+  - ./reflector.yaml
