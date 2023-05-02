@@ -12,13 +12,11 @@ loki.source.kubernetes "pods" {
   forward_to = [loki.write.local.receiver]
 }
 
-loki.relabel "keep_error_only" {
-  forward_to = [loki.write.local.receiver]
-
+loki.relabel "kubernetes" {
   rule {
-    action        = "keep"
-    source_labels = ["level"]
-    regex         = "error"
+    source_labels = ["__meta_kubernetes_pod_name"]
+    action = replace
+    target_label = namespace
   }
 }
 
