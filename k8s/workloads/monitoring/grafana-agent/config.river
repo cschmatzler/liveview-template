@@ -12,15 +12,11 @@ loki.source.kubernetes "pods" {
   forward_to = [loki.relabel.kubernetes.receiver]
 }
 
-loki.source.kubernetes_events "events" {
-  forward_to = [loki.write.local.receiver]
-}
-
-loki.relabel "kubernetes" {
-  forward_to = [loki.write.local.receiver]
+discovery.relabel "kubernetes_logs" {
+  targets = loki.source.kubernetes.pods.targets
 
   rule {
-    source_labels = ["__meta_kubernetes_pod_name"]
+    source_labels = ["__meta_kubernetes_namespace"]
     action = "replace"
     target_label = "namespace"
   }
