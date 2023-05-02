@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vector-agent
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: vector
+      version: 0.21.1
+      sourceRef:
+        kind: HelmRepository
+        name: vector
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    role: Agent
+    service:
+      enabled: false
+    customConfig:
+      data_dir: /vector-data-dir
+      sources:
+        kubernetes_source:
+          type: kubernetes_logs
+      sinks:
+        kubernetes:
+          type: vector
+          version: "2"
+          inputs:
+            - kubernetes_source
+          compression: true
+          address: vector-aggregator.monitoring.svc.cluster.local:6000

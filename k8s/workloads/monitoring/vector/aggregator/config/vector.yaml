@@ -1,0 +1,43 @@
+data_dir: /vector-data-dir
+api:
+  enabled: true
+  address: 0.0.0.0:8686
+sources:
+  kubernetes_source:
+    type: vector
+    version: "2"
+    address: 0.0.0.0:6000
+transforms:
+  kubernetes_remap:
+    type: remap
+    inputs:
+      - kubernetes_source
+    source: |
+      structured =
+        parse_json(.message) ??
+        parse_logfmt(.message) ??
+        parse_common_log(.message) ??
+        parse_klog(.message) ??
+        parse_syslog!(.message)
+      .custom_level = .level || structured.level || "unknown"
+      .custom_app_name = .pod_labels."app.kubernetes.io/name" || .pod_labels.app || .pod_labels."k8s-app" || "unknown"
+sinks:
+  kubernetes:
+    inputs:
+      - kubernetes_remap
+    type: loki
+    endpoint: http://loki-gateway.monitoring.svc.cluster.local
+    encoding:
+      codec: json
+    out_of_order_action: accept
+    remove_label_fields: true
+    remove_timestamp: true
+    labels:
+      hostname: "{{ kubernetes.pod_node_name }}"
+      node: "{{ kubernetes.pod_node_name }}"
+      namespace: "{{ kubernetes.pod_namespace }}"
+      app: "{{ custom_app_name }}"
+      pod: "{{ kubernetes.pod_name }}"
+      container: "{{ kubernetes.container_name }}"
+      stream: "{{ stream }}"
+      level: "{{ custom_level }}"
