@@ -21,7 +21,7 @@ ingester:
   zoneAwareReplication:
     enabled: false
 querier:
-  replicas: 1
+  replicas: 2
 query_frontend:
   replicas: 1
 ruler:
