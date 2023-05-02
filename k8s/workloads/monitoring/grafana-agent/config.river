@@ -13,7 +13,7 @@ discovery.kubernetes "services_logs" {
 }
 
 loki.source.kubernetes "logs" {
-  targets = discovery.kubernets.services_logs.targets
+  targets = discovery.kubernetes.services_logs.targets
   forward_to = [loki.write.local.receiver]
 }
 
