@@ -5,11 +5,6 @@ logging {
 
 discovery.kubernetes "services_logs" {
   role = "service"
-
-  selectors {
-    role  = "service"
-    label = "grafana-agent/collect-logs"
-  }
 }
 
 loki.source.kubernetes "logs" {
