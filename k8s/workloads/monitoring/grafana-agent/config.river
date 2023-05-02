@@ -28,7 +28,7 @@ loki.relabel "kubernetes" {
 
 loki.write "local" {
   endpoint {
-    url = "http://loki-gateway.monitoring.svc.cluster.local"
+    url = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
   }
   external_labels = {
     exporter = "grafana-agent",
