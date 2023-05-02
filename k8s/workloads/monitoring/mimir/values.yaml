@@ -34,3 +34,5 @@ query_scheduler:
   enabled: false
 nginx:
   enabled: false
+rollout_operator:
+  enabled: false
