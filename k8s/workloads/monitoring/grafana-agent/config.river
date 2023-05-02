@@ -26,4 +26,5 @@ loki.write "local" {
   endpoint {
     url = "http://loki-gateway.monitoring.svc.cluster.local"
   }
+  external_labels = ["namespace"]
 }
