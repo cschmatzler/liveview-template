@@ -16,8 +16,8 @@ discovery.relabel "kubernetes_metrics" {
 
   rule {
     source_labels = [
-      "__meta_kubernetes_pod_label_grafana_agent_collect_metrics",
-      "__meta_kubernetes_service_label_grafana_agent_collect_metrics",
+      "__meta_kubernetes_pod_labelpresent_grafana_agent_collect_metrics",
+      "__meta_kubernetes_service_labelpresent_grafana_agent_collect_metrics",
     ]
     action = "keep"
     regex = "true"
@@ -65,7 +65,7 @@ discovery.relabel "kubernetes_logs" {
 }
 
 prometheus.scrape "metrics" {
-  targets = discovery.kubernetes.pods.targets
+  targets = discovery.relabel.kubernetes_metrics.output
 
   scrape_interval = "15s"
 
