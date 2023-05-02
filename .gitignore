@@ -1,7 +1,6 @@
 .env
 /deps/
-/assets/vendor/phosphor
-/assets/vendor/fonts
+/assets/node_modules/
 /_build/
 /priv/static/assets/
 /priv/static/cache_manifest.json

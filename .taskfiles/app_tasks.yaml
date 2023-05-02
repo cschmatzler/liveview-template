@@ -1,12 +1,13 @@
 version: "3"
 tasks:
-  init:
+  download-assets:
     cmds:
       - mkdir -p ./assets/vendor/phosphor
-      - wget -qO- https://phosphoricons.com/assets/phosphor-icons.zip | bsdtar -xv -C ./assets/vendor/phosphor -f-
+      - wget -qO- https://github.com/phosphor-icons/homepage/releases/download/v2.0.0/phosphor-icons.zip | bsdtar -xv -C ./assets/vendor/phosphor -f-
       - find ./assets/vendor/phosphor/**/SVGs -type f -exec sh -c 'mv "$@" ./assets/vendor/phosphor' _ {} +
       - find ./assets/vendor/phosphor/** ! -name "*.svg" -depth -exec rm -rf {} +
       - find ./assets/vendor/phosphor -type f -exec sh -c 'svgo "$@"' _ {} +
+      - wget -q https://raw.githubusercontent.com/phosphor-icons/core/v2.0.0/LICENSE -o ./assets/vendor/phosphor/LICENSE
       - mkdir -p ./assets/vendor/fonts
       - wget -qO- https://www.gent.media/assets/manrope/manrope.zip | bsdtar -xv -C ./assets/vendor/fonts -f-
       - find ./assets/vendor/fonts/**/ttf -type f -name *.ttf -exec sh -c 'mv "$@" ./assets/vendor/fonts' _ {} +
