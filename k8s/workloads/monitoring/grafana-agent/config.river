@@ -15,8 +15,8 @@ loki.source.kubernetes "pods" {
 loki.relabel "kubernetes" {
   rule {
     source_labels = ["__meta_kubernetes_pod_name"]
-    action = replace
-    target_label = namespace
+    action = "replace"
+    target_label = "namespace"
   }
 }
 
