@@ -10,7 +10,6 @@ loki:
         kvstore:
           store: memberlist
       path_prefix: /var/loki
-      replication_factor: 2
       storage:
         s3:
           s3: null
@@ -28,11 +27,9 @@ loki:
             prefix: index_
             period: 24h
     limits_config:
-      retention_period: 14d
+      retention_period: 30d
       enforce_metric_name: false
       max_cache_freshness_per_query: 10m
-      shard_streams:
-        enabled: true
     ingester:
       max_chunk_age: 1h
     compactor:
