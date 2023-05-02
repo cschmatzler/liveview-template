@@ -13,7 +13,7 @@ jobs:
     runs-on: buildjet-4vcpu-ubuntu-2204
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
+      - uses: erlef/setup-beam@c2e02f777c158310fc6d3d4e11b36a52d2d52db8 # v1
         with:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
@@ -46,7 +46,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
+      - uses: erlef/setup-beam@c2e02f777c158310fc6d3d4e11b36a52d2d52db8 # v1
         with:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
@@ -73,7 +73,7 @@ jobs:
     needs: compile
     steps:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
-      - uses: erlef/setup-beam@a255120a8298b1d3ebd952d84954db5471801f8f # v1
+      - uses: erlef/setup-beam@c2e02f777c158310fc6d3d4e11b36a52d2d52db8 # v1
         with:
           otp-version: "25.3"
           elixir-version: "1.14-otp-25"
