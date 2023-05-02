@@ -25,8 +25,6 @@ spec:
   uninstall:
     keepHistory: false
   valuesFrom:
-    - kind: ConfigMap
-      name: loki-values
     - targetPath: loki.structuredConfig.common.storage.s3.bucketnames
       kind: Secret
       name: loki-bucket
@@ -47,3 +45,5 @@ spec:
       kind: Secret
       name: loki-bucket
       valuesKey: AWS_SECRET_ACCESS_KEY
+    - kind: ConfigMap
+      name: loki-values
