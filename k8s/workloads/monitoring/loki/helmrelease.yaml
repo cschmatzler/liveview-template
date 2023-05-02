@@ -24,8 +24,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
   valuesFrom:
+    - kind: ConfigMap
+      name: loki-values
     - targetPath: loki.structuredConfig.common.storage.s3.bucketnames
       kind: Secret
       name: loki-bucket
