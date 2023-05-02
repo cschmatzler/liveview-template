@@ -28,5 +28,5 @@ ruler:
   replicas: 1
 store_gateway:
   replicas: 2
-nginx:
-  replicas: 1
+  zoneAwareReplication:
+    enabled: false
