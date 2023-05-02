@@ -13,15 +13,6 @@ discovery.kubernetes "services" {
 
 discovery.relabel "kubernetes_metrics" {
   targets = concat(discovery.kubernetes.pods.targets, discovery.kubernetes.services.targets)
-
-  rule {
-    source_labels = [
-      "__meta_kubernetes_pod_labelpresent_grafana_agent_collect_metrics",
-      "__meta_kubernetes_service_labelpresent_grafana_agent_collect_metrics",
-    ]
-    action = "keep"
-    regex = "true"
-  }
 }
 
 discovery.relabel "kubernetes_logs" {
