@@ -1,13 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: workloads-kube-system-reflector
+  name: workloads-security-reflector
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/workloads/kube-system/reflector
+  path: ./k8s/workloads/security/reflector
   interval: 10m
   timeout: 5m
   prune: true
