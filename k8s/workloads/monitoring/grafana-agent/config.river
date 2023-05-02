@@ -11,6 +11,19 @@ discovery.kubernetes "services" {
   role = "service"
 }
 
+discovery.relabel "kubernetes_metrics" {
+  targets = concat(discovery.kubernetes.pods.targets, discovery.kubernetes.services.target)
+
+  rule {
+    source_labels = [
+      "__meta_kubernetes_pod_label_grafana_agent_collect_metrics",
+      "__meta_kubernetes_service_label_grafana_agent_collect_metrics"
+    ]
+    action = "keep"
+    regex = "true"
+  }
+}
+
 discovery.relabel "kubernetes_logs" {
   targets = discovery.kubernetes.pods.targets
 
@@ -47,11 +60,21 @@ discovery.relabel "kubernetes_logs" {
   }
 }
 
+prometheus.scrape "metrics" {
+  targets = discovery.relabel.kubernetes_metrics.output
+  forward_to = [prometheus.remote_write.local.receiver]
+}
+
 loki.source.kubernetes "pods" {
   targets    = discovery.relabel.kubernetes_logs.output
   forward_to = [loki.write.local.receiver]
 }
 
+prometheus.remote_write "local" {
+  endpoint {
+    url = "http://mimir-distributor.monitoring.svc.cluster.local/api/prom/push"
+  }
+}
 
 loki.write "local" {
   endpoint {
