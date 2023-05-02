@@ -8,7 +8,7 @@ discovery.kubernetes "pods" {
 }
 
 discovery.relabel "kubernetes_logs" {
-  targets = loki.source.kubernetes.pods.targets
+  targets = discovery.kubernetes.pods.targets
 
   rule {
     source_labels = ["__meta_kubernetes_namespace"]
