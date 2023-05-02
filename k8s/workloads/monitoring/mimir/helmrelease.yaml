@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-      chart: mimir
+      chart: mimir-distributed
       version: 4.4.0-weekly.236
   maxHistory: 2
   install:
