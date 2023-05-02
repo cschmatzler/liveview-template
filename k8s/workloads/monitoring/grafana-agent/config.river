@@ -9,7 +9,7 @@ discovery.kubernetes "pods" {
 
 loki.source.kubernetes "pods" {
   targets    = discovery.kubernetes.pods.targets
-  forward_to = [loki.write.local.receiver]
+  forward_to = [loki.relabel.kubernetes.receiver]
 }
 
 loki.source.kubernetes_events "events" {
