@@ -10,8 +10,8 @@ tasks:
       - wget -q -O ./assets/vendor/phosphor/LICENSE https://raw.githubusercontent.com/phosphor-icons/core/v2.0.0/LICENSE
       - mkdir -p ./assets/vendor/fonts
       - wget -qO- https://www.gent.media/assets/manrope/manrope.zip | bsdtar -xv -C ./assets/vendor/fonts -f-
-      - find ./assets/vendor/fonts/**/ttf -type f -name *.ttf -exec sh -c 'mv "$@" ./assets/vendor/fonts' _ {} +
-      - find ./assets/vendor/fonts/** ! -name "*.ttf" -depth -exec rm -rf {} +
+      - find ./assets/vendor/fonts/**/webfonts -type f -name *.woff2 -exec sh -c 'mv "$@" ./assets/vendor/fonts' _ {} +
+      - find ./assets/vendor/fonts/** ! -name "*.woff2" -depth -exec rm -rf {} +
 
   dev:
     cmds:
