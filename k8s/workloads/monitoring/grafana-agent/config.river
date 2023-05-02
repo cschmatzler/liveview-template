@@ -12,7 +12,7 @@ discovery.kubernetes "services" {
 }
 
 discovery.relabel "kubernetes_metrics" {
-  targets = concat(discovery.kubernetes.pods.targets, discovery.kubernetes.services.target)
+  targets = concat(discovery.kubernetes.pods.targets, discovery.kubernetes.services.targets)
 
   rule {
     source_labels = [
