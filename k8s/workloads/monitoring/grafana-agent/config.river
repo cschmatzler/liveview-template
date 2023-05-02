@@ -7,9 +7,18 @@ discovery.kubernetes "pods" {
   role = "pod"
 }
 
+discovery.kubernetes "services" {
+  role = "service"
+}
+
 discovery.relabel "kubernetes_logs" {
   targets = discovery.kubernetes.pods.targets
 
+  rule {
+    source_labels = ["__meta_kubernetes_pod_label_grafana_agent_collect_logs"]
+    action = "keep"
+    regex = "true"
+  }
   rule {
     source_labels = ["__meta_kubernetes_pod_node_name"]
     action = "replace"
