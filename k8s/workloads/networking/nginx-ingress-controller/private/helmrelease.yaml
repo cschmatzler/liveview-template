@@ -10,7 +10,7 @@ spec:
         name: bitnami
         namespace: flux-system
       chart: nginx-ingress-controller
-      version: 9.5.1
+      version: 9.6.1
   interval: 10m
   install:
     remediation:
