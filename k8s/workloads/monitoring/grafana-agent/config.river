@@ -13,6 +13,8 @@ loki.source.kubernetes "pods" {
 }
 
 loki.relabel "kubernetes" {
+  forward_to = [loki.write.local.receiver]
+
   rule {
     source_labels = ["__meta_kubernetes_pod_name"]
     action = "replace"
