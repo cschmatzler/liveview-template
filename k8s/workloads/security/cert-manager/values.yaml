@@ -10,6 +10,5 @@ podDnsConfig:
     - "9.9.9.9"
 podLabels:
   grafana-agent/collect-logs: "true"
-  grafana-agent/collect-metrics: "true"
 serviceLabels:
   grafana-agent/collect-metrics: "true"
