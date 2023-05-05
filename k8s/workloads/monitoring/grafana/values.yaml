@@ -55,20 +55,25 @@ datasources:
       - name: Prometheus
         type: prometheus
         access: proxy
-        url: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
         isDefault: true
+        url: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
+        jsonData:
+          tenant: X-Scope-OrgID
+        secureJsonData:
+          tenant: liveview-template
       - name: Loki
         type: loki
         access: proxy
         url: http://loki-gateway.monitoring.svc.cluster.local
         jsonData:
           maxLines: 250
-      - name: Alertmanager
-        type: alertmanager
+          tenant: X-Scope-OrgID
+        secureJsonData:
+          tenant: liveview-template
+      - name: Tempo
+        type: tempo
         access: proxy
-        url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
-        jsonData:
-          implementation: prometheus
+        url: http://tempo-query-frontend.monitoring.svc.cluster.local:3100
 dashboards:
   default:
     cilium-operator:
