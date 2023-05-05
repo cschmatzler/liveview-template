@@ -67,13 +67,17 @@ datasources:
         url: http://loki-gateway.monitoring.svc.cluster.local
         jsonData:
           maxLines: 250
-          tenant: X-Scope-OrgID
+          httpHeaderName1: "X-Scope-OrgID"
         secureJsonData:
-          tenant: liveview-template
+          httpHeaderValue1: "liveview-template.app"
       - name: Tempo
         type: tempo
         access: proxy
         url: http://tempo-query-frontend.monitoring.svc.cluster.local:3100
+        jsonData:
+          httpHeaderName1: "X-Scope-OrgID"
+        secureJsonData:
+          httpHeaderValue1: "liveview-template.app"
 dashboards:
   default:
     cilium-operator:
@@ -102,6 +106,9 @@ dashboards:
       datasource:
         - name: DS_LOKI
           value: Loki
+    mimir-overview:
+      url: https://github.com/grafana/mimir/blob/main/operations/mimir-mixin-compiled/dashboards/mimir-overview.json
+      datasource: Prometheus
 
 ingress:
   enabled: true
