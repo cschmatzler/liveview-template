@@ -8,7 +8,7 @@ otelcol.receiver.otlp "traces" {
   http {}
 
   output {
-    traces  = [otelcol.processor.batch.traces]
+    traces  = [otelcol.processor.batch.traces.input]
   }
 }
 
