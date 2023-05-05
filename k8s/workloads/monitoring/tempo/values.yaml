@@ -8,5 +8,9 @@ traces:
       enabled: true
     http:
       enabled: true
+ingester:
+  replicas: 2
+memcached:
+  enabled: false
 minio:
   enabled: false
