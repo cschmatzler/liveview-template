@@ -21,6 +21,8 @@ ingester:
     enabled: false
 querier:
   replicas: 2
+query_scheduler:
+  replicas: 1
 query_frontend:
   replicas: 1
 ruler:
@@ -29,7 +31,7 @@ store_gateway:
   replicas: 2
   zoneAwareReplication:
     enabled: false
-query_scheduler:
+overrides_exporter:
   enabled: false
 nginx:
   enabled: false
