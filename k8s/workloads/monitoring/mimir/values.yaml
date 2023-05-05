@@ -13,8 +13,6 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: liveview-template-app-mimir-ruler
-minio:
-  enabled: false
 distributor:
   replicas: 1
 ingester:
@@ -36,4 +34,6 @@ query_scheduler:
 nginx:
   enabled: false
 rollout_operator:
+  enabled: false
+minio:
   enabled: false

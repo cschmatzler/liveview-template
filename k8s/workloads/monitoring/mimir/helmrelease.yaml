@@ -29,17 +29,17 @@ spec:
       name: mimir-values
     - targetPath: mimir.structuredConfig.common.storage.s3.endpoint
       kind: Secret
-      name: mimir-config
+      name: mimir-op
       valuesKey: BUCKET_ENDPOINT
     - targetPath: mimir.structuredConfig.common.storage.s3.region
       kind: Secret
-      name: mimir-config
+      name: mimir-op
       valuesKey: BUCKET_REGION
     - targetPath: mimir.structuredConfig.common.storage.s3.access_key_id
       kind: Secret
-      name: mimir-config
+      name: mimir-op
       valuesKey: AWS_ACCESS_KEY_ID
     - targetPath: mimir.structuredConfig.common.storage.s3.secret_access_key
       kind: Secret
-      name: mimir-config
+      name: mimir-op
       valuesKey: AWS_SECRET_ACCESS_KEY
