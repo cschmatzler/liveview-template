@@ -107,7 +107,10 @@ dashboards:
         - name: DS_LOKI
           value: Loki
     tempo-operational:
-      url: https://github.com/grafana/tempo/blob/main/operations/tempo-mixin-compiled/dashboards/tempo-operational.json
+      url: https://raw.githubusercontent.com/grafana/tempo/main/operations/tempo-mixin-compiled/dashboards/tempo-operational.json
+      datasource: Prometheus
+    mimir-overview:
+      url: https://raw.githubusercontent.com/grafana/mimir/main/operations/mimir-mixin-compiled/dashboards/mimir-overview.json
       datasource: Prometheus
 
 ingress:
