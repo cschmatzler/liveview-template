@@ -21,14 +21,14 @@ defmodule Template.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint Template.Web.Endpoint
-
       use Template.Web, :verified_routes
 
       # Import conveniences for testing with connections
-      import Plug.Conn
       import Phoenix.ConnTest
+      import Plug.Conn
       import Template.ConnCase
+
+      @endpoint Template.Web.Endpoint
     end
   end
 

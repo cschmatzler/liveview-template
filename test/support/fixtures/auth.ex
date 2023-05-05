@@ -3,9 +3,9 @@ defmodule Template.Fixtures.Auth do
 
   use Boundary, check: [in: false, out: false]
 
-  alias Template.Repo
   alias Template.Auth.Token
   alias Template.Auth.User
+  alias Template.Repo
 
   def user_fixture(attrs \\ %{}) do
     default_attrs = %{
@@ -26,9 +26,7 @@ defmodule Template.Fixtures.Auth do
   def token_fixture(attrs \\ %{token: :crypto.strong_rand_bytes(Token.token_size())}) do
     user = user_fixture()
 
-    token =
-      %Token{token: attrs.token, user_id: user.id}
-      |> Repo.insert!()
+    token = Repo.insert!(%Token{token: attrs.token, user_id: user.id})
 
     {token, user}
   end

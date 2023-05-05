@@ -1,4 +1,5 @@
 defmodule Template.Web.PageLive do
+  @moduledoc false
   use Template.Web, :live_view
 
   alias Template.Web.Components.KeyboardHandler

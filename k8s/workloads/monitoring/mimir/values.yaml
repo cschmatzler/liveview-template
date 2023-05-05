@@ -15,7 +15,7 @@ mimir:
 minio:
   enabled: false
 distributor:
-  replicas: 2
+  replicas: 1
 ingester:
   replicas: 2
   zoneAwareReplication:

@@ -5,43 +5,48 @@ defmodule Template.Auth.Impl do
 
   @behaviour Template.Auth
 
-  alias Template.Repo
   alias Template.Auth.Token
   alias Template.Auth.User
+  alias Template.Repo
 
   @impl Template.Auth
   def get_user_with_oauth(provider, uid) do
-    User.with_oauth_query(provider, uid)
+    provider
+    |> User.with_oauth_query(uid)
     |> Repo.one()
   end
 
   @impl Template.Auth
   def get_user_with_token(token) do
-    Token.user_with_token_query(token)
+    token
+    |> Token.user_with_token_query()
     |> Repo.one()
   end
 
   @impl Template.Auth
   def create_user(provider, uid, email, name, image_url) do
-    User.changeset(%{
+    %{
       provider: provider,
       uid: uid,
       email: email,
       name: name,
       image_url: image_url
-    })
+    }
+    |> User.changeset()
     |> Repo.insert()
   end
 
   @impl Template.Auth
   def create_token!(user_id) do
-    Token.build(user_id)
+    user_id
+    |> Token.build()
     |> Repo.insert!()
   end
 
   @impl Template.Auth
   def delete_token(token) do
-    Token.with_token_query(token)
+    token
+    |> Token.with_token_query()
     |> Repo.delete_all()
 
     :ok

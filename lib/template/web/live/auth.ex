@@ -1,4 +1,5 @@
 defmodule Template.Web.Live.Auth do
+  @moduledoc false
   import Template.Web.Auth, only: [signed_out_path: 0]
 
   alias Template.Auth.User

@@ -11,8 +11,8 @@ defmodule Template.Web.Auth do
 
   use Template.Web, :verified_routes
 
-  import Plug.Conn
   import Phoenix.Controller
+  import Plug.Conn
 
   alias Template.Auth
 

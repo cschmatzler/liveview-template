@@ -74,6 +74,7 @@ defmodule Template.MixProject do
       {:postgrex, "~> 0.17"},
       {:remote_ip, "~> 1.1"},
       {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false},
+      {:styler, "~> 0.5", only: [:dev, :test], runtime: false},
       {:swoosh, "~> 1.9"},
       {:tailwind, "~> 0.2"},
       {:ueberauth, "~> 0.10"},
@@ -85,7 +86,7 @@ defmodule Template.MixProject do
   defp docs do
     [
       formatters: ["html"],
-      extras: Path.wildcard("docs/**/*.md") |> Enum.flat_map(&extract_title/1),
+      extras: "docs/**/*.md" |> Path.wildcard() |> Enum.flat_map(&extract_title/1),
       groups_for_extras: [
         Infrastructure: ~r/infrastructure/,
         Architecture: ~r/architecture/
@@ -116,7 +117,8 @@ defmodule Template.MixProject do
     [_, filename] = Regex.split(~r/.*\//, path)
 
     title =
-      Regex.named_captures(~r/^(?:\d+_)?(?<title>.+)\.md$/, filename)
+      ~r/^(?:\d+_)?(?<title>.+)\.md$/
+      |> Regex.named_captures(filename)
       |> Map.get("title")
       |> String.split("_")
       |> Enum.map_join(" ", &String.capitalize/1)

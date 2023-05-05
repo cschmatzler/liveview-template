@@ -1,4 +1,5 @@
 defmodule Template.Web.Live.Landing do
+  @moduledoc false
   use Template.Web, :live_view
 
   import Template.Web.Components

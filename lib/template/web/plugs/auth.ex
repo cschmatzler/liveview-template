@@ -1,6 +1,7 @@
 defmodule Template.Web.Plugs.Auth do
-  import Plug.Conn
+  @moduledoc false
   import Phoenix.Controller
+  import Plug.Conn
   import Template.Web.Auth, only: [signed_in_path: 0, signed_out_path: 0, session_cookie: 0]
 
   alias Template.Auth

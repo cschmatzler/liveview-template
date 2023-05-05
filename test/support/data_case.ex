@@ -19,12 +19,12 @@ defmodule Template.DataCase do
 
   using do
     quote do
-      alias Template.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import Template.DataCase
+
+      alias Template.Repo
     end
   end
 

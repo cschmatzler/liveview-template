@@ -3,9 +3,9 @@ defmodule Template.Web.Router do
 
   use Phoenix.Router, helpers: false
 
-  import Plug.Conn
   import Phoenix.Controller
   import Phoenix.LiveView.Router
+  import Plug.Conn
   import Template.Web.Plugs.Auth
 
   alias Controllers.AuthController

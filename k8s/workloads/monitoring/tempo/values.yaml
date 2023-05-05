@@ -1,0 +1,11 @@
+storage:
+  trace:
+    backend: s3
+traces:
+  otlp:
+    grpc:
+      enabled: true
+    http:
+      enabled: true
+minio:
+  enabled: false

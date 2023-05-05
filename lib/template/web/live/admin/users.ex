@@ -1,4 +1,5 @@
 defmodule Template.Web.Live.Admin.Users do
+  @moduledoc false
   use Template.Web, :live_view
 
   alias Template.Web.Components.Sidebar

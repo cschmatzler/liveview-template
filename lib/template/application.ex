@@ -41,8 +41,7 @@ defmodule Template.Application do
   defp configcat_config do
     config = Application.fetch_env!(:template, ConfigCat)
 
-    local_datasource =
-      ConfigCat.LocalMapDataSource.new(config[:flag_overrides], config[:flag_override_strategy])
+    local_datasource = ConfigCat.LocalMapDataSource.new(config[:flag_overrides], config[:flag_override_strategy])
 
     Keyword.put(config, :flag_overrides, local_datasource)
   end

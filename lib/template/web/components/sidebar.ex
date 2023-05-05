@@ -1,4 +1,5 @@
 defmodule Template.Web.Components.Sidebar do
+  @moduledoc false
   use Template.Web, :component
 
   def render(assigns) do

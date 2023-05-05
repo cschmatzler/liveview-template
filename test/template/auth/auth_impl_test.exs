@@ -53,7 +53,7 @@ defmodule Template.Auth.AuthImplTest do
         |> DateTime.add(-Token.token_validity_in_days(), :day)
         |> DateTime.truncate(:second)
 
-      Ecto.Changeset.change(token, inserted_at: expired_date) |> Repo.update!()
+      token |> Ecto.Changeset.change(inserted_at: expired_date) |> Repo.update!()
 
       result = Auth.get_user_with_token(token.token)
 
@@ -163,9 +163,9 @@ defmodule Template.Auth.AuthImplTest do
     test "deletes the token token belonging to the given token string from the database", %{
       token: token
     } do
-      assert Repo.all(Token) |> length() == 1
+      assert Token |> Repo.all() |> length() == 1
       assert :ok = Auth.delete_token(token.token)
-      assert Repo.all(Token) |> length() == 0
+      assert Token |> Repo.all() |> length() == 0
     end
 
     test "returns :ok even if the given token string does not exist" do
