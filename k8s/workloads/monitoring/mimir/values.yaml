@@ -1,3 +1,4 @@
+configStorageType: Secret
 mimir:
   structuredConfig:
     common:

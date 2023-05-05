@@ -1,3 +1,4 @@
+configStorageType: Secret
 storage:
   trace:
     backend: s3

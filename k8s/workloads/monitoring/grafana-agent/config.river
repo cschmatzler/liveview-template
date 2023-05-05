@@ -3,6 +3,27 @@ logging {
   format = "logfmt"
 }
 
+otelcol.receiver.otlp "traces" {
+  grpc {}
+  http {}
+
+  output {
+    traces  = [otelctol.processor.batch.traces]
+  }
+}
+
+otelcol.processor.batch "traces" {
+  output {
+    traces = [otelcol.exporter.otlp.tempo]
+  }
+}
+
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = http://tempo-distributor.monitoring.svc.cluster.local:4317
+  }
+}
+
 discovery.kubernetes "pods" {
   role = "pod"
 }
