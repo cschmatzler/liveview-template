@@ -58,9 +58,9 @@ datasources:
         isDefault: true
         url: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
         jsonData:
-          tenant: X-Scope-OrgID
+          httpHeaderName1: "X-Scope-OrgID"
         secureJsonData:
-          tenant: liveview-template
+          httpHeaderValue1: "liveview-template.app"
       - name: Loki
         type: loki
         access: proxy
