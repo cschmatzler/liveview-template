@@ -20,7 +20,7 @@ otelcol.processor.batch "traces" {
 
 otelcol.exporter.otlp "tempo" {
   client {
-    endpoint = http://tempo-distributor.monitoring.svc.cluster.local:4317
+    endpoint = "http://tempo-distributor.monitoring.svc.cluster.local:4317"
   }
 }
 
