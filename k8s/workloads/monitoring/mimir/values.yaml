@@ -16,41 +16,41 @@ mimir:
 distributor:
   replicas: 1
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 ingester:
   replicas: 2
   zoneAwareReplication:
     enabled: false
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 querier:
   replicas: 2
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 query_scheduler:
   replicas: 1
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 query_frontend:
   replicas: 1
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 ruler:
   replicas: 1
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 store_gateway:
   replicas: 2
   zoneAwareReplication:
     enabled: false
   service:
-    annotations:
+    labels:
       grafana-agent/collect-metrics: "true"
 overrides_exporter:
   enabled: false
