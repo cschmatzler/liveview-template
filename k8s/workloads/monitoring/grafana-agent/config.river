@@ -110,9 +110,7 @@ prometheus.remote_write "local" {
 loki.write "local" {
   endpoint {
     url = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
-    headers = {
-      "X-Scope-OrgID" = "liveview-template.app",
-    }
+    tenant_id = "liveview-template.app",
   }
   external_labels = {
     exporter = "grafana-agent",
