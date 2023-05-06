@@ -3,8 +3,8 @@ logging {
   format = "logfmt"
 }
 
-# Discovery
-# ---------
+// Discovery
+// ---------
 discovery.kubernetes "pods" {
   role = "pod"
 }
@@ -29,8 +29,8 @@ discovery.relabel "common" {
   }
 }
 
-# Metrics
-# -------
+// Metrics
+// -------
 discovery.relabel "kubernetes_metrics" {
   targets = discovery.relabel.common.output
 
@@ -115,8 +115,8 @@ loki.write "local" {
   }
 }
 
-# Traces
-# ------
+// Traces
+// ------
 otelcol.receiver.otlp "traces" {
   grpc {}
   http {}
