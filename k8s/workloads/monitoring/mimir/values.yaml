@@ -18,9 +18,11 @@ metaMonitoring:
     enabled: true
     installOperator: false
     logs:
+      enabled: true
       remote:
         url: "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
     metrics:
+      enabled: true
 
 distributor:
   replicas: 1
