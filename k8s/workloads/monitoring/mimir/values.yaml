@@ -45,6 +45,9 @@ store_gateway:
     enabled: false
   podLabels:
     grafana-agent/collect-metrics: "true"
+compactor:
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 overrides_exporter:
   enabled: false
 nginx:
