@@ -43,6 +43,11 @@ discovery.relabel "kubernetes_metrics" {
     action = "keep"
     regex = ";*(true;?)+"
   }
+  rule {
+    source_labels = ["__meta_kubernetes_namespace"]
+    action = "replace"
+    target_label = "namespace"
+  }
 }
 
 discovery.relabel "kubernetes_logs" {
@@ -107,6 +112,7 @@ prometheus.remote_write "local" {
   }
   external_labels = {
     cluster = "liveview-template.app",
+    exporter = "grafana-agent",
   }
 }
 
