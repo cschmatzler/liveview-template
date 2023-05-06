@@ -1,2 +1,3 @@
+fullNameOverride: node-exporter
 podLabels:
   grafana-agent/collect-metrics: "true"
