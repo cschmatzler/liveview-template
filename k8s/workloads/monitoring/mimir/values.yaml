@@ -15,43 +15,36 @@ mimir:
         bucket_name: liveview-template-app-mimir-ruler
 distributor:
   replicas: 1
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 ingester:
   replicas: 2
   zoneAwareReplication:
     enabled: false
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 querier:
   replicas: 2
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 query_scheduler:
   replicas: 1
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 query_frontend:
   replicas: 1
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 ruler:
   replicas: 1
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 store_gateway:
   replicas: 2
   zoneAwareReplication:
     enabled: false
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 overrides_exporter:
   enabled: false
 nginx:
