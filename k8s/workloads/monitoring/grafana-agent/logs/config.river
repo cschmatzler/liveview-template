@@ -50,8 +50,8 @@ discovery.relabel "common" {
   }
 }
 
-# Logs
-# ----
+// Logs
+// ----
 discovery.relabel "kubernetes_logs" {
   targets = discovery.relabel.common.output
 
