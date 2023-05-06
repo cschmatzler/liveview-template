@@ -1,5 +1,5 @@
 agent:
   configMap:
     create: false
-    name: grafana-agent-config
+    name: grafana-agent-logs-config
     key: config.river

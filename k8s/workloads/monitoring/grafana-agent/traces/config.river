@@ -1,0 +1,27 @@
+logging {
+  level  = "debug"
+  format = "logfmt"
+}
+
+// Traces
+// ------
+otelcol.receiver.otlp "traces" {
+  grpc {}
+  http {}
+
+  output {
+    traces  = [otelcol.processor.batch.traces.input]
+  }
+}
+
+otelcol.processor.batch "traces" {
+  output {
+    traces = [otelcol.exporter.otlphttp.tempo.input]
+  }
+}
+
+otelcol.exporter.otlphttp "tempo" {
+  client {
+    endpoint = "http://tempo-distributor.monitoring.svc.cluster.local:4318"
+  }
+}

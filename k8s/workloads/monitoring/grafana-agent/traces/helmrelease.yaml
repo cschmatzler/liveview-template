@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: grafana-agent
+  name: grafana-agent-traces
   namespace: monitoring
 spec:
   chart:
@@ -26,4 +26,4 @@ spec:
     keepHistory: false
   valuesFrom:
     - kind: ConfigMap
-      name: grafana-agent-values
+      name: grafana-agent-traces-values

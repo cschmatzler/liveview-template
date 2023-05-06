@@ -4,10 +4,10 @@ namespace: monitoring
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: grafana-agent-values
+  - name: grafana-agent-metrics-values
     files:
       - values.yaml=./values.yaml
-  - name: grafana-agent-config
+  - name: grafana-agent-metrics-config
     files:
       - config.river=./config.river
     options:

@@ -1,18 +1,56 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: workloads-monitoring-grafana-agent
+  name: workloads-monitoring-grafana-agent-metrics
   namespace: flux-system
 spec:
   sourceRef:
     kind: GitRepository
     name: liveview-template
-  path: ./k8s/workloads/monitoring/grafana-agent
+  path: ./k8s/workloads/monitoring/grafana-agent/metrics
   interval: 10m
   timeout: 5m
   prune: true
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: grafana-agent
+      name: grafana-agent-metrics
+      namespace: monitoring
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: workloads-monitoring-grafana-agent-logs
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./k8s/workloads/monitoring/grafana-agent/logs
+  interval: 10m
+  timeout: 5m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: grafana-agent-logs
+      namespace: monitoring
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: workloads-monitoring-grafana-agent-traces
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./k8s/workloads/monitoring/grafana-agent/traces
+  interval: 10m
+  timeout: 5m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: grafana-agent-traces
       namespace: monitoring
