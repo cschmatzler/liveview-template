@@ -48,6 +48,9 @@ store_gateway:
 compactor:
   podLabels:
     grafana-agent/collect-metrics: "true"
+alertmanager:
+  podLabels:
+    grafana-agent/collect-metrics: "true"
 overrides_exporter:
   enabled: false
 nginx:
