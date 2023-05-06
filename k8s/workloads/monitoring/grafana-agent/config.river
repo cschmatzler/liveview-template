@@ -104,9 +104,9 @@ prometheus.remote_write "local" {
     headers = {
       "X-Scope-OrgID" = "liveview-template.app",
     }
-    external_labels = {
-      cluster = "liveview-template.app",
-    }
+  }
+  external_labels = {
+    cluster = "liveview-template.app",
   }
 }
 
