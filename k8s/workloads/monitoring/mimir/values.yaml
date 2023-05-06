@@ -13,19 +13,6 @@ mimir:
     ruler_storage:
       s3:
         bucket_name: liveview-template-app-mimir-ruler
-metaMonitoring:
-  grafanaAgent:
-    enabled: true
-    installOperator: false
-    logs:
-      enabled: true
-      remote:
-        url: "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
-    metrics:
-      enabled: true
-      remote:
-        url: http://mimir-distributor.monitoring.svc.cluster.local:8080/api/v1/push
-
 distributor:
   replicas: 1
   service:

@@ -3,27 +3,8 @@ logging {
   format = "logfmt"
 }
 
-otelcol.receiver.otlp "traces" {
-  grpc {}
-  http {}
-
-  output {
-    traces  = [otelcol.processor.batch.traces.input]
-  }
-}
-
-otelcol.processor.batch "traces" {
-  output {
-    traces = [otelcol.exporter.otlphttp.tempo.input]
-  }
-}
-
-otelcol.exporter.otlphttp "tempo" {
-  client {
-    endpoint = "http://tempo-distributor.monitoring.svc.cluster.local:4318"
-  }
-}
-
+# Discovery
+# ---------
 discovery.kubernetes "pods" {
   role = "pod"
 }
@@ -32,8 +13,26 @@ discovery.kubernetes "services" {
   role = "service"
 }
 
-discovery.relabel "kubernetes_metrics" {
+discovery.relabel "common" {
   targets = concat(discovery.kubernetes.pods.targets, discovery.kubernetes.services.targets)
+
+  rule {
+    source_labels = ["__meta_kubernetes_namespace"]
+    action = "replace"
+    target_label = "namespace"
+  }
+  rule {
+    source_labels = ["__meta_kubernetes_namespace", "__meta_kubernetes_pod_container_name"]
+    separator = "/"
+    action = "replace"
+    target_label = "job"
+  }
+}
+
+# Metrics
+# -------
+discovery.relabel "kubernetes_metrics" {
+  targets = discovery.relabel.common.output
 
   rule {
     source_labels = [
@@ -43,15 +42,10 @@ discovery.relabel "kubernetes_metrics" {
     action = "keep"
     regex = ";*(true;?)+"
   }
-  rule {
-    source_labels = ["__meta_kubernetes_namespace"]
-    action = "replace"
-    target_label = "namespace"
-  }
 }
 
 discovery.relabel "kubernetes_logs" {
-  targets = discovery.kubernetes.pods.targets
+  targets = discovery.relabel.common.output
 
   rule {
     source_labels = ["__meta_kubernetes_pod_label_grafana_agent_collect_logs"]
@@ -62,11 +56,6 @@ discovery.relabel "kubernetes_logs" {
     source_labels = ["__meta_kubernetes_pod_node_name"]
     action = "replace"
     target_label = "node"
-  }
-  rule {
-    source_labels = ["__meta_kubernetes_namespace"]
-    action = "replace"
-    target_label = "namespace"
   }
   rule {
     source_labels = [
@@ -123,5 +112,28 @@ loki.write "local" {
   }
   external_labels = {
     exporter = "grafana-agent",
+  }
+}
+
+# Traces
+# ------
+otelcol.receiver.otlp "traces" {
+  grpc {}
+  http {}
+
+  output {
+    traces  = [otelcol.processor.batch.traces.input]
+  }
+}
+
+otelcol.processor.batch "traces" {
+  output {
+    traces = [otelcol.exporter.otlphttp.tempo.input]
+  }
+}
+
+otelcol.exporter.otlphttp "tempo" {
+  client {
+    endpoint = "http://tempo-distributor.monitoring.svc.cluster.local:4318"
   }
 }
