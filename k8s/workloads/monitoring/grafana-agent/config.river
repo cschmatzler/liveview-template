@@ -10,7 +10,7 @@ discovery.kubernetes "pods" {
 }
 
 discovery.relabel "common" {
-  targets = discovery.kubernetes.pods.output
+  targets = discovery.kubernetes.pods.targets
 
   rule {
     source_labels = ["__meta_kubernetes_namespace"]
