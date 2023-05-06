@@ -12,7 +12,7 @@ spec:
         name: grafana
         namespace: flux-system
       chart: mimir-distributed
-      version: 4.4.0-weekly.236
+      version: 4.4.1
   maxHistory: 2
   install:
     createNamespace: true
