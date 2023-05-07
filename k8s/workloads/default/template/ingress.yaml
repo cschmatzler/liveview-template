@@ -4,10 +4,9 @@ metadata:
   name: template
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    external-dns.alpha.kubernetes.io/target: liveview-template-app.manticore-hippocampus.ts.net
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: private
+  ingressClassName: public
   rules:
     - host: &host liveview-template.app
       http:
