@@ -10,8 +10,6 @@ traces:
       enabled: true
 ingester:
   replicas: 2
-  podLabels:
-    grafana-agent/collect-metrics: "true"
 memcached:
   enabled: false
 minio:
