@@ -92,6 +92,9 @@ dashboards:
       gnetId: 16613
       revision: 1
       datasource: Prometheus
+    node-exporter:
+      url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/node-exporter/dashboards/nodes.json
+      datasource: Prometheus
     external-secrets:
       url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
       datasource: Prometheus
