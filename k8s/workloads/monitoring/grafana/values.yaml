@@ -80,9 +80,15 @@ datasources:
           httpHeaderValue1: "liveview-template.app"
 dashboards:
   default:
-    cilium-operator:
-      gnetId: 16612
-      revision: 1
+    node-exporter:
+      gnetId: 1860
+      revision: 31
+      datasource:
+        - name: DS_PROMETHEUS
+          value: Prometheus
+    kube-state-metrics:
+      gnetId: 13332
+      revision: 12
       datasource: Prometheus
     cilium-agent:
       gnetId: 16611
@@ -91,9 +97,6 @@ dashboards:
     cilium-hubble:
       gnetId: 16613
       revision: 1
-      datasource: Prometheus
-    node-exporter:
-      url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/node-exporter/dashboards/nodes.json
       datasource: Prometheus
     external-secrets:
       url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
@@ -109,12 +112,6 @@ dashboards:
       datasource:
         - name: DS_LOKI
           value: Loki
-    tempo-operational:
-      url: https://raw.githubusercontent.com/grafana/tempo/main/operations/tempo-mixin-compiled/dashboards/tempo-operational.json
-      datasource: Prometheus
-    mimir-overview:
-      url: https://raw.githubusercontent.com/grafana/mimir/main/operations/mimir-mixin-compiled/dashboards/mimir-overview.json
-      datasource: Prometheus
 
 ingress:
   enabled: true
