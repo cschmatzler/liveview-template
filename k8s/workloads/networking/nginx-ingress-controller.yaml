@@ -17,22 +17,21 @@ spec:
       name: nginx-ingress-controller-private
       namespace: networking
 ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: workloads-networking-nginx-ingress-controller-public
-#   namespace: flux-system
-# spec:
-#   sourceRef:
-#     kind: GitRepository
-#     name: liveview-template
-#   path: ./k8s/workloads/networking/nginx-ingress-controller/public
-#   interval: 10m
-#   timeout: 5m
-#   prune: true
-#   healthChecks:
-#     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-#       kind: HelmRelease
-#       name: nginx-ingress-controller-public
-#       namespace: networking
-
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: workloads-networking-nginx-ingress-controller-public
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./k8s/workloads/networking/nginx-ingress-controller/public
+  interval: 10m
+  timeout: 5m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: nginx-ingress-controller-public
+      namespace: networking
