@@ -1,4 +1,4 @@
-defmodule Template.PromEx do
+defmodule Template.Metrics do
   @moduledoc false
 
   use Boundary, top_level?: true

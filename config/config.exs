@@ -3,7 +3,7 @@ import Config
 # -------
 # Metrics
 # -------
-config :template, Template.PromEx,
+config :template, Template.Metrics,
   disabled: false,
   manual_metrics_start_delay: :no_delay,
   drop_metrics_groups: [],

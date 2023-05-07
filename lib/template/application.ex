@@ -26,7 +26,7 @@ defmodule Template.Application do
       Template.Repo,
       {Oban, Application.fetch_env!(:template, Oban)},
       Template.Web.Endpoint,
-      Template.PromEx
+      Template.Metrics
     ]
 
     opts = [strategy: :one_for_one, name: Template.Supervisor]
