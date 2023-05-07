@@ -20,7 +20,7 @@ discovery.relabel "kubernetes_metrics" {
       "__meta_kubernetes_endpoints_labelpresent_grafana_agent_collect_metrics",
     ]
     action = "keep"
-    regex = "true"
+    regex = "^;*(true;*)+$"
   }
 }
 
