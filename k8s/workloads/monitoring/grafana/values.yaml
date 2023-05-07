@@ -9,13 +9,14 @@ extraInitContainers:
     envFrom:
       - secretRef:
           name: grafana-config
-sidecar:
-  dashboards:
-    enabled: true
-    searchNamespace: ALL
-  datasources:
-    enabled: true
-    searchNamespace: ALL
+
+# sidecar:
+#   dashboards:
+#     enabled: true
+#     searchNamespace: ALL
+#   datasources:
+#     enabled: true
+#     searchNamespace: ALL
 
 persistence:
   enabled: false
@@ -82,6 +83,7 @@ datasources:
           httpHeaderName1: "X-Scope-OrgID"
         secureJsonData:
           httpHeaderValue1: "liveview-template.app"
+
 dashboards:
   infra:
     node-exporter:
