@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: template
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/target: liveview-template-app.manticore-hippocampus.ts.net
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: private
+  rules:
+    - host: &host liveview-template.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: template
+                port:
+                  name: http
+  tls:
+    - secretName: template-tls
+      hosts:
+        - *host

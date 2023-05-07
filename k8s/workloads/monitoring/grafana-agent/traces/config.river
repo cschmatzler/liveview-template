@@ -6,7 +6,6 @@ logging {
 // Traces
 // ------
 otelcol.receiver.otlp "traces" {
-  grpc {}
   http {}
 
   output {
