@@ -1,0 +1,13 @@
+imagePullSecrets:
+  - name: dockerconfigjson-github
+
+initContainers:
+  - name: init-db
+    image: ghcr.io/cschmatzler/postgresql-initdb:15.2
+    imagePullPolicy: Always
+    envFrom:
+      - secretRef:
+          name: unleash-config
+
+postgresql:
+  enabled: false
