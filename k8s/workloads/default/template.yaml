@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: workloads-default-template
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./k8s/workloads/default/template
+  interval: 10m
+  timeout: 5m
+  prune: true

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: template
+  labels:
+    app.kubernetes.io/name: template
+    app.kubernetes.io/part-of: template
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: template
+      app.kubernetes.io/part-of: template
+  imagePullSecrets:
+    - name: dockerconfigjson-github
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: template
+        app.kubernetes.io/part-of: template
+    spec:
+      initContainers:
+        - name: init-db
+          image: ghcr.io/cschmatzler/postgresql-initdb:15.2
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: template-config
+      containers:
+        - name: template
+          image: ghcr.io/cschmatzler/template:23.4.29-e4b4c2d
+          envFrom:
+            - secretRef:
+                name: template-env
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 3000
