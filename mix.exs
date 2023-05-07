@@ -65,7 +65,6 @@ defmodule Template.MixProject do
       {:knigge, "~> 1.4"},
       {:libcluster, "~> 3.3"},
       {:oban, "~> 2.14"},
-      {:paginator, "~> 1.2"},
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},
