@@ -5,18 +5,12 @@ logging {
 
 // Discovery
 // ---------
-discovery.kubernetes "pods" {
-  role = "pod"
-}
-discovery.kubernetes "services" {
-  role = "service"
-}
 discovery.kubernetes "endpoints" {
   role = "endpoints"
 }
 
 discovery.relabel "common" {
-  targets = concat(discovery.kubernetes.pods.targets, discovery.kubernetes.services.targets, discovery.kubernetes.endpoints.targets)
+  targets = discovery.kubernetes.endpoints.targets
 
   rule {
     source_labels = ["__meta_kubernetes_namespace"]
