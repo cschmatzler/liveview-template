@@ -1,3 +1,7 @@
+global:
+  imagePullSecrets:
+    - name: dockerconfigjson-github
+
 extraInitContainers:
   - name: init-db
     image: ghcr.io/cschmatzler/postgresql-initdb:15.2
