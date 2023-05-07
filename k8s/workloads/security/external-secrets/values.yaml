@@ -1,0 +1,2 @@
+podLabels:
+  grafana-agent/collect-metrics: "true"

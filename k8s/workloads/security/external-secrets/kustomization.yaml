@@ -3,3 +3,9 @@ kind: Kustomization
 namespace: security
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: external-secrets-values
+    files:
+      - values.yaml=./values.yaml
+configurations:
+  - kustomizeconfig.yaml
