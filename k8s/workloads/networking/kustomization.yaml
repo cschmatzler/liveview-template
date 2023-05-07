@@ -4,4 +4,4 @@ resources:
   - ./namespace.yaml
   - ./external-dns.yaml
   - ./tailscale.yaml
-  - ./nginx-ingress-controller.yaml
+  - ./contour.yaml
