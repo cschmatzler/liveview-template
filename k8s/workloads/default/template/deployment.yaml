@@ -27,7 +27,7 @@ spec:
                 name: template-config
       containers:
         - name: template
-          image: ghcr.io/cschmatzler/liveview-template:23.5.7-693275d
+          image: ghcr.io/cschmatzler/liveview-template:23.5.7-381269d
           envFrom:
             - secretRef:
                 name: template-config
