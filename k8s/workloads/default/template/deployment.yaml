@@ -30,7 +30,7 @@ spec:
           image: ghcr.io/cschmatzler/liveview-template:23.5.7-693275d
           envFrom:
             - secretRef:
-                name: template-env
+                name: template-config
           ports:
             - name: http
               protocol: TCP
