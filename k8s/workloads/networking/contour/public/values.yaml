@@ -1,5 +1,4 @@
 contour:
-  manageCRDs: true
   extraArgs:
     - --use-proxy-protocol
   ingressClass:
