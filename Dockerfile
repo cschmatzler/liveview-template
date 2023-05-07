@@ -25,6 +25,7 @@ COPY config/config.exs config/${MIX_ENV}.exs config/
 COPY assets assets/
 COPY lib lib/
 COPY priv priv/
+COPY rel rel/
 
 RUN mix do tailwind.install --if-missing, esbuild.install --if-missing
 RUN mix do tailwind default --minify, esbuild default --minify, phx.digest
