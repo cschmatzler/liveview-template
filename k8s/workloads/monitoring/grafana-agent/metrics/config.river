@@ -3,14 +3,24 @@ logging {
   format = "logfmt"
 }
 
-// Discovery
-// ---------
 discovery.kubernetes "endpoints" {
   role = "endpoints"
 }
 
-discovery.relabel "common" {
+discovery.relabel "kubernetes_metrics" {
   targets = discovery.kubernetes.endpoints.targets
+
+  rule {
+    source_labels = [
+      "__meta_kubernetes_endpoints_labelpresent_grafana_agent_collect_metrics",
+    ]
+    action = "keep"
+    regex = "true"
+  }
+}
+
+discovery.relabel "common" {
+  targets = discovery.relabel.kubernetes_metrics.output
 
   rule {
     source_labels = ["__meta_kubernetes_namespace"]
@@ -50,22 +60,8 @@ discovery.relabel "common" {
   }
 }
 
-// Metrics
-// -------
-discovery.relabel "kubernetes_metrics" {
-  targets = discovery.relabel.common.output
-
-  rule {
-    source_labels = [
-      "__meta_kubernetes_endpoints_labelpresent_grafana_agent_collect_metrics",
-    ]
-    action = "keep"
-    regex = "true"
-  }
-}
-
 prometheus.scrape "metrics" {
-  targets = discovery.relabel.kubernetes_metrics.output
+  targets = discovery.relabel.common.output
 
   scrape_interval = "15s"
 
