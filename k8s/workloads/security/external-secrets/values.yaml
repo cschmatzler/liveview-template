@@ -1,2 +1,8 @@
 podLabels:
   grafana-agent/collect-metrics: "true"
+webhook:
+  podLabels:
+    grafana-agent/collect-metrics: "true"
+certController:
+  podLabels:
+    grafana-agent/collect-metrics: "true"
