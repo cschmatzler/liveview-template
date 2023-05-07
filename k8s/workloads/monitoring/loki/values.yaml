@@ -32,12 +32,24 @@ loki:
       reporting_enabled: false
 gateway:
   replicas: 1
+  service:
+    labels:
+      grafana-agent/collect-metrics: "true"
 read:
   replicas: 2
+  service:
+    labels:
+      grafana-agent/collect-metrics: "true"
 write:
   replicas: 2
+  service:
+    labels:
+      grafana-agent/collect-metrics: "true"
 backend:
   replicas: 2
+  service:
+    labels:
+      grafana-agent/collect-metrics: "true"
 monitoring:
   selfMonitoring:
     enabled: false
