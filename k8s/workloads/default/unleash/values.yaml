@@ -9,5 +9,27 @@ initContainers:
       - secretRef:
           name: unleash-config
 
+existingSecrets:
+  - name: DATABASE_HOST
+    valueFrom:
+      secretKeyRef:
+        name: unleash-config
+        key: DATABASE_HOST
+  - name: DATABASE_USER
+    valueFrom:
+      secretKeyRef:
+        name: unleash-config
+        key: DATABASE_USER
+  - name: DATABASE_PASS
+    valueFrom:
+      secretKeyRef:
+        name: unleash-config
+        key: DATABASE_PASS
+  - name: DATABASE
+    valueFrom:
+      secretKeyRef:
+        name: unleash-config
+        key: DATABASE
+
 postgresql:
   enabled: false

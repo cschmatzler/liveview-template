@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - ./unleash.yaml
   - ./template.yaml
-
