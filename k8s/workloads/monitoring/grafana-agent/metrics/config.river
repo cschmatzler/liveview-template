@@ -57,7 +57,7 @@ discovery.relabel "kubernetes_metrics" {
 
   rule {
     source_labels = [
-      "__meta_kubernetes_pod_labelpresent_grafana_agent_collect_metrics",
+      "__meta_kubernetes_endpoints_labelpresent_grafana_agent_collect_metrics",
     ]
     action = "keep"
     regex = "true"
