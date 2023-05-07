@@ -29,6 +29,7 @@ defmodule Template.Web.Endpoint do
     plug Phoenix.CodeReloader
   end
 
+  plug PromEx.Plug, prom_ex_module: Template.PromEx
   plug RemoteIp, headers: ["cf-connecting-ip", "x-forwarded-for"]
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]

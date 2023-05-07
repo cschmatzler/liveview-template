@@ -70,6 +70,7 @@ defmodule Template.MixProject do
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phoenix_live_view, "~> 0.18"},
+      {:prom_ex, "~> 1.8"},
       {:postgrex, "~> 0.17"},
       {:remote_ip, "~> 1.1"},
       {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false},

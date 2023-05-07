@@ -1,5 +1,15 @@
 import Config
 
+# -------
+# Metrics
+# -------
+config :template, Template.PromEx,
+  disabled: false,
+  manual_metrics_start_delay: :no_delay,
+  drop_metrics_groups: [],
+  grafana: :disabled,
+  metrics_server: :disabled
+
 # -------------
 # Feature Flags
 # -------------
