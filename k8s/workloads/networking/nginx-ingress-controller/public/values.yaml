@@ -7,6 +7,7 @@ defaultBackend:
 service:
   type: LoadBalancer
   annotations:
+    load-balancer.hetzner.cloud/name: nginx-ingress-controller-public
     load-balancer.hetzner.cloud/location: fsn1
     load-balancer.hetzner.cloud/type: lb11
     load-balancer.hetzner.cloud/use-private-ip: "true"
