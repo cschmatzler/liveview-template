@@ -71,7 +71,10 @@ if config_env() == :prod do
   # --------
 
   config :template, Template.Repo,
-    url: System.fetch_env!("DATABASE_URL"),
+    hostname: System.fetch_env!("DB_HOST"),
+    username: System.fetch_env!("DB_USERNAME"),
+    password: System.fetch_env!("DB_PASSWORD"),
+    database: System.fetch_env!("DB_NAME"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
   # ---
