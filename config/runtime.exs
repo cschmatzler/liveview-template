@@ -20,7 +20,7 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 # Prod
 # ---------
 if config_env() == :prod do
-  host = System.get_env("HOST") || System.get_env("RENDER_EXTERNAL_HOSTNAME")
+  host = System.get_env("HOST")
 
   # -------------
   # Observability
@@ -38,11 +38,7 @@ if config_env() == :prod do
 
   config :opentelemetry_exporter,
     otlp_protocol: :http_protobuf,
-    otlp_endpoint: "https://api.honeycomb.io:443",
-    otlp_headers: [
-      {"x-honeycomb-team", System.fetch_env!("HONEYCOMB_API_KEY")},
-      {"x-honeycomb-dataset", "template"}
-    ]
+    otlp_endpoint: System.fetch_env!("OTLP_ENDPOINT")
 
   # -------------
   # Feature Flags
@@ -52,19 +48,19 @@ if config_env() == :prod do
   # ----------
   # Clustering
   # ----------
-  dns_name = System.get_env("RENDER_DISCOVERY_SERVICE")
-  app_name = System.get_env("RENDER_SERVICE_NAME")
-
-  config :libcluster,
-    topologies: [
-      render: [
-        strategy: Cluster.Strategy.Kubernetes.DNS,
-        config: [
-          service: dns_name,
-          application_name: app_name
-        ]
-      ]
-    ]
+  # dns_name = System.get_env("RENDER_DISCOVERY_SERVICE")
+  # app_name = System.get_env("RENDER_SERVICE_NAME")
+  #
+  # config :libcluster,
+  #   topologies: [
+  #     render: [
+  #       strategy: Cluster.Strategy.Kubernetes.DNS,
+  #       config: [
+  #         service: dns_name,
+  #         application_name: app_name
+  #       ]
+  #     ]
+  #   ]
 
   # --------
   # Database
