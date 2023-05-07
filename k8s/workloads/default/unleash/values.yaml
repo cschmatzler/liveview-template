@@ -9,7 +9,7 @@ initContainers:
       - secretRef:
           name: unleash-config
 
-existingSecrets:
+env:
   - name: DATABASE_HOST
     valueFrom:
       secretKeyRef:
