@@ -26,9 +26,15 @@ tasks:
       - sh: test -f {{.KUBERNETES_DIR}}/bootstrap/github-deploy-key.sops.yaml
         msg: |
           Could not find GitHub deploy key.
+      - sh: test -f {{.KUBERNETES_DIR}}/bootstrap/dockerconfig-github.sops.yaml
+        msg: |
+          Could not find GitHub dockerconfig.
       - sh: test -f {{.KUBERNETES_DIR}}/bootstrap/onepassword-credentials.sops.yaml
         msg: |
           Could not find 1Password credentials.
+      - sh: test -f {{.KUBERNETES_DIR}}/bootstrap/hcloud.sops.yaml
+        msg: |
+          Could not find hcloud secret.
 
   bootstrap-workloads:
     cmds:

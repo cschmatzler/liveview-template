@@ -1,0 +1,2 @@
+config:
+  INHERITED_LABELS: grafana-agent/*, app.kubernetes.io/*
