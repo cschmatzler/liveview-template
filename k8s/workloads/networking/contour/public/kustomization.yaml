@@ -4,7 +4,7 @@ namespace: networking
 resources:
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: nginx-ingress-controller-public-values
+  - name: contour-public-values
     files:
       - values.yaml=./values.yaml
 configurations:
