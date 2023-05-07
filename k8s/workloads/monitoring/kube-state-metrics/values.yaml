@@ -1,2 +1,2 @@
-podLabels:
+customLabels:
   grafana-agent/collect-metrics: "true"
