@@ -39,9 +39,9 @@ dashboardProviders:
   dashboardproviders.yaml:
     apiVersion: 1
     providers:
-      - name: default
+      - name: infra
         orgId: 1
-        folder: ""
+        folder: infra
         type: file
         disableDeletion: false
         editable: true
@@ -83,8 +83,9 @@ datasources:
         secureJsonData:
           httpHeaderValue1: "liveview-template.app"
 dashboards:
-  default:
+  infra:
     node-exporter:
+      name: Node Exporter
       gnetId: 1860
       revision: 31
       datasource:
