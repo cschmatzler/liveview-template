@@ -19,7 +19,7 @@ defmodule Template.MixProject do
         ]
       ],
       test_coverage: [tool: ExCoveralls],
-      name: "Qing",
+      name: "Opportunity",
       description: "An opinionated template for LiveView services.",
       docs: docs(),
       version: version()
