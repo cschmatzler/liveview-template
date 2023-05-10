@@ -74,7 +74,7 @@ defmodule Template.MixProject do
       {:postgrex, "~> 0.17"},
       {:remote_ip, "~> 1.1"},
       {:sobelow, "~> 0.12", only: [:dev, :test], runtime: false},
-      {:styler, "~> 0.6", only: [:dev, :test], runtime: false},
+      {:styler, "~> 0.7", only: [:dev, :test], runtime: false},
       {:swoosh, "~> 1.9"},
       {:tailwind, "~> 0.2"},
       {:ueberauth, "~> 0.10"},
