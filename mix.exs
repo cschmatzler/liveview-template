@@ -20,7 +20,7 @@ defmodule Template.MixProject do
       ],
       test_coverage: [tool: ExCoveralls],
       name: "Opportunity",
-      description: "Stuff",
+      description: "An opinionated template for LiveView services.",
       docs: docs(),
       version: version()
     ]
