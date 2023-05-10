@@ -10,7 +10,7 @@ spec:
         name: bitnami
         namespace: flux-system
       chart: contour
-      version: 11.3.1
+      version: 11.3.2
   interval: 10m
   install:
     remediation:
