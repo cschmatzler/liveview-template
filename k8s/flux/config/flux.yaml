@@ -66,8 +66,8 @@ spec:
     - target:
         kind: Deployment
         name: (kustomize-controller|helm-controller|source-controller)
-        apiVersion: apps/v1
       patch: |
+        apiVersion: apps/v1
         kind: Deployment
         metadata:
           name: not-used
