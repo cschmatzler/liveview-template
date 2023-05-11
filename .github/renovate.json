@@ -1,24 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
-    "docker:enableMajor",
-    ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
-    ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranch",
-    "helpers:pinGitHubActionDigests"
+    ":automergePatch",
+    "docker:enableMajor",
+    "helpers:pinGitHubActionDigests",
+    "schedule:nonOfficeHours",
+    "schedule:automergeNonOfficeHours"
   ],
-  "dependencyDashboard": true,
-  "suppressNotifications": [
-    "prIgnoreNotification"
-  ],
-  "rebaseWhen": "conflicted",
-  "schedule": [
-    "before 8am"
-  ],
+  "ignoreDeps": ["ghcr.io/cschmatzler/postgresql-initdb", "package ghcr.io/cschmatzler/liveview-template"],
   "flux": {
     "fileMatch": [
       "k8s/.+\\.ya?ml$"
@@ -33,18 +26,5 @@
     "fileMatch": [
       "k8s/.+\\.ya?ml$"
     ]
-  },
-  "regexManagers": [
-    {
-      "description": "Process various other dependencies",
-      "fileMatch": [
-        "k8s/.+\\.ya?ml$"
-      ],
-      "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    }
-  ]
+  }
 }

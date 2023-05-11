@@ -12,6 +12,18 @@ spec:
       version: 1.13.2
       chart: cilium
   interval: 10m
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   valuesFrom:
     - kind: ConfigMap
       name: cilium-values
