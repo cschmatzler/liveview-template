@@ -86,10 +86,15 @@ defmodule Template.MixProject do
   defp docs do
     [
       formatters: ["html"],
-      extras: "docs/**/*.md" |> Path.wildcard() |> Enum.flat_map(&extract_title/1),
+      extras:
+        "docs/**/*.md"
+        |> Path.wildcard()
+        |> Enum.reject(&(&1 =~ "template.md"))
+        |> Enum.flat_map(&extract_title/1),
       groups_for_extras: [
         Infrastructure: ~r/infrastructure/,
-        Architecture: ~r/architecture/
+        Architecture: ~r/architecture/,
+        ADRs: ~r/decisions/
       ]
     ]
   end

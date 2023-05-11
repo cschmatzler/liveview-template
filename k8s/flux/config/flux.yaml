@@ -7,7 +7,7 @@ spec:
   interval: 10m
   url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
-    tag: v2.0.0-rc.1
+    tag: v2.0.0-rc.2
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -23,7 +23,10 @@ spec:
   prune: true
   wait: true
   patches:
-    - patch: |
+    - target:
+        kind: Deployment
+        name: (kustomize-controller|helm-controller|source-controller)
+      patch: |
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --concurrent=8
@@ -36,11 +39,11 @@ spec:
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --requeue-dependency=5s
-      target:
+    - target:
         kind: Deployment
         name: (kustomize-controller|helm-controller|source-controller)
-    - patch: |
         apiVersion: apps/v1
+      patch: |
         kind: Deployment
         metadata:
           name: not-used
@@ -53,16 +56,13 @@ spec:
                     limits:
                       cpu: 2000m
                       memory: 2Gi
-      target:
+    - target:
         kind: Deployment
-        name: (kustomize-controller|helm-controller|source-controller)
-    - patch: |
+        name: helm-controller
+      patch: |
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --feature-gates=DetectDrift=true,CorrectDrift=false
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --log-level=debug
-      target:
-        kind: Deployment
-        name: helm-controller
