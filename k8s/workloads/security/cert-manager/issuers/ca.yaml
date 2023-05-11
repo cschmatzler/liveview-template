@@ -1,18 +1,17 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ca
+  name: ca.liveview-template.app
 spec:
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
     name: self-signed
-  secretName: ca.liveview-template.app
   commonName: ca.liveview-template.app
+  secretName: ca.liveview-template.app
   privateKey:
-    algorithm: RSA
-    encoding: PKCS8
-    size: 2048
+    algorithm: ECDSA
+    size: 256
   isCA: true
   duration: 2160h
   renewBefore: 360h

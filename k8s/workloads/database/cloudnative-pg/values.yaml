@@ -1,3 +1,5 @@
+fullnameOverride: cloudnative-pg
+
 config:
   data:
-    INHERITED_LABELS: grafana-agent/*, app.kubernetes.io/*
+    INHERITED_LABELS: app.kubernetes.io/*, grafana-agent/*

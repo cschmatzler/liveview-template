@@ -1,3 +1,4 @@
+
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -28,8 +29,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      # TODO: update this from default to database
-      destinationPath: s3://liveview-template-app-default-postgresql-main
+      destinationPath: s3://liveview-template-app-database-postgresql-main
       endpointURL: http://s3.eu-central-2.wasabisys.com
       s3Credentials:
         accessKeyId:

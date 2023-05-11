@@ -40,7 +40,7 @@ resource "hcloud_load_balancer_network" "control_plane" {
 }
 
 resource "hcloud_load_balancer_target" "control_plane" {
-  count = local.control_plane_nodes.count
+  count = local.control_plane_nodepool.count
 
   type             = "server"
   load_balancer_id = hcloud_load_balancer.control_plane.id
