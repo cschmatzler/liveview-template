@@ -5,14 +5,14 @@ resource "hcloud_placement_group" "control_plane" {
 
 module "control_plane" {
   source = "./node"
-  count  = local.control_plane_nodes.count
+  count  = local.control_plane_nodepool.count
 
   role = "control-plane"
 
-  node_type          = local.control_plane_nodes.node_type
-  node_location      = local.control_plane_nodes.node_location
+  node_type          = local.control_plane_nodepool.node_type
+  node_location      = local.control_plane_nodepool.node_location
   placement_group_id = hcloud_placement_group.control_plane.id
-  image_id           = local.control_plane_nodes.image_id
+  image_id           = local.control_plane_nodepool.image_id
 
   user_data = file("./talos/controlplane.yaml")
 

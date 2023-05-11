@@ -39,7 +39,7 @@ locals {
 
   # Nodes
   # -----
-  control_plane_nodes = {
+  control_plane_nodepool = {
     count         = 3
     name          = "control-plane",
     node_type     = "cax11",

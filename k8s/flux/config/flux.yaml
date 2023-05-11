@@ -1,3 +1,19 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: liveview-template
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: ssh://git@github.com/cschmatzler/liveview-template
+  ref:
+    branch: master
+  secretRef:
+    name: github-deploy-key
+  ignore: |
+    /*
+    !/k8s
+---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
@@ -8,6 +24,14 @@ spec:
   url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
     tag: v2.0.0-rc.2
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  CLUSTER_NAME: liveview-template
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -66,3 +90,17 @@ spec:
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --log-level=debug
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: liveview-template
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./k8s/flux
+  prune: true
+  wait: false
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
