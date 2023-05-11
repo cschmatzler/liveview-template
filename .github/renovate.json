@@ -11,7 +11,7 @@
     "schedule:nonOfficeHours",
     "schedule:automergeNonOfficeHours"
   ],
-  "ignoreDeps": ["ghcr.io/cschmatzler/postgresql-initdb", "package ghcr.io/cschmatzler/liveview-template"],
+  "ignoreDeps": ["ghcr.io/cschmatzler/postgresql-initdb", "ghcr.io/cschmatzler/liveview-template"],
   "flux": {
     "fileMatch": [
       "k8s/.+\\.ya?ml$"
