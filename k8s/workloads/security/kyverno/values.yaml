@@ -1,0 +1,4 @@
+crds:
+  install: true
+admissionController:
+  replicas: 3

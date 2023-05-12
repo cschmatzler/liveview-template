@@ -8,6 +8,7 @@ resources:
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./grafana.yaml
+  - ./kyverno.yaml
   - ./jetstack.yaml
   - ./onepassword-connect.yaml
   - ./prometheus-community.yaml

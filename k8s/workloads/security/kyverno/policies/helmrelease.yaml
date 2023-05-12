@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kyverno-policies
+spec:
+  interval: 10m
+  chart:
+    spec:
+      sourceRef:
+        kind: HelmRepository
+        name: kyverno
+        namespace: flux-system
+      chart: kyverno-policies
+      version: 3.0.0-beta.1
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  valuesFrom:
+    - kind: ConfigMap
+      name: kyverno-policies-values

@@ -2,6 +2,55 @@ data "cloudflare_zone" "domain" {
   name = local.domain
 }
 
+resource "hcloud_firewall" "kubernetes" {
+  name = "kubernetes"
+  rule {
+    description = "Control Plane"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = 6443
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+  rule {
+    description = "Talos API"
+    direction   = "in"
+    protocol    = "tcp"
+    port        = 50000
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+  rule {
+    description = "Outgoing traffic/TCP"
+    direction   = "out"
+    protocol    = "tcp"
+    port        = "any"
+    destination_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+  rule {
+    description = "Outgoing traffic/UDP"
+    direction   = "out"
+    protocol    = "udp"
+    port        = "any"
+    destination_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+}
+
+resource "hcloud_firewall_attachment" "kubernetes" {
+  firewall_id = hcloud_firewall.kubernetes.id
+  server_ids = concat(module.control_plane.*.server_id, flatten([for nodepool in module.workers: nodepool.*.server_id]))
+}
+
 resource "hcloud_network" "network" {
   name     = "cluster.${local.domain}"
   ip_range = "10.0.0.0/16"

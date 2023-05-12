@@ -5,7 +5,7 @@ resource "hcloud_placement_group" "workers" {
   type = "spread"
 }
 
-module "worker" {
+module "workers" {
   source   = "./node"
   for_each = local.worker_nodes
 

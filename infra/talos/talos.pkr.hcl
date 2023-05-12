@@ -1,4 +1,4 @@
-packer {
+packer 
   required_plugins {
     hcloud = {
       version = ">= 1.0.0"
@@ -7,15 +7,23 @@ packer {
   }
 }
 
+variable "hcloud_token" {
+  type      = string
+  sensitive = true
+  default   = "${env("TF_VAR_hcloud_token")}"
+}
+
 variable "talos_version" {
   type    = string
+  default = "${env("TALOS_VERSION")}"
 }
 
 locals {
-  image = "https://github.com/siderolabs/talos/releases/download/v${var.talos_version}/hcloud-arm64.raw.xz"
+  image = "https://github.com/siderolabs/talos/releases/download/${var.talos_version}/hcloud-arm64.raw.xz"
 }
 
 source "hcloud" "talos" {
+  token        = var.hcloud_token
   image        = "debian-11"
   rescue       = "linux64"
   location     = "fsn1"

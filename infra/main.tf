@@ -30,7 +30,7 @@ provider "cloudflare" {
 locals {
   # Packer
   # ------
-  image_id = 109031096
+  image_id = 110601696
 
   # Network
   # -------
