@@ -11,7 +11,7 @@ spec:
         name: grafana
         namespace: flux-system
       chart: grafana-agent
-      version: 0.13.0
+      version: 0.14.0
   interval: 10m
   maxHistory: 3
   install:
