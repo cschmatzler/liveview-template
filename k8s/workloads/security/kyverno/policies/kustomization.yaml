@@ -4,6 +4,7 @@ namespace: security
 resources:
   - ./helmrelease.yaml
   - ./remove-cpu-limit.yaml
+  - ./inject-timezone.yaml
 configMapGenerator:
   - name: kyverno-policies-values
     files:
