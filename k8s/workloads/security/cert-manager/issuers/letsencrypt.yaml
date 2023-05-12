@@ -7,7 +7,7 @@ spec:
     email: admin@liveview-template.app
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: letsencrypt-account-key
+      name: letsencrypt-acme-key
     solvers:
       - dns01:
           cloudflare:

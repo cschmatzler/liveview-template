@@ -24,6 +24,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+    - name: workloads-security-cert-manager
     - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository

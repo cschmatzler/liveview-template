@@ -1,9 +1,3 @@
-fullnameOverride: cloudnative-pg
-
 config:
-  name: cloudnative-pg-config
   data:
     INHERITED_LABELS: app.kubernetes.io/*, grafana-agent/*
-
-monitoringQueriesConfigMap:
-  name: cloudnative-pg-monitoring

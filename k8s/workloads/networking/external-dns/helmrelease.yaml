@@ -12,6 +12,7 @@ spec:
       chart: external-dns
       version: 1.12.2
   interval: 10m
+  maxHistory: 3
   install:
     remediation:
       retries: 3

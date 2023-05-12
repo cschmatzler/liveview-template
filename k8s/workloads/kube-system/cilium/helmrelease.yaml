@@ -9,9 +9,10 @@ spec:
         kind: HelmRepository
         name: cilium
         namespace: flux-system
-      version: 1.13.2
       chart: cilium
+      version: 1.13.2
   interval: 10m
+  maxHistory: 3
   install:
     createNamespace: true
     crds: CreateReplace

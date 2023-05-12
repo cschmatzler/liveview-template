@@ -3,7 +3,6 @@ kind: HelmRelease
 metadata:
   name: cert-manager
 spec:
-  interval: 10m
   chart:
     spec:
       sourceRef:
@@ -12,6 +11,7 @@ spec:
         namespace: flux-system
       chart: cert-manager
       version: v1.11.2
+  interval: 10m
   maxHistory: 3
   install:
     createNamespace: true

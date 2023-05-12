@@ -6,6 +6,7 @@ metadata:
 spec:
   dependsOn:
     - name: workloads-security-external-secrets-stores
+    - name: workloads-networking-contour-private
   sourceRef:
     kind: GitRepository
     name: liveview-template

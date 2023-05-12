@@ -12,6 +12,7 @@ spec:
       chart: contour
       version: 11.3.2
   interval: 10m
+  maxHistory: 3
   install:
     createNamespace: true
     crds: CreateReplace

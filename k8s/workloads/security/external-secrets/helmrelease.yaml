@@ -12,7 +12,7 @@ spec:
       chart: external-secrets
       version: 0.8.1
   interval: 10m
-  maxHistory: 2
+  maxHistory: 3
   install:
     createNamespace: true
     crds: CreateReplace
