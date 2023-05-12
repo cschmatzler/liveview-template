@@ -14,11 +14,10 @@ module "control_plane" {
   placement_group_id = hcloud_placement_group.control_plane.id
   image_id           = local.control_plane_nodepool.image_id
 
-  user_data = file("./talos/controlplane.yaml")
+  user_data = data.sops_file.control_plane_config.raw
 
   network_id  = hcloud_network.network.id
   subnet_id   = hcloud_network_subnet.cluster.id
-  ipv4_enabled = true
   rdns_domain = local.rdns_domain
 
   labels = {

@@ -16,7 +16,19 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = ">= 3.0.0"
     }
+    sops = {
+      source  = "carlpett/sops"
+      version = ">= 0.5.0"
+    }
   }
+}
+
+data "sops_file" "control_plane_config" {
+  source_file = "talos/controlplane.sops.yaml"
+}
+
+data "sops_file" "worker_config" {
+  source_file = "talos/worker.sops.yaml"
 }
 
 provider "hcloud" {

@@ -6,7 +6,7 @@ defmodule Template.Metrics do
 
   alias PromEx.Plugins
 
-  @impl true
+  @impl PromEx
   def plugins do
     [
       Plugins.Application,
@@ -14,7 +14,7 @@ defmodule Template.Metrics do
       {Plugins.Phoenix, router: Template.Web.Router, endpoint: Template.Web.Endpoint},
       Plugins.Ecto,
       Plugins.Oban,
-      Plugins.PhoenixLiveView,
+      Plugins.PhoenixLiveView
     ]
   end
 end
