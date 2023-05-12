@@ -16,11 +16,10 @@ module "workers" {
   placement_group_id = element(hcloud_placement_group.workers.*.id, ceil(each.value.index / 10))
   image_id           = each.value.image_id
 
-  user_data = file("./talos/worker.yaml")
+  user_data = data.sops_file.worker_config.raw
 
   network_id  = hcloud_network.network.id
   subnet_id   = hcloud_network_subnet.cluster.id
-  ipv4_enabled = false
   rdns_domain = local.rdns_domain
 
   labels = {
