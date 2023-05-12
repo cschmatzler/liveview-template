@@ -6,7 +6,7 @@ defmodule Template.Metrics do
 
   alias PromEx.Plugins
 
-  @impl true
+  @impl PromEx
   def plugins do
     [
       Plugins.Application,
