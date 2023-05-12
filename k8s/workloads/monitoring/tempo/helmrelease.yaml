@@ -4,7 +4,6 @@ metadata:
   name: tempo
   namespace: monitoring
 spec:
-  interval: 10m
   chart:
     spec:
       sourceRef:
@@ -13,7 +12,8 @@ spec:
         namespace: flux-system
       chart: tempo-distributed
       version: 1.3.0
-  maxHistory: 2
+  interval: 10m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:

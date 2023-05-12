@@ -8,15 +8,9 @@ extraInitContainers:
     imagePullPolicy: Always
     envFrom:
       - secretRef:
-          name: grafana-config
+          name: grafana-op
 
-# sidecar:
-#   dashboards:
-#     enabled: true
-#     searchNamespace: ALL
-#   datasources:
-#     enabled: true
-#     searchNamespace: ALL
+replicaCount: 3
 
 persistence:
   enabled: false
@@ -29,7 +23,7 @@ env:
   GF_DATABASE_SSL_MODE: verify-full
   GF_DATABASE_CA_CERT_PATH: /certs/ca.crt
 envFromSecrets:
-  - name: grafana-config
+  - name: grafana-op
 extraSecretMounts:
   - name: postgresql-main-tls
     mountPath: /certs
@@ -122,6 +116,6 @@ ingress:
 admin:
   # These are only applied by Grafana during initial bootstrap - changing them in the
   # secret will not update an existing database.
-  existingSecret: grafana-config
+  existingSecret: grafana-op
   userKey: GRAFANA_USERNAME
   passwordKey: GRAFANA_PASSWORD

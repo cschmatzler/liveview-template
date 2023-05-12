@@ -12,6 +12,7 @@ spec:
       chart: cloudnative-pg
       version: 0.18.0
   interval: 10m
+  maxHistory: 3
   install:
     createNamespace: true
     crds: CreateReplace

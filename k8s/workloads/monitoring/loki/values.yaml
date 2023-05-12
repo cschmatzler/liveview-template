@@ -31,17 +31,17 @@ loki:
     analytics:
       reporting_enabled: false
 gateway:
-  replicas: 1
+  replicas: 3
 read:
-  replicas: 2
+  replicas: 3
   serviceLabels:
     grafana-agent/collect-metrics: "true"
 write:
-  replicas: 2
+  replicas: 3
   serviceLabels:
     grafana-agent/collect-metrics: "true"
 backend:
-  replicas: 2
+  replicas: 3
   serviceLabels:
     grafana-agent/collect-metrics: "true"
 monitoring:

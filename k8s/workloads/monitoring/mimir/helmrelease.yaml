@@ -4,7 +4,6 @@ metadata:
   name: mimir
   namespace: monitoring
 spec:
-  interval: 10m
   chart:
     spec:
       sourceRef:
@@ -13,7 +12,8 @@ spec:
         namespace: flux-system
       chart: mimir-distributed
       version: 4.4.1
-  maxHistory: 2
+  interval: 10m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:

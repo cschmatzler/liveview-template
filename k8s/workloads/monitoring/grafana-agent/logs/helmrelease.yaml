@@ -13,7 +13,7 @@ spec:
       chart: grafana-agent
       version: 0.13.0
   interval: 10m
-  maxHistory: 2
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:

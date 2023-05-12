@@ -8,8 +8,16 @@ traces:
       enabled: true
     http:
       enabled: true
+compactor:
+  replicas: 3
+distributor:
+  replicas: 3
 ingester:
-  replicas: 2
+  replicas: 3
+querier:
+  replicas: 3
+query_frontend:
+  replicas: 3
 memcached:
   enabled: false
 minio:

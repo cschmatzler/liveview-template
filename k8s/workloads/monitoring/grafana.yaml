@@ -5,6 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+    - name: workloads-security-external-secrets-stores
     - name: workloads-database-cloudnative-pg-main
   sourceRef:
     kind: GitRepository

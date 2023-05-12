@@ -4,16 +4,16 @@ metadata:
   name: loki
   namespace: monitoring
 spec:
-  interval: 10m
   chart:
     spec:
-      chart: loki
-      version: 5.5.0
       sourceRef:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  maxHistory: 2
+      chart: loki
+      version: 5.5.0
+  interval: 10m
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
@@ -29,21 +29,21 @@ spec:
       name: loki-values
     - targetPath: loki.structuredConfig.common.storage.s3.bucketnames
       kind: Secret
-      name: loki-config
+      name: loki-op
       valuesKey: BUCKET_NAME
     - targetPath: loki.structuredConfig.common.storage.s3.endpoint
       kind: Secret
-      name: loki-config
+      name: loki-op
       valuesKey: BUCKET_ENDPOINT
     - targetPath: loki.structuredConfig.common.storage.s3.region
       kind: Secret
-      name: loki-config
+      name: loki-op
       valuesKey: BUCKET_REGION
     - targetPath: loki.structuredConfig.common.storage.s3.access_key_id
       kind: Secret
-      name: loki-config
+      name: loki-op
       valuesKey: AWS_ACCESS_KEY_ID
     - targetPath: loki.structuredConfig.common.storage.s3.secret_access_key
       kind: Secret
-      name: loki-config
+      name: loki-op
       valuesKey: AWS_SECRET_ACCESS_KEY
