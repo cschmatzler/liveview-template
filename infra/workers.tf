@@ -20,6 +20,7 @@ module "workers" {
 
   network_id  = hcloud_network.network.id
   subnet_id   = hcloud_network_subnet.cluster.id
+  ipv4_enabled = false
   rdns_domain = local.rdns_domain
 
   labels = {

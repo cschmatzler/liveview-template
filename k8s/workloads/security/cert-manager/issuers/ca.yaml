@@ -16,6 +16,20 @@ spec:
   duration: 2160h
   renewBefore: 360h
 ---
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: ca.liveview-template.app-bundle
+spec:
+  sources:
+    - useDefaultCAs: true
+    - secret:
+      name: ca.liveview-template.app
+      key: "ca.crt"
+  target:
+    configMap:
+      key: "ca.liveview-template.app-bundle.pem"
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:

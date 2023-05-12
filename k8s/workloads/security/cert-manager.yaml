@@ -20,11 +20,31 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: workloads-security-trust-manager
+  namespace: flux-system
+spec:
+  sourceRef:
+    kind: GitRepository
+    name: liveview-template
+  path: ./k8s/workloads/security/cert-manager/trust-manager
+  interval: 10m
+  timeout: 5m
+  prune: true
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: trust-manager
+      namespace: security
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: workloads-security-cert-manager-issuers
   namespace: flux-system
 spec:
   dependsOn:
     - name: workloads-security-cert-manager
+    - name: workloads-security-trust-manager
     - name: workloads-security-external-secrets-stores
   sourceRef:
     kind: GitRepository
