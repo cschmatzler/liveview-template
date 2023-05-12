@@ -23,5 +23,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    replicaCount: 3
+  valuesFrom:
+    - kind: ConfigMap
+      name: reflector-values
