@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: security
 resources:
   - ./helmrelease.yaml
-  # - ./remove-cpu-limit.yaml
+  - ./remove-cpu-limit.yaml
 configMapGenerator:
   - name: kyverno-policies-values
     files:
