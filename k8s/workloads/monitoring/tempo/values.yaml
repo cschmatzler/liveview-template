@@ -16,7 +16,7 @@ ingester:
   replicas: 3
 querier:
   replicas: 3
-query_frontend:
+query-frontend:
   replicas: 3
 memcached:
   enabled: false
