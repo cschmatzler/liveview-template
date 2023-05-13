@@ -15,10 +15,6 @@ jobs:
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - name: Install Terraform
         uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2
-      - name: Log into Tailscale
-        uses: tailscale/github-action@v1
-        with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Log into 1Password
         uses: 1password/load-secrets-action/configure@v1
         with:
@@ -28,8 +24,20 @@ jobs:
         with:
           export-env: true
         env:
+          # Tailscale
+          TAILSCALE_AUTHKEY: op://liveview-template/github-actions/TAILSCALE_AUTHKEY
+          # Terraform state
           AWS_ACCESS_KEY_ID: op://liveview-template/terraform/AWS_ACCESS_KEY_ID
           AWS_SECRET_ACCESS_KEY: op://liveview-template/terraform/AWS_SECRET_ACCESS_KEY
+          # Grafana
+          TF_VAR_admin_auth: op://liveview-template/grafana/GF_ADMIN_AUTH
+          # TODO: this fails for when we're having multiple users
+          # create specific vault with shareable items?
+          TF_VAR_user_christoph_password: op://liveview-template/grafana/password
+      - name: Log into Tailscale
+        uses: tailscale/github-action@v1
+        with:
+          authkey: ${{ env.TAILSCALE_AUTHKEY }}
       - name: Check formatting
         id: fmt
         run: terraform fmt -check
@@ -44,10 +52,6 @@ jobs:
         id: plan
         run: terraform plan -no-color
         continue-on-error: true
-        env:
-          # Grafana authentication
-          TF_VAR_admin_auth: ${{ secrets.GRAFANA_ADMIN_AUTH }}
-          TF_VAR_user_christoph_password: ${{ secrets.GRAFANA_USER_CHRISTOPH_PASSWORD }}
       - uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
         if: github.event_name == 'pull_request'
         env:
