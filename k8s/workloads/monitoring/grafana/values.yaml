@@ -53,12 +53,20 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
-        prometheusType: Mimir
-        implementation: mimir
         access: proxy
         isDefault: true
         url: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
         jsonData:
+          prometheusType: Mimir
+          httpHeaderName1: "X-Scope-OrgID"
+        secureJsonData:
+          httpHeaderValue1: "liveview-template.app"
+      - name: Alertmanager
+        type: alertmanager
+        access: proxy
+        url: http://mimir-alertmanager.monitoring.svc.cluster.local:8080
+        jsonData:
+          implementation: mimir
           httpHeaderName1: "X-Scope-OrgID"
         secureJsonData:
           httpHeaderValue1: "liveview-template.app"
