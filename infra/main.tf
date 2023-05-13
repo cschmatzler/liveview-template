@@ -69,6 +69,13 @@ locals {
       node_location = "fsn1",
       image_id      = local.image_id
     },
+    {
+      count         = 2
+      name          = "worker-cax21",
+      node_type     = "cax21",
+      node_location = "fsn1",
+      image_id      = local.image_id
+    },
   ]
 
   # Servers

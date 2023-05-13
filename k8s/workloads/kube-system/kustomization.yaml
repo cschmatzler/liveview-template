@@ -4,3 +4,4 @@ resources:
   - ./namespace.yaml
   - ./cilium.yaml
   - ./hcloud-csi.yaml
+  - ./goldilocks.yaml
