@@ -2,7 +2,7 @@ name: "Grafana Provisioning: Validate and Plan"
 on:
   pull_request:
     paths:
-      - "k8s/workloads/monitoring/grafana/provision/*.tf"
+      - "k8s/workloads/monitoring/grafana/provision/**/*.tf"
 jobs:
   validate-and-plan:
     name: Validate and Plan
