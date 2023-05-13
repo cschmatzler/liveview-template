@@ -53,6 +53,8 @@ datasources:
     datasources:
       - name: Prometheus
         type: prometheus
+        prometheusType: Mimir
+        implementation: mimir
         access: proxy
         isDefault: true
         url: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
