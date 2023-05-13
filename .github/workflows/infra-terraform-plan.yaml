@@ -12,9 +12,9 @@ jobs:
         working-directory: infra/
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2
       - name: Check formatting
         id: fmt
         run: terraform fmt -check
@@ -43,7 +43,7 @@ jobs:
           # Talos configuration encryption
           SOPS_AGE_RECIPIENTS: ${{ secrets.SOPS_AGE_RECIPIENTS }}
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
