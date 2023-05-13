@@ -15,6 +15,6 @@ resource "b2_bucket" "bucket" {
 # TODO: ship this into 1Password directly once the Terraform provider supports service accounts
 resource "b2_application_key" "application_key" {
   key_name     = var.name
-  capabilities = ["listFiles", "readFiles", "writeFiles", "deleteFiles"]
-  bucket_id = b2_bucket.bucket.id
+  capabilities = ["readBuckets", "listBuckets", "listAllBucketNames", "listFiles", "readFiles", "writeFiles", "deleteFiles"]
+  bucket_id    = b2_bucket.bucket.id
 }
