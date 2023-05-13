@@ -1,12 +1,4 @@
 terraform {
-  cloud {
-    organization = "liveview-template"
-
-    workspaces {
-      name = "liveview-template"
-    }
-  }
-
   required_providers {
     hcloud = {
       source  = "hetznercloud/hcloud"
@@ -20,6 +12,16 @@ terraform {
       source  = "carlpett/sops"
       version = ">= 0.5.0"
     }
+  }
+
+  backend "s3" {
+    endpoint = "https://s3.eu-central-2.wasabisys.com"
+    region = "eu-central-2"
+    bucket = "liveview-template-app-infra"
+    force_path_style = true
+    key = "terraform/infra.tfstate"
+    skip_region_validation = true
+    skip_credentials_validation = true
   }
 }
 
