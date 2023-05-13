@@ -12,70 +12,76 @@ jobs:
       run:
         working-directory: infra/
     steps:
-    - uses: actions/checkout@v3
-    - uses: hashicorp/setup-terraform@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
 
-    - name: Terraform fmt
-      id: fmt
-      run: terraform fmt -check
-      continue-on-error: true
+      - name: Check formatting
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
 
-    - name: Terraform Init
-      id: init
-      run: terraform init
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Initialize Terraform
+        id: init
+        run: terraform init
+        env:
+          # State backend
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    - name: Terraform Validate
-      id: validate
-      run: terraform validate -no-color
+      - name: Validate Terraform configuration
+        id: validate
+        run: terraform validate -no-color
 
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -no-color
-      continue-on-error: true
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
-        TF_VAR_cloudflare_token: ${{ secrets.CLOUDFLARE_TOKEN }}
-        SOPS_AGE_RECIPIENTS: ${{ secrets.SOPS_AGE_RECIPIENTS }}
-        SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      - name: Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+        env:
+          # State backend
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # Infrastructure provider authorization
+          TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_cloudflare_token: ${{ secrets.CLOUDFLARE_TOKEN }}
+          # Talos configuration encryption
+          SOPS_AGE_RECIPIENTS: ${{ secrets.SOPS_AGE_RECIPIENTS }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
-    - uses: actions/github-script@v6
-      if: github.event_name == 'pull_request'
-      env:
-        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-          <details><summary>Validation Output</summary>
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Formatting: \`${{ steps.fmt.outcome }}\`
+            #### Initialization: `${{ steps.init.outcome }}\`
+            #### Validation: `${{ steps.validate.outcome }}\`
+            <details><summary>Validation Output</summary>
 
-          \`\`\`\n
-          ${{ steps.validate.outputs.stdout }}
-          \`\`\`
+            \`\`\`\n
+            ${{ steps.validate.outputs.stdout }}
+            \`\`\`
 
-          </details>
+            </details>
 
-          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Plan: `${{ steps.plan.outcome }}\`
 
-          <details><summary>Show Plan</summary>
+            <details><summary>Plan Output</summary>
 
-          \`\`\`\n
-          ${process.env.PLAN}
-          \`\`\`
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
 
-          </details>
+            </details>
 
-          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`;
 
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: output
-          })
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
