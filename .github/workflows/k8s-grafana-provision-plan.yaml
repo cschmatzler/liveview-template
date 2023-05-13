@@ -19,6 +19,17 @@ jobs:
         uses: tailscale/github-action@v1
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+      - name: Log into 1Password
+        uses: 1password/load-secrets-action/configure@v1
+        with:
+          service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+      - name: Fetch secrets from 1Password
+        uses: 1password/load-secrets-action@v1
+        with:
+          export-env: true
+        env:
+          AWS_ACCESS_KEY_ID: op://liveview-template/terraform/AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: op://liveview-template/terraform/AWS_SECRET_ACCESS_KEY
       - name: Check formatting
         id: fmt
         run: terraform fmt -check
@@ -26,10 +37,6 @@ jobs:
       - name: Initialize Terraform
         id: init
         run: terraform init
-        env:
-          # State backend
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Validate Terraform configuration
         id: validate
         run: terraform validate -no-color
@@ -38,9 +45,6 @@ jobs:
         run: terraform plan -no-color
         continue-on-error: true
         env:
-          # State backend
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           # Grafana authentication
           TF_VAR_admin_auth: ${{ secrets.GRAFANA_ADMIN_AUTH }}
           TF_VAR_user_christoph_password: ${{ secrets.GRAFANA_USER_CHRISTOPH_PASSWORD }}
