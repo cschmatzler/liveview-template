@@ -11,7 +11,7 @@ terraform {
     region                      = "eu-central-2"
     bucket                      = "liveview-template-app-tfstate"
     force_path_style            = true
-    key                         = "monitoring-grafana-provision.tfstate"
+    key                         = "grafana-provision.tfstate"
     skip_region_validation      = true
     skip_credentials_validation = true
   }
