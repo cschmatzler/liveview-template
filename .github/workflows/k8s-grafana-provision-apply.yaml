@@ -41,6 +41,9 @@ jobs:
         with:
           version: 1.40.1
           authkey: ${{ env.TAILSCALE_AUTHKEY }}
+      - name: Initialize Terraform
+        id: init
+        run: terraform init
       - name: Apply
         id: apply
         run: terraform apply -auto-approve -no-color
