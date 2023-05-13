@@ -16,11 +16,11 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2
       - name: Log into 1Password
-        uses: 1password/load-secrets-action/configure@v1
+        uses: 1password/load-secrets-action/configure@0a7975f916547d98abb122787cff0eee67bd4fce # v1
         with:
           service-account-token: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
       - name: Fetch secrets from 1Password
-        uses: 1password/load-secrets-action@v1
+        uses: 1password/load-secrets-action@0a7975f916547d98abb122787cff0eee67bd4fce # v1
         with:
           export-env: true
         env:
@@ -35,7 +35,7 @@ jobs:
           # create specific vault with shareable items?
           TF_VAR_user_christoph_password: op://liveview-template/grafana/password
       - name: Log into Tailscale
-        uses: tailscale/github-action@v1
+        uses: tailscale/github-action@cc6818dd6930277a6e4b5d249e32ba2f4cf6ea32 # v1
         with:
           version: 1.40.1
           authkey: ${{ env.TAILSCALE_AUTHKEY }}
