@@ -11,8 +11,6 @@ jobs:
     defaults:
       run:
         working-directory: infra/
-    permissions:
-      pull-requests: write
     steps:
     - uses: actions/checkout@v3
     - uses: hashicorp/setup-terraform@v2
