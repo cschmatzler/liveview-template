@@ -24,9 +24,9 @@ env:
   GF_DATABASE_CA_CERT_PATH: /certs/ca.liveview-template.app-bundle.pem
 envFromSecrets:
   - name: grafana-op
-extraConfigMapMounts:
+extraConfigmapMounts:
   - name: ca.liveview-template.app-bundle
-    configMapName: ca.liveview-template.app-bundle
+    configMap: ca.liveview-template.app-bundle
     mountPath: /certs
     readOnly: true
 
