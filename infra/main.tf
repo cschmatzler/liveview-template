@@ -2,24 +2,24 @@ terraform {
   required_providers {
     hcloud = {
       source  = "hetznercloud/hcloud"
-      version = ">= 1.0.0"
+      version = "1.38.2"
     }
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = ">= 3.0.0"
+      version = "4.5.0"
     }
     sops = {
       source  = "carlpett/sops"
-      version = ">= 0.5.0"
+      version = "0.7.2"
     }
   }
 
   backend "s3" {
     endpoint                    = "https://s3.eu-central-2.wasabisys.com"
     region                      = "eu-central-2"
-    bucket                      = "liveview-template-app-infra"
+    bucket                      = "liveview-template-app-tfstate"
     force_path_style            = true
-    key                         = "terraform/infra.tfstate"
+    key                         = "infra.tfstate"
     skip_region_validation      = true
     skip_credentials_validation = true
   }
