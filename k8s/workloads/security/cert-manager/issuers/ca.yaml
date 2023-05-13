@@ -25,10 +25,10 @@ spec:
     - useDefaultCAs: true
     - secret:
         name: ca.liveview-template.app
-        key: "ca.crt"
+        key: ca.crt
   target:
     configMap:
-      key: "ca.liveview-template.app-bundle.pem"
+      key: ca.liveview-template.app-bundle.pem
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
