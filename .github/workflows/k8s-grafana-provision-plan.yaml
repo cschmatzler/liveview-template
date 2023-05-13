@@ -37,6 +37,7 @@ jobs:
       - name: Log into Tailscale
         uses: tailscale/github-action@v1
         with:
+          version: 1.40.1
           authkey: ${{ env.TAILSCALE_AUTHKEY }}
       - name: Check formatting
         id: fmt
