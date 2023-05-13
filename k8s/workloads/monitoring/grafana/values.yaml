@@ -55,7 +55,7 @@ datasources:
         type: prometheus
         access: proxy
         isDefault: true
-        url: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
+        url: http://mimir-querier.monitoring.svc.cluster.local:8080/prometheus
         jsonData:
           prometheusType: Mimir
           httpHeaderName1: "X-Scope-OrgID"
@@ -73,7 +73,7 @@ datasources:
       - name: Loki
         type: loki
         access: proxy
-        url: http://loki-gateway.monitoring.svc.cluster.local
+        url: http://loki-read.monitoring.svc.cluster.local:3100
         jsonData:
           maxLines: 250
           httpHeaderName1: "X-Scope-OrgID"
