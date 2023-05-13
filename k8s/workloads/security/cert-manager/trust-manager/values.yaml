@@ -1,3 +1,6 @@
 crds:
   enabled: true
 replicaCount: 3
+app:
+  trust:
+    namespace: security
