@@ -3,5 +3,6 @@ kind: Namespace
 metadata:
   name: networking
   labels:
-    kustomize.toolkit.fluxcd.io/prune: disabled
     pod-security.kubernetes.io/enforce: privileged
+    kustomize.toolkit.fluxcd.io/prune: disabled
+    goldilocks.fairwinds.com/enabled: true
