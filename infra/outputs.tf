@@ -3,5 +3,5 @@ output "control_plane_ip_addresses" {
 }
 
 output "worker_ip_addresses" {
-  value = flatten([for nodepool in module.workers: nodepool.*.ipv4_address])
+  value = flatten([for nodepool in module.workers : nodepool.*.ipv4_address])
 }

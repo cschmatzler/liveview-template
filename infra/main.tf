@@ -15,12 +15,12 @@ terraform {
   }
 
   backend "s3" {
-    endpoint = "https://s3.eu-central-2.wasabisys.com"
-    region = "eu-central-2"
-    bucket = "liveview-template-app-infra"
-    force_path_style = true
-    key = "terraform/infra.tfstate"
-    skip_region_validation = true
+    endpoint                    = "https://s3.eu-central-2.wasabisys.com"
+    region                      = "eu-central-2"
+    bucket                      = "liveview-template-app-infra"
+    force_path_style            = true
+    key                         = "terraform/infra.tfstate"
+    skip_region_validation      = true
     skip_credentials_validation = true
   }
 }
