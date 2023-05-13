@@ -2,7 +2,8 @@ name: Deploy app
 on:
   push:
     branches:
-      - master
+      - noop
+      # - master
     paths-ignore:
       - infra/
       - k8s/
