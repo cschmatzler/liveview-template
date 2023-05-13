@@ -10,7 +10,7 @@ extraInitContainers:
       - secretRef:
           name: grafana-op
 
-replicaCount: 3
+replicas: 3
 
 persistence:
   enabled: false
@@ -21,8 +21,14 @@ env:
   GF_ANALYTICS_CHECK_FOR_UPDATES: false
   GF_DATABASE_TYPE: postgres
   GF_DATABASE_SSL_MODE: verify-full
+
 envFromSecrets:
   - name: grafana-op
+extraConfigMapMounts:
+  - name: ca.liveview-template.app-bundle
+    configMapName: ca.liveview-template.app-bundle
+    mountPath: /certs
+    readOnly: true
 
 dashboardProviders:
   dashboardproviders.yaml:
