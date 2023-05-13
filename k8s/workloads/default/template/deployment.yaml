@@ -18,6 +18,10 @@ spec:
     spec:
       imagePullSecrets:
         - name: dockerconfigjson-github
+      volumes:
+        - name: ca-bundle
+          configMap:
+            name: ca.liveview-template.app-bundle
       initContainers:
         - name: init-db
           image: ghcr.io/cschmatzler/postgresql-initdb:15.2
@@ -31,6 +35,11 @@ spec:
           envFrom:
             - secretRef:
                 name: template-config
+          volumeMounts:
+            - name: ca-bundle
+              mountPath: /certs
+              subPath: ca.liveview-template.app-bundle.pem
+              readOnly: true
           ports:
             - name: http
               protocol: TCP
