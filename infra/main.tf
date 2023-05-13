@@ -8,6 +8,10 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "4.5.0"
     }
+    b2 = {
+      source  = "Backblaze/b2"
+      version = "0.8.4"
+    }
     sops = {
       source  = "carlpett/sops"
       version = "0.7.2"
@@ -25,13 +29,6 @@ terraform {
   }
 }
 
-data "sops_file" "control_plane_config" {
-  source_file = "talos/controlplane.sops.yaml"
-}
-
-data "sops_file" "worker_config" {
-  source_file = "talos/worker.sops.yaml"
-}
 
 provider "hcloud" {
   token = var.hcloud_token
@@ -40,6 +37,12 @@ provider "hcloud" {
 provider "cloudflare" {
   api_token = var.cloudflare_token
 }
+
+provider "b2" {
+  application_key = var.backblaze_application_key
+  application_key_id = var.backblaze_application_key_id
+}
+
 
 locals {
   # Packer

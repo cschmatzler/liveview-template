@@ -6,10 +6,7 @@ mimir:
         backend: s3
     blocks_storage:
       s3:
-        bucket_name: liveview-template-app-mimir-blocks
-    alertmanager_storage:
-      s3:
-        bucket_name: liveview-template-app-mimir-alertmanager
+        bucket_name: liveview-template-app-mimir
 distributor:
   replicas: 3
   service:

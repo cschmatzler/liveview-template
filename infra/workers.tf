@@ -5,6 +5,10 @@ resource "hcloud_placement_group" "workers" {
   type = "spread"
 }
 
+data "sops_file" "worker_config" {
+  source_file = "talos/worker.sops.yaml"
+}
+
 module "workers" {
   source   = "./node"
   for_each = local.worker_nodes

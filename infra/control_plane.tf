@@ -3,6 +3,10 @@ resource "hcloud_placement_group" "control_plane" {
   type = "spread"
 }
 
+data "sops_file" "control_plane_config" {
+  source_file = "talos/controlplane.sops.yaml"
+}
+
 module "control_plane" {
   source = "./node"
   count  = local.control_plane_nodepool.count
