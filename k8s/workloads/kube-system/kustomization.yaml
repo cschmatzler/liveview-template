@@ -4,4 +4,5 @@ resources:
   - ./namespace.yaml
   - ./cilium.yaml
   - ./hcloud-csi.yaml
+  - ./metrics-server.yaml
   - ./goldilocks.yaml

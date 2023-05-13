@@ -4,6 +4,8 @@ metadata:
   name: workloads-kube-system-goldilocks
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: workloads-kube-system-metrics-server
   sourceRef:
     kind: GitRepository
     name: liveview-template
