@@ -10,9 +10,6 @@ mimir:
     alertmanager_storage:
       s3:
         bucket_name: liveview-template-app-mimir-alertmanager
-    ruler_storage:
-      s3:
-        bucket_name: liveview-template-app-mimir-ruler
 distributor:
   replicas: 3
   service:
@@ -40,11 +37,6 @@ query_frontend:
   service:
     labels:
       grafana-agent/collect-metrics: "true"
-ruler:
-  replicas: 3
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
 store_gateway:
   replicas: 3
   zoneAwareReplication:
@@ -57,12 +49,11 @@ compactor:
   service:
     labels:
       grafana-agent/collect-metrics: "true"
-alertmanager:
-  replicas: 3
-  service:
-    labels:
-      grafana-agent/collect-metrics: "true"
 overrides_exporter:
+  enabled: false
+ruler:
+  enabled: false
+alertmanager:
   enabled: false
 nginx:
   enabled: false

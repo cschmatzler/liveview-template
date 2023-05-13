@@ -58,15 +58,7 @@ datasources:
         url: http://mimir-querier.monitoring.svc.cluster.local:8080/prometheus
         jsonData:
           prometheusType: Mimir
-          httpHeaderName1: "X-Scope-OrgID"
-        secureJsonData:
-          httpHeaderValue1: "liveview-template.app"
-      - name: Alertmanager
-        type: alertmanager
-        access: proxy
-        url: http://mimir-alertmanager.monitoring.svc.cluster.local:8080
-        jsonData:
-          implementation: mimir
+          manageAlerts: false
           httpHeaderName1: "X-Scope-OrgID"
         secureJsonData:
           httpHeaderValue1: "liveview-template.app"
@@ -76,6 +68,7 @@ datasources:
         url: http://loki-read.monitoring.svc.cluster.local:3100
         jsonData:
           maxLines: 250
+          manageAlerts: false
           httpHeaderName1: "X-Scope-OrgID"
         secureJsonData:
           httpHeaderValue1: "liveview-template.app"
