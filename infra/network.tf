@@ -48,7 +48,7 @@ resource "hcloud_firewall" "kubernetes" {
 
 resource "hcloud_firewall_attachment" "kubernetes" {
   firewall_id = hcloud_firewall.kubernetes.id
-  server_ids = concat(module.control_plane.*.server_id, flatten([for nodepool in module.workers: nodepool.*.server_id]))
+  server_ids  = concat(module.control_plane.*.server_id, flatten([for nodepool in module.workers : nodepool.*.server_id]))
 }
 
 resource "hcloud_network" "network" {
