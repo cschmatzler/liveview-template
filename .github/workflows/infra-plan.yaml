@@ -1,0 +1,81 @@
+name: "Infra: Validate and Plan"
+on:
+  pull_request:
+    paths:
+      - "infra/**/*.tf"
+jobs:
+  validate-and-plan:
+    name: Validate and Plan
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: infra/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2
+      - name: Check formatting
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+      - name: Initialize Terraform
+        id: init
+        run: terraform init
+        env:
+          # State backend
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Validate Terraform configuration
+        id: validate
+        run: terraform validate -no-color
+      - name: Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+        env:
+          # State backend
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # Infrastructure provider authorization
+          TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_cloudflare_token: ${{ secrets.CLOUDFLARE_TOKEN }}
+          # Talos configuration encryption
+          SOPS_AGE_RECIPIENTS: ${{ secrets.SOPS_AGE_RECIPIENTS }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      - uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Formatting: \`${{ steps.fmt.outcome }}\`
+            #### Initialization: \`${{ steps.init.outcome }}\`
+            #### Validation: \`${{ steps.validate.outcome }}\`
+            <details><summary>Validation Output</summary>
+
+            \`\`\`\n
+            ${{ steps.validate.outputs.stdout }}
+            \`\`\`
+
+            </details>
+
+            #### Plan: \`${{ steps.plan.outcome }}\`
+
+            <details><summary>Plan Output</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            Actor: @${{ github.actor }}, Action: \`${{ github.event_name }}\``;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })

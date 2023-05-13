@@ -1,15 +1,15 @@
-name: "Terraform: Validate and Plan"
+name: "Infra: Validate and Plan"
 on:
   pull_request:
     paths:
-      - "infra/**/*.tf"
+      - "k8s/workloads/monitoring/grafana/provision/*.tf"
 jobs:
   validate-and-plan:
     name: Validate and Plan
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: infra/
+        working-directory: k8s/workloads/monitoring/grafana/provision/
     steps:
       - name: Checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
@@ -37,12 +37,9 @@ jobs:
           # State backend
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # Infrastructure provider authorization
-          TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
-          TF_VAR_cloudflare_token: ${{ secrets.CLOUDFLARE_TOKEN }}
-          # Talos configuration encryption
-          SOPS_AGE_RECIPIENTS: ${{ secrets.SOPS_AGE_RECIPIENTS }}
-          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+          # Grafana authentication
+          TF_VAR_admin_auth: ${{ secrets.GRAFANA_ADMIN_AUTH }}
+          TF_VAR_user_christoph_password: ${{ secrets.GRAFANA_USER_CHRISTOPH_PASSWORD }}
       - uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6
         if: github.event_name == 'pull_request'
         env:

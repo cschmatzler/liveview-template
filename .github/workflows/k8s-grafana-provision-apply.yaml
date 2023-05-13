@@ -1,0 +1,39 @@
+name: "Infra: Apply"
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - infra/**/*.tf
+jobs:
+  apply:
+    name: Apply
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: infra/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # v2
+      - name: Initialize Terraform
+        id: init
+        run: terraform init
+        env:
+          # State backend
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Apply
+        id: apply
+        run: terraform apply -auto-approve -no-color
+        env:
+          # State backend
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # Infrastructure provider authorization
+          TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_cloudflare_token: ${{ secrets.CLOUDFLARE_TOKEN }}
+          # Talos configuration encryption
+          SOPS_AGE_RECIPIENTS: ${{ secrets.SOPS_AGE_RECIPIENTS }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
