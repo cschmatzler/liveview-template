@@ -24,8 +24,8 @@ spec:
   sources:
     - useDefaultCAs: true
     - secret:
-      name: ca.liveview-template.app
-      key: "ca.crt"
+        name: ca.liveview-template.app
+        key: "ca.crt"
   target:
     configMap:
       key: "ca.liveview-template.app-bundle.pem"
