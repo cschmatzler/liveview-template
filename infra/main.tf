@@ -19,8 +19,8 @@ terraform {
   }
 
   backend "s3" {
-    endpoint                    = "https://s3.eu-central-2.wasabisys.com"
-    region                      = "eu-central-2"
+    endpoint                    = "https://s3.eu-central-003.backblazeb2.com"
+    region                      = "eu-central-003"
     bucket                      = "liveview-template-app-tfstate"
     force_path_style            = true
     key                         = "infra.tfstate"
