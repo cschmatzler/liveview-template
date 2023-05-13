@@ -25,7 +25,7 @@ env:
 envFromSecrets:
   - name: grafana-op
 extraConfigmapMounts:
-  - name: ca.liveview-template.app-bundle
+  - name: ca-bundle
     configMap: ca.liveview-template.app-bundle
     mountPath: /certs
     readOnly: true

@@ -18,7 +18,7 @@ loki:
             prefix: index_
             period: 24h
     limits_config:
-      retention_period: 30d
+      retention_period: 90d
       enforce_metric_name: false
       max_cache_freshness_per_query: 10m
     ingester:
