@@ -29,8 +29,8 @@ admin:
   # These are only applied by Grafana during initial bootstrap - changing them in the
   # secret will not update an existing database.
   existingSecret: grafana-op
-  userKey: GRAFANA_USERNAME
-  passwordKey: GRAFANA_PASSWORD
+  userKey: GRAFANA_ADMIN_USERNAME
+  passwordKey: GRAFANA_ADMIN_PASSWORD
 ingress:
   enabled: true
   ingressClassName: private
