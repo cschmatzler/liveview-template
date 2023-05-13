@@ -1,9 +1,9 @@
 variable "admin_auth" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "user_christoph_password" {
-  type = string
+  type      = string
   sensitive = true
 }
