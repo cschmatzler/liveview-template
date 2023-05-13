@@ -1,7 +1,7 @@
 global:
   imagePullSecrets:
     - name: dockerconfigjson-github
-
+replicas: 3
 extraInitContainers:
   - name: init-db
     image: ghcr.io/cschmatzler/postgresql-initdb:15.2
@@ -9,14 +9,10 @@ extraInitContainers:
     envFrom:
       - secretRef:
           name: grafana-op
-
-replicas: 3
-
 persistence:
   enabled: false
 testFramework:
   enabled: false
-
 env:
   GF_ANALYTICS_CHECK_FOR_UPDATES: false
   GF_DATABASE_TYPE: postgres
@@ -29,79 +25,12 @@ extraConfigmapMounts:
     configMap: ca.liveview-template.app-bundle
     mountPath: /certs
     readOnly: true
-
-dashboardProviders:
-  dashboardproviders.yaml:
-    apiVersion: 1
-    providers:
-      - name: infra
-        orgId: 1
-        folder: Infra
-        type: file
-        disableDeletion: false
-        editable: true
-        options:
-          path: /var/lib/grafana/dashboards/default
-datasources:
-  datasources.yaml:
-    apiVersion: 1
-    deleteDatasources:
-      - name: Loki
-        orgId: 1
-      - name: Alertmanager
-        orgId: 1
-    datasources:
-      - name: Prometheus
-        type: prometheus
-        access: proxy
-        isDefault: true
-        url: http://mimir-querier.monitoring.svc.cluster.local:8080/prometheus
-        jsonData:
-          prometheusType: Mimir
-          manageAlerts: false
-          httpHeaderName1: "X-Scope-OrgID"
-        secureJsonData:
-          httpHeaderValue1: "liveview-template.app"
-      - name: Loki
-        type: loki
-        access: proxy
-        url: http://loki-read.monitoring.svc.cluster.local:3100
-        jsonData:
-          maxLines: 250
-          manageAlerts: false
-          httpHeaderName1: "X-Scope-OrgID"
-        secureJsonData:
-          httpHeaderValue1: "liveview-template.app"
-      - name: Tempo
-        type: tempo
-        access: proxy
-        url: http://tempo-query-frontend.monitoring.svc.cluster.local:3100
-        jsonData:
-          httpHeaderName1: "X-Scope-OrgID"
-        secureJsonData:
-          httpHeaderValue1: "liveview-template.app"
-
-dashboards:
-  infra:
-    node-exporter:
-      name: Node Exporter
-      gnetId: 1860
-      revision: 31
-      datasource:
-        - name: DS_PROMETHEUS
-          value: Prometheus
-    kube-state-metrics:
-      gnetId: 13332
-      revision: 12
-      datasource: Prometheus
-    cert-manager:
-      gnetId: 11001
-      revision: 1
-      datasource: Prometheus
-    cloudnative-pg:
-      url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
-      datasource: Prometheus
-
+admin:
+  # These are only applied by Grafana during initial bootstrap - changing them in the
+  # secret will not update an existing database.
+  existingSecret: grafana-op
+  userKey: GRAFANA_USERNAME
+  passwordKey: GRAFANA_PASSWORD
 ingress:
   enabled: true
   ingressClassName: private
@@ -115,10 +44,3 @@ ingress:
     - secretName: grafana-tls
       hosts:
         - *host
-
-admin:
-  # These are only applied by Grafana during initial bootstrap - changing them in the
-  # secret will not update an existing database.
-  existingSecret: grafana-op
-  userKey: GRAFANA_USERNAME
-  passwordKey: GRAFANA_PASSWORD
