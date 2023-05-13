@@ -1,4 +1,4 @@
-name: "Terraform: Plan"
+name: "Terraform: Validate and Plan"
 
 on:
   pull_request:
@@ -6,7 +6,8 @@ on:
       - "infra/**/*.tf"
 
 jobs:
-  plan:
+  validate-and-plan:
+    name: Validate and Plan
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -77,7 +78,7 @@ jobs:
 
             </details>
 
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`;
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\``;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,
