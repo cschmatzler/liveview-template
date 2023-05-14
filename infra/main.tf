@@ -8,9 +8,9 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "4.5.0"
     }
-    b2 = {
-      source  = "Backblaze/b2"
-      version = "0.8.4"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.67.0"
     }
     sops = {
       source  = "carlpett/sops"
@@ -19,8 +19,8 @@ terraform {
   }
 
   backend "s3" {
-    endpoint                    = "https://s3.eu-central-003.backblazeb2.com"
-    region                      = "eu-central-003"
+    endpoint                    = "https://s3.eu-central-2.wasabisys.com"
+    region                      = "eu-central-2"
     bucket                      = "liveview-template-app-tfstate"
     force_path_style            = true
     key                         = "infra.tfstate"
@@ -38,11 +38,38 @@ provider "cloudflare" {
   api_token = var.cloudflare_token
 }
 
-provider "b2" {
-  application_key = var.backblaze_application_key
-  application_key_id = var.backblaze_application_key_id
+provider "aws" {
+  region = "eu-central-2"
+
+  endpoints {
+    s3 = "https://s3.eu-central-2.wasabisys.com"
+    sts = "https://sts.wasabisys.com"
+    iam = "https://iam.wasabisys.com"
+  }
+
+  s3_use_path_style  = true
+  skip_region_validation = true
+  skip_requesting_account_id = true
+  skip_metadata_api_check = true
+  skip_credentials_validation = true
 }
 
+provider "aws" {
+  alias = "us_east"
+  region = "eu-east-1"
+
+  endpoints {
+    s3 = "https://s3.wasabisys.com"
+    sts = "https://sts.wasabisys.com"
+    iam = "https://iam.wasabisys.com"
+  }
+
+  s3_use_path_style  = true
+  skip_region_validation = true
+  skip_requesting_account_id = true
+  skip_metadata_api_check = true
+  skip_credentials_validation = true
+}
 
 locals {
   # Packer

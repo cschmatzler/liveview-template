@@ -9,3 +9,9 @@ module "loki_bucket" {
 
   name = "liveview-template-app-loki"
 }
+
+module "tempo_bucket" {
+  source = "./object_storage"
+
+  name = "liveview-template-app-tempo"
+}
