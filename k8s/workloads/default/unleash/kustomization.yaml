@@ -3,10 +3,4 @@ kind: Kustomization
 namespace: default
 resources:
   - ./externalsecret.yaml
-  - ./helmrelease.yaml
-configMapGenerator:
-  - name: unleash-values
-    files:
-      - values.yaml=./values.yaml
-configurations:
-  - kustomizeconfig.yaml
+  - ./deployment.yaml

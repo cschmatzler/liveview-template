@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unleash
+  namespace: default
+  labels:
+    app.kubernetes.io/name: unleash
+    app.kubernetes.io/instance: unleash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unleash
+      app.kubernetes.io/instance: unleash
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: unleash
+        app.kubernetes.io/instance: unleash
+    imagePullSecrets:
+      - name: dockerconfigjson-github
+    spec:
+      initContainers:
+        - name: init-db
+          image: ghcr.io/cschmatzler/postgresql-initdb:15.2
+          imagePullPolicy: Always
+          envFrom:
+            - name: POSTGRES_HOST
+              secretKeyRef:
+                name: unleash-op
+                key: POSTGRES_HOST
+            - name: POSTGRES_SUPERUSER
+              secretKeyRef:
+                name: unleash-op
+                key: POSTGRES_SUPERUSER
+            - name: POSTGRES_SUPERUSER_PASSWORD
+              secretKeyRef:
+                name: unleash-op
+                key: POSTGRES_SUPERUSER_PASSWORD
+            - name: POSTGRES_USER
+              secretKeyRef:
+                name: unleash-op
+                key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              secretKeyRef:
+                name: unleash-op
+                key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              secretKeyRef:
+                name: unleash-op
+                key: POSTGRES_DB
+      containers:
+      - name: unleash
+        image:  unleashorg/unleash-server:4.19.4
+        env:
+        - name: DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: unleash-op
+              key: DATABASE_HOST

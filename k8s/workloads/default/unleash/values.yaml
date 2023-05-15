@@ -7,28 +7,28 @@ initContainers:
     imagePullPolicy: Always
     envFrom:
       - secretRef:
-          name: unleash-config
+          name: unleash-op
 
 env:
   - name: DATABASE_HOST
     valueFrom:
       secretKeyRef:
-        name: unleash-config
+        name: unleash-op
         key: DATABASE_HOST
   - name: DATABASE_USER
     valueFrom:
       secretKeyRef:
-        name: unleash-config
+        name: unleash-op
         key: DATABASE_USER
   - name: DATABASE_PASS
     valueFrom:
       secretKeyRef:
-        name: unleash-config
+        name: unleash-op
         key: DATABASE_PASS
   - name: DATABASE
     valueFrom:
       secretKeyRef:
-        name: unleash-config
+        name: unleash-op
         key: DATABASE
 
 postgresql:
