@@ -28,11 +28,11 @@ spec:
             - secretRef:
                 name: unleash-op
       containers:
-      - name: unleash
-        image:  unleashorg/unleash-server:4.19.4
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: unleash-op
-              key: DATABASE_URL
+        - name: unleash
+          image: unleashorg/unleash-server:4.19.4
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: DATABASE_URL
