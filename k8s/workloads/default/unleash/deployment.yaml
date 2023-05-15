@@ -30,24 +30,29 @@ spec:
       containers:
         - name: unleash
           image: unleashorg/unleash-server:4.19.4
-          envFrom:
+          env:
             - name: CA_BUNDLE
-              configMapKeyRef:
-                name: ca.liveview-template.app-bundle
-                key: ca.liveview-template.app-bundle.pem
+              valueFrom:
+                configMapKeyRef:
+                  name: ca.liveview-template.app-bundle
+                  key: ca.liveview-template.app-bundle.pem
             - name: DATABASE_HOST
-              secretKeyRef:
-                name: unleash-op
-                key: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: DATABASE_HOST
             - name: DATABASE_USERNAME
-              secretKeyRef:
-                name: unleash-op
-                key: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: DATABASE_USERNAME
             - name: DATABASE_PASSWORD
-              secretKeyRef:
-                name: unleash-op
-                key: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: DATABASE_PASSWORD
             - name: DATABASE_NAME
-              secretKeyRef:
-                name: unleash-op
-                key: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: DATABASE_NAME
