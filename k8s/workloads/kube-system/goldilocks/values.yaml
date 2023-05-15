@@ -1,6 +1,7 @@
 vpa:
   enabled: true
 dashboard:
+  replicaCount: 1
   ingress:
     enabled: true
     ingressClassName: private
