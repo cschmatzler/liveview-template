@@ -31,18 +31,8 @@ spec:
       - name: unleash
         image:  unleashorg/unleash-server:4.19.4
         env:
-        - name: DATABASE_HOST
+        - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
               name: unleash-op
-              key: DATABASE_HOST
-        - name: DATABASE_USER
-          valueFrom:
-            secretKeyRef:
-              name: unleash-op
-              key: DATABASE_USER
-        - name: DATABASE_PASS
-          valueFrom:
-            secretKeyRef:
-              name: unleash-op
-              key: DATABASE_PASS
+              key: DATABASE_URL
