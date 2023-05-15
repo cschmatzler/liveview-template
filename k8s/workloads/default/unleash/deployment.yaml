@@ -30,7 +30,7 @@ spec:
       containers:
         - name: unleash
           image: unleashorg/unleash-server:4.19.4
-          env:
+          envFrom:
             - name: CA_BUNDLE
               configMapKeyRef:
                 name: ca.liveview-template.app-bundle
