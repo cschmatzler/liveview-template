@@ -36,3 +36,13 @@ spec:
             secretKeyRef:
               name: unleash-op
               key: DATABASE_HOST
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: unleash-op
+              key: DATABASE_USER
+        - name: DATABASE_PASS
+          valueFrom:
+            secretKeyRef:
+              name: unleash-op
+              key: DATABASE_PASS
