@@ -24,7 +24,7 @@ spec:
         - name: init-db
           image: ghcr.io/cschmatzler/postgresql-initdb:15.2
           imagePullPolicy: Always
-          envFrom:
+          env:
             - name: POSTGRES_HOST
               secretKeyRef:
                 name: unleash-op
