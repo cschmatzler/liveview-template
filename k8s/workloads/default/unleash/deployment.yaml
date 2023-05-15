@@ -30,6 +30,8 @@ spec:
       containers:
         - name: unleash
           image: unleashorg/unleash-server:4.19.4
-          envFrom:
-            - secretRef:
+          env:
+            - name: DATABASE_URL
+              secretKeyRef:
                 name: unleash-op
+                key: DATABASE_URL
