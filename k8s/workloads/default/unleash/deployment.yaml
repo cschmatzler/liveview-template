@@ -31,11 +31,6 @@ spec:
         - name: unleash
           image: unleashorg/unleash-server:4.19.4
           env:
-            - name: CA_BUNDLE
-              valueFrom:
-                configMapKeyRef:
-                  name: ca.liveview-template.app-bundle
-                  key: ca.liveview-template.app-bundle.pem
             - name: DATABASE_HOST
               valueFrom:
                 secretKeyRef:
