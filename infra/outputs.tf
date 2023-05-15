@@ -6,6 +6,11 @@ output "worker_ip_addresses" {
   value = flatten([for nodepool in module.workers : nodepool.*.ipv4_address])
 }
 
+output "postgresql_main_application_key" {
+  value = "${module.postgresql_main_bucket.aws_access_key_id}:${module.postgresql_main_bucket.aws_secret_access_key}"
+  sensitive = true
+}
+
 output "mimir_application_key" {
   value = "${module.mimir_bucket.aws_access_key_id}:${module.mimir_bucket.aws_secret_access_key}"
   sensitive = true

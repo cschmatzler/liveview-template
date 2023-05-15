@@ -29,12 +29,12 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://liveview-template-app-database-postgresql-main
+      destinationPath: s3://liveview-template-app-postgresql-main
       endpointURL: http://s3.eu-central-2.wasabisys.com
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-op
-          key: aws-access-key-id
+          key: AWS_ACCESS_KEY_ID
         secretAccessKey:
           name: cloudnative-pg-op
-          key: aws-secret-access-key
+          key: AWS_SECRET_ACCESS_KEY
