@@ -19,7 +19,7 @@ spec:
       pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
   superuserSecret:
-    name: cloudnative-pg-op
+    name: postgresql-main-op
   certificates:
     serverTLSSecret: postgresql-main-tls
     serverCASecret: postgresql-main-tls
@@ -33,8 +33,8 @@ spec:
       endpointURL: http://s3.eu-central-2.wasabisys.com
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-op
+          name: postgresql-main-op
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: cloudnative-pg-op
+          name: postgresql-main-op
           key: AWS_SECRET_ACCESS_KEY
