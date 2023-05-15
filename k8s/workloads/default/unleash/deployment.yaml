@@ -31,6 +31,8 @@ spec:
         - name: unleash
           image: unleashorg/unleash-server:4.19.4
           env:
+            - name: DATABASE_SSL
+              value: require
             - name: DATABASE_HOST
               valueFrom:
                 secretKeyRef:
@@ -51,3 +53,7 @@ spec:
                 secretKeyRef:
                   name: unleash-op
                   key: DATABASE_NAME
+          ports:
+            - name: http
+              protocol: TCP
+              containerPort: 4242
