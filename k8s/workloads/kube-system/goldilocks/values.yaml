@@ -12,8 +12,8 @@ dashboard:
     hosts:
       - host: &host goldilocks.liveview-template.app
         paths:
-          path: /
-          type: Prefix
+          - path: /
+            type: Prefix
     tls:
       - secretName: goldilocks-tls
         hosts:
