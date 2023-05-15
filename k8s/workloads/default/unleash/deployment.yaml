@@ -31,6 +31,8 @@ spec:
         - name: unleash
           image: unleashorg/unleash-server:4.19.4
           env:
+            - name: AUTH_TYPE
+              value: none
             - name: DATABASE_HOST
               valueFrom:
                 secretKeyRef:
