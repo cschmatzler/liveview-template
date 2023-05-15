@@ -4,9 +4,10 @@ metadata:
   name: unleash
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    external-dns.alpha.kubernetes.io/target: liveview-template-app.manticore-hippocampus.ts.net
     ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: public
+  ingressClassName: private
   rules:
     - host: &host unleash.liveview-template.app
       http:
