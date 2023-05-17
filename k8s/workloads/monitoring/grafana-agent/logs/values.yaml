@@ -3,3 +3,11 @@ agent:
     create: false
     name: grafana-agent-logs-config
     key: config.river
+  resources:
+    requests:
+      cpu: 32m
+      memory: 128M
+    limits:
+      memory: 128M
+configReloader:
+  enabled: false

@@ -10,3 +10,11 @@ agent:
     - name: otlp-http
       port: 4318
       targetPort: 4318
+  resources:
+    requests:
+      cpu: 32m
+      memory: 128M
+    limits:
+      memory: 128M
+configReloader:
+  enabled: false
