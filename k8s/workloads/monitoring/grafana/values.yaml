@@ -31,6 +31,12 @@ admin:
   existingSecret: grafana-op
   userKey: GRAFANA_ADMIN_USERNAME
   passwordKey: GRAFANA_ADMIN_PASSWORD
+resources:
+  requests:
+    cpu: 16m
+    memory: 192M
+  limits:
+    memory: 192m
 ingress:
   enabled: true
   ingressClassName: private
