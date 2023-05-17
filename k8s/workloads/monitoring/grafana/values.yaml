@@ -9,6 +9,19 @@ extraInitContainers:
     envFrom:
       - secretRef:
           name: grafana-op
+    resources:
+      requests:
+        cpu: 8m
+        memory: 32M
+      limits:
+        memory: 32M
+downloadDashboards:
+  resources:
+    requests:
+      cpu: 8m
+      memory: 32M
+    limits:
+      memory: 32M
 persistence:
   enabled: false
 testFramework:
