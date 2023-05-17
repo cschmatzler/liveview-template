@@ -1,2 +1,8 @@
+resources:
+  requests:
+    cpu: 16m
+    memory: 128M
+  limits:
+    memory: 128M
 customLabels:
   grafana-agent/collect-metrics: "true"
