@@ -34,7 +34,7 @@ admin:
 resources:
   requests:
     cpu: 16m
-    memory: 192M
+    memory: 192m
   limits:
     memory: 192m
 ingress:
