@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE="hexpm/elixir:1.14.4-erlang-25.3.1-ubuntu-jammy-20230126"
+ARG BUILDER_IMAGE="hexpm/elixir:1.14.4-erlang-26.0-ubuntu-jammy-20230126"
 ARG RUNNER_IMAGE="ubuntu:jammy-20230126"
 
 FROM ${BUILDER_IMAGE} as builder
