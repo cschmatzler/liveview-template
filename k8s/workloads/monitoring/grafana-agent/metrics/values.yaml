@@ -9,8 +9,8 @@ agent:
   resources:
     requests:
       cpu: 32m
-      memory: 128M
+      memory: 1024M
     limits:
-      memory: 128M
+      memory: 1024M
 configReloader:
   enabled: false
