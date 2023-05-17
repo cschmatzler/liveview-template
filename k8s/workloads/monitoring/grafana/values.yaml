@@ -34,9 +34,9 @@ admin:
 resources:
   requests:
     cpu: 16m
-    memory: 192m
+    memory: 192M
   limits:
-    memory: 192m
+    memory: 192M
 ingress:
   enabled: true
   ingressClassName: private
