@@ -1,3 +1,9 @@
 fullnameOverride: node-exporter
 podLabels:
   grafana-agent/collect-metrics: "true"
+resources:
+  requests:
+    cpu: 32m
+    memory: 128M
+  limits:
+    memory: 128M

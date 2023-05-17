@@ -82,9 +82,9 @@ compactor:
   resources:
     requests:
       cpu: 32m
-      memory: 256M
+      memory: 192M
     limits:
-      memory: 256M
+      memory: 192M
   service:
     labels:
       grafana-agent/collect-metrics: "true"

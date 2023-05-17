@@ -5,7 +5,7 @@ agent:
     key: config.river
   resources:
     requests:
-      cpu: 32m
+      cpu: 16m
       memory: 128M
     limits:
       memory: 128M
