@@ -4,10 +4,8 @@ on:
     paths-ignore:
       - infra/
       - k8s/
-
 env:
   MIX_ENV: test
-
 jobs:
   compile:
     runs-on: buildjet-4vcpu-ubuntu-2204
@@ -15,8 +13,8 @@ jobs:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - uses: erlef/setup-beam@c2e02f777c158310fc6d3d4e11b36a52d2d52db8 # v1
         with:
-          otp-version: "25.3"
-          elixir-version: "1.14-otp-25"
+          otp-version: "26.0"
+          elixir-version: "1.14.4-otp-26"
       - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         id: deps-cache
         with:
@@ -48,8 +46,8 @@ jobs:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - uses: erlef/setup-beam@c2e02f777c158310fc6d3d4e11b36a52d2d52db8 # v1
         with:
-          otp-version: "25.3"
-          elixir-version: "1.14-otp-25"
+          otp-version: "26.0"
+          elixir-version: "1.14.4-otp-26"
       - uses: arduino/setup-task@v1
         with:
           version: 3.x
@@ -62,7 +60,10 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
-      - run: task ci:test
+      - run: mix ecto.drop
+      - run: mix ecto.create
+      - run: mix ecto.migrate
+      - run: mix coveralls.json
       - uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -75,8 +76,8 @@ jobs:
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
       - uses: erlef/setup-beam@c2e02f777c158310fc6d3d4e11b36a52d2d52db8 # v1
         with:
-          otp-version: "25.3"
-          elixir-version: "1.14-otp-25"
+          otp-version: "26.0"
+          elixir-version: "1.14.4-otp-26"
       - uses: arduino/setup-task@v1
         with:
           version: 3.x
@@ -89,9 +90,9 @@ jobs:
           key: mix-${{ github.sha }}
           restore-keys: |
             mix-${{ hashFiles('**/mix.lock') }}
-      - run: task ci:analyze
-      - uses: aquasecurity/trivy-action@e5f43133f6e8736992c9f3c1b3296e24b37e17f2 # 0.10.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          trivy-config: trivy.yaml
+      - run: mix deps.unlock --check-unused
+      - run: mix hex.audit
+      - run: mix format --check-formatted
+      - run: mix credo
+      - run: mix excellent_migrations.check_safety
+      - run: mix sobelow --config
