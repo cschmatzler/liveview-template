@@ -14,6 +14,8 @@ IFS=', ' read -r -a users <<< $USERS
 for user in "${users[@]}"
 do
   IFS=':' read -r -a user_data <<< $user
+  echo "${user_data[0]}"
+  echo "${user_data[1]}"
   curl \
     "$UNLEASH_URL/api/admin/user-admin" \
     --verbose \
