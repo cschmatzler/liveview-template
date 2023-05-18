@@ -3,11 +3,15 @@ const fs = require("node:fs");
 
 unleash
   .start({
-    createAdminUser: false,
     db: {
       ssl: {
-        ca: fs.readFileSync("/certs/ca.liveview-template.app-bundle.pem").toString(),
+        ca: fs
+          .readFileSync("/certs/ca.liveview-template.app-bundle.pem")
+          .toString(),
       },
+    },
+    authentication: {
+      createAdminUser: false
     },
   })
   .then((unleash) => {
