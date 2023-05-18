@@ -67,3 +67,19 @@ job:
 secret:
   enabled: false
   nameOverride: kratos-op
+ingress:
+  public:
+    enabled: true
+    ingressClassName: public
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+      ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - host: &host kratos.liveview-template.app
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: kratos-tls
+        hosts:
+          - *host
