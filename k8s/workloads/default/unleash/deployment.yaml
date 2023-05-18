@@ -20,6 +20,10 @@ spec:
     spec:
       imagePullSecrets:
         - name: dockerconfigjson-github
+      volumes:
+        - name: certs
+          configMap:
+            name: ca.liveview-template.app-bundle
       initContainers:
         - name: init-db
           image: ghcr.io/cschmatzler/postgresql-initdb:15.2
@@ -29,7 +33,7 @@ spec:
                 name: unleash-op
       containers:
         - name: unleash
-          image: unleashorg/unleash-server:4.23.3
+          image: ghcr.io/cschmatzler/unleash:5.0.6
           env:
             - name: DATABASE_HOST
               valueFrom:
@@ -51,6 +55,10 @@ spec:
                 secretKeyRef:
                   name: unleash-op
                   key: DATABASE_NAME
+          volumeMounts:
+            - name: certs
+              mountPath: /certs
+              readOnly: true
           ports:
             - name: http
               protocol: TCP
