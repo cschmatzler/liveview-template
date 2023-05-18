@@ -2,7 +2,8 @@ name: "Template: Deploy"
 on:
   push:
     branches:
-      - master
+      # - master
+      - noop
     paths-ignore:
       - infra/
       - k8s/
