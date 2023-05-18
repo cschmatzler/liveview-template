@@ -14,13 +14,11 @@ IFS=', ' read -r -a users <<< $USERS
 for user in "${users[@]}"
 do
   IFS=':' read -r -a user_data <<< $user
-  echo "${user_data[0]}"
-  echo "${user_data[1]}"
   curl \
     "$UNLEASH_URL/api/admin/user-admin" \
     --verbose \
     --fail \
     --header "Authorization: $API_TOKEN" \
     --header "Content-Type: application/json" \
-    --data '{"email":"'${user_data[0]}'","username":"'${user_data[1]}'","rootRole":"Admin","sendEmail":false}'
+    --data '{"email":"'${user_data[0]}'","username":"'${user_data[1]}'"}'
 done
