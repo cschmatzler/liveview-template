@@ -15,10 +15,9 @@ for user in "${users[@]}"
 do
   IFS=':' read -r -a user_data <<< $user
   curl \
-    "$UNLEASH_URL/api/admin/user-admin" \
-    --verbose \
-    --fail \
-    --header "Authorization: $API_TOKEN" \
-    --header "Content-Type: application/json" \
-    --data '{"email":"'${user_data[0]}'","username":"'${user_data[1]}'"}'
+    -X POST \
+    -H "Authorization: $API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"email":"'${user_data[0]}'","username":"'${user_data[1]}'"}' \
+    "$UNLEASH_URL/api/admin/user-admin"
 done
