@@ -2,4 +2,4 @@ replicaCount: 3
 authSecret:
   enabled: true
   create: false
-  name: actions-controller-manager-op
+  name: actions-runner-controller-op
