@@ -14,11 +14,18 @@ IFS=', ' read -r -a users <<< $USERS
 for user in "${users[@]}"
 do
   IFS=': ' read -r -a user_data <<< $user
-  curl \
+  user_id=$(curl \
     -H "Authorization: $API_TOKEN" \
     -H "Content-Type: application/json" \
     -d '{ "email": "'${user_data[0]}'", "username": "'${user_data[1]}'", "rootRole": 1}' \
-    "$UNLEASH_URL/api/admin/user-admin"
+    "$UNLEASH_URL/api/admin/user-admin" \
+  | jq '.id')
+
+  curl \
+    -H "Authorization: $API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{ "password": "'${user_data[2]}'" }' \
+    "$UNLEASH_URL/api/admin/user-admin/$user_id/change-password"
 done
 
 sleep infinity
