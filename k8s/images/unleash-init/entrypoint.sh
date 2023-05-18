@@ -16,6 +16,7 @@ do
   IFS=':' read -r -a user_data <<< $user
   curl \
     "$UNLEASH_URL/api/admin/user-admin" \
+    --fail \
     --header "Authorization: Bearer $API_TOKEN" \
     --header "Content-Type: application/json" \
     --data '{"email":"'$user_data[0]'","username":"'$user_data[1]'","rootRole":"Admin","sendEmail":false}'

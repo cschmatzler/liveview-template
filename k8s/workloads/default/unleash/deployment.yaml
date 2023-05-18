@@ -72,6 +72,7 @@ spec:
         - name: unleash-init
           image: ghcr.io/cschmatzler/unleash-init:1.0.0
           imagePullPolicy: Always
+          restartPolicy: Never
           env:
             - name: UNLEASH_URL
               value: http://unleash.default.svc.cluster.local:4242
