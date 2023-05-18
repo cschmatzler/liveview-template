@@ -6,7 +6,7 @@ unleash
     createAdminUser: false,
     db: {
       ssl: {
-        ca: fs.readFileSync("/certs/").toString(),
+        ca: fs.readFileSync("/certs/ca.liveview-template.app-bundle.pem").toString(),
       },
     },
   })
