@@ -12,9 +12,9 @@ distributor:
   resources:
     requests:
       cpu: 128m
-      memory: 768M
+      memory: 128M
     limits:
-      memory: 768M
+      memory: 128M
   service:
     labels:
       grafana-agent/collect-metrics: "true"
