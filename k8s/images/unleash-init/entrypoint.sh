@@ -15,6 +15,7 @@ for user in "${users[@]}"
 do
   IFS=':' read -r -a user_data <<< $user
   curl \
+    --verbose \
     -X POST \
     -H "Authorization: $API_TOKEN" \
     -H "Content-Type: application/json" \
