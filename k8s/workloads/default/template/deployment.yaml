@@ -29,6 +29,14 @@ spec:
           envFrom:
             - secretRef:
                 name: template-config
+        - name: migrate
+          image: ghcr.io/cschmatzler/liveview-template:23.5.7-15c4739
+          command:
+            - /app/bin/migrate
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: template-config
       containers:
         - name: template
           image: ghcr.io/cschmatzler/liveview-template:23.5.18-dc830f4
