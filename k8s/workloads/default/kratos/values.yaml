@@ -70,7 +70,7 @@ secret:
 ingress:
   public:
     enabled: true
-    ingressClassName: public
+    className: public
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt
       ingress.kubernetes.io/force-ssl-redirect: "true"
