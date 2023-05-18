@@ -37,4 +37,5 @@ if [[ -z "${database_exists}" ]]; then
 fi
 
 psql --command "grant all privileges on database \"${POSTGRES_DB}\" to \"${POSTGRES_USER}\";"
+psql --command "alter database \"${POSTGRES_DB}\" owner to \"${POSTGRES_USER}\";"
 
