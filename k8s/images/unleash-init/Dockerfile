@@ -1,6 +1,6 @@
 FROM alpine:3.18.0
 
-RUN apk add --no-cache bash curl
+RUN apk add --no-cache bash curl jq
 
 COPY ./k8s/images/unleash-init/entrypoint.sh /entrypoint.sh
 
