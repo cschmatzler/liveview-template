@@ -69,3 +69,16 @@ spec:
             - name: http
               protocol: TCP
               containerPort: 4242
+        - name: unleash-init
+          image: ghcr.io/cschmatzler/unleash-init:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: UNLEASH_URL
+              value: http://unleash.default.svc.cluster.local:4242
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: INIT_ADMIN_API_TOKENS
+            - name: USERS
+              value: christoph@medium.place:christoph
