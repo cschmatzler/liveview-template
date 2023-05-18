@@ -48,10 +48,6 @@ jobs:
         with:
           otp-version: "26.0"
           elixir-version: "1.14.4-otp-26"
-      - uses: arduino/setup-task@v1
-        with:
-          version: 3.x
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         with:
           path: |
@@ -78,10 +74,6 @@ jobs:
         with:
           otp-version: "26.0"
           elixir-version: "1.14.4-otp-26"
-      - uses: arduino/setup-task@v1
-        with:
-          version: 3.x
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         with:
           path: |
