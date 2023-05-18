@@ -3,6 +3,11 @@ const unleash = require("unleash-server");
 unleash
   .start({
     createAdminUser: false,
+    db: {
+      ssl: {
+        ca: fs.readFileSync("/certs/").toString(),
+      },
+    },
   })
   .then((unleash) => {
     console.log(
