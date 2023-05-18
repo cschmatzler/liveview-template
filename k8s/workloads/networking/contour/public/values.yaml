@@ -10,3 +10,4 @@ envoy:
       load-balancer.hetzner.cloud/name: contour-public
       load-balancer.hetzner.cloud/location: fsn1
       load-balancer.hetzner.cloud/type: lb11
+      load-balancer.hetzner.cloud/disable-private-ingress: "true"
