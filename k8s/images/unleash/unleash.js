@@ -11,8 +11,11 @@ unleash
           .toString(),
       },
     },
+    server: {
+      host: "0.0.0.0",
+    },
     authentication: {
-      createAdminUser: false
+      createAdminUser: false,
     },
   })
   .then((unleash) => {
