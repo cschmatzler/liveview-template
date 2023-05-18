@@ -7,6 +7,11 @@ kratos:
   config:
     selfservice:
       default_browser_return_url: "https://kratos.liveview-template.app/"
+    identity:
+      default_schema_id: default
+      schemas:
+        - id: default
+          url: file:///etc/config/identity.default.schema.json
   identitySchemas:
     "identity.default.schema.json": |
       {
