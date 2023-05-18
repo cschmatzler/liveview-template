@@ -4,7 +4,8 @@ replicaCount: 3
 kratos:
   automigration:
     enabled: true
-job:
+    type: initContainer
+deployment:
   extraInitContainers: |
     - name: init-db
       image: ghcr.io/cschmatzler/postgresql-initdb:15.2
