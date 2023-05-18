@@ -48,7 +48,7 @@ jobs:
       - name: Update version file
         run: echo $VERSION > version
       - name: Update Deployment manifest
-        run: yq -y '.spec.template.spec.containers[0].image = "ghcr.io/cschmatzler/liveview-template:${{ env.VERSION }}"'
+        run: yq -i '.spec.template.spec.containers[0].image = "ghcr.io/cschmatzler/liveview-template:${{ env.VERSION }}"' k8s/workloads/default/template/deployment.yaml
       - name: Push new version and tag
         run: |
           git config --global user.name "release[bot]"
