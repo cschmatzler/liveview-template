@@ -18,6 +18,6 @@ do
     -X POST \
     -H "Authorization: $API_TOKEN" \
     -H "Content-Type: application/json" \
-    -d '{"email":"'${user_data[0]}'","username":"'${user_data[1]}'"}' \
+    -d '{"email":"${user_data[0]}","username":"${user_data[1]}"}' \
     "$UNLEASH_URL/api/admin/user-admin"
 done
