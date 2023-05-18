@@ -16,6 +16,7 @@ do
   IFS=':' read -r -a user_data <<< $user
   curl \
     "$UNLEASH_URL/api/admin/user-admin" \
+    --verbose \
     --fail \
     --header "Authorization: $API_TOKEN" \
     --header "Content-Type: application/json" \
