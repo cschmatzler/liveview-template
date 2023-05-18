@@ -60,7 +60,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: unleash-op
-                  key: INIT_ADMIN_API_TOKENS
+                  key: API_TOKEN
           volumeMounts:
             - name: certs
               mountPath: /certs
