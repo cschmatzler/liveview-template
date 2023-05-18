@@ -40,7 +40,7 @@ querier:
       memory: 128M
     limits:
       memory: 128M
-query_frontend:
+queryFrontend:
   replicas: 3
   resources:
     requests:
