@@ -5,7 +5,7 @@ kratos:
   automigration:
     enabled: true
 job:
-  extraInitContainers:
+  extraInitContainers: |
     - name: init-db
       image: ghcr.io/cschmatzler/postgresql-initdb:15.2
       imagePullPolicy: Always
