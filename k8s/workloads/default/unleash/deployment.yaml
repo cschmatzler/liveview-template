@@ -56,6 +56,11 @@ spec:
                 secretKeyRef:
                   name: unleash-op
                   key: DATABASE_NAME
+            - name: INIT_ADMIN_API_TOKENS
+              valueFrom:
+                secretKeyRef:
+                  name: unleash-op
+                  key: INIT_ADMIN_API_TOKENS
           volumeMounts:
             - name: certs
               mountPath: /certs
