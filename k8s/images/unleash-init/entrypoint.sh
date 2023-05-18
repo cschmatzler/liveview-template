@@ -20,3 +20,5 @@ do
     -d '{ "email": "'${user_data[0]}'", "username": "${user_data[1]}", "rootRole": 1}' \
     "$UNLEASH_URL/api/admin/user-admin"
 done
+
+sleep infinity
