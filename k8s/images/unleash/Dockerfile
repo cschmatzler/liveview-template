@@ -2,10 +2,10 @@ FROM node:20.2.0-alpine3.17
 
 WORKDIR /app
 
-COPY package.json package-lock.json .
+COPY ./k8s/images/unleash/package.json ./k8s/images/unleash/package-lock.json .
 RUN npm i --ci
 
-COPY unleash.js .
+COPY ./k8s/images/unleash/unleash.js .
 
 ENV NODE_ENV production
 
