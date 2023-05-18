@@ -1,4 +1,5 @@
 const unleash = require("unleash-server");
+const fs = require("node:fs");
 
 unleash
   .start({
