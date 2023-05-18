@@ -34,6 +34,7 @@ spec:
       containers:
         - name: unleash
           image: ghcr.io/cschmatzler/unleash:5.0.6
+          imagePullPolicy: Always
           env:
             - name: DATABASE_HOST
               valueFrom:
