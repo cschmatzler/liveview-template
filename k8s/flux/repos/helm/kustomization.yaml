@@ -13,5 +13,6 @@ resources:
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./onepassword-connect.yaml
+  - ./ory.yaml
   - ./prometheus-community.yaml
   - ./unleash.yaml

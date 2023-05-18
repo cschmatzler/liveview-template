@@ -1,0 +1,16 @@
+imagePullSecrets:
+  - name: dockerconfigjson-github
+replicaCount: 3
+kratos:
+  automigration: true
+job:
+  extraInitContainers:
+    - name: init-db
+      image: ghcr.io/cschmatzler/postgresql-initdb:15.2
+      imagePullPolicy: Always
+      envFrom:
+        - secretRef:
+            name: kratos-op
+secret:
+  enabled: false
+  nameOverride: kratos-op
