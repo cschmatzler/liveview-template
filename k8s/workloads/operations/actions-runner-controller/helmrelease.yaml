@@ -10,7 +10,7 @@ spec:
         name: actions-runner-controller
         namespace: flux-system
       chart: actions-runner-controller
-      version: 0.27.4
+      version: 0.23.3
   interval: 10m
   maxHistory: 3
   install:
