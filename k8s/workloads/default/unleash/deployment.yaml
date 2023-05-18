@@ -79,6 +79,6 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: unleash-op
-                  key: INIT_ADMIN_API_TOKENS
+                  key: API_TOKEN
             - name: USERS
               value: christoph@medium.place:christoph
