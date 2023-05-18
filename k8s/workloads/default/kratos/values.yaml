@@ -2,7 +2,8 @@ imagePullSecrets:
   - name: dockerconfigjson-github
 replicaCount: 3
 kratos:
-  automigration: true
+  automigration:
+    enabled: true
 job:
   extraInitContainers:
     - name: init-db
