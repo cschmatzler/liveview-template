@@ -3,6 +3,7 @@ const fs = require("node:fs");
 
 unleash
   .start({
+    logLevel: "debug",
     db: {
       ssl: {
         ca: fs
