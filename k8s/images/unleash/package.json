@@ -1,0 +1,13 @@
+{
+  "name": "unleash",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "unleash-server": "^5.0.6"
+  }
+}
