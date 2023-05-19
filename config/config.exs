@@ -10,11 +10,6 @@ config :template, Template.Metrics,
   grafana: :disabled,
   metrics_server: :disabled
 
-# -------------
-# Feature Flags
-# -------------
-config :template, ConfigCat, data_governance: :eu_only
-
 # ----------
 # Clustering
 # ----------
@@ -46,15 +41,6 @@ config :template, Template.Web.Endpoint,
   render_errors: [
     formats: [html: Template.Web.ErrorHTML, json: Template.Web.ErrorJSON],
     layout: false
-  ]
-
-# --------------
-# Authentication
-# --------------
-config :ueberauth, Ueberauth,
-  providers: [
-    github: {Ueberauth.Strategy.Github, []},
-    google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
 # ------

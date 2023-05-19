@@ -33,7 +33,6 @@ defmodule Template.Web.Live.Landing do
             </a>
           </div>
 
-          <.login user={@user} />
           <div class="flex lg:hidden">
             <button
               type="button"
@@ -48,47 +47,6 @@ defmodule Template.Web.Live.Landing do
         </nav>
       </header>
       <.main />
-    </div>
-    """
-  end
-
-  defp login(assigns) do
-    ~H"""
-    <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-      <%= if @user do %>
-        <.link
-          href={Template.Web.Auth.signed_in_path()}
-          class="rounded-md border-moss border-2 bg-white px-3 py-1.5 text-sm font-semibold text-moss shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          <%= gettext("Dashboard") %>
-        </.link>
-      <% else %>
-        <%= if ConfigCat.get_value("enableLogin", false) do %>
-          <span class="py-1.5 text-lg font-semibold leading-7 text-moss">
-            <%= gettext("Sign in with") %>
-          </span>
-
-          <div class="flex space-x-2 ml-5">
-            <.link
-              href={~p"/auth/google"}
-              id="sign-in-google"
-              class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
-            >
-              <span class="sr-only">Google</span>
-              <.icon name="phosphor-google-logo-bold" class="h-5 w-5" />
-            </.link>
-
-            <.link
-              href={~p"/auth/github"}
-              id="sign-in-github"
-              class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
-            >
-              <span class="sr-only">GitHub</span>
-              <.icon name="phosphor-github-logo-bold" class="h-5 w-5" />
-            </.link>
-          </div>
-        <% end %>
-      <% end %>
     </div>
     """
   end
@@ -129,33 +87,6 @@ defmodule Template.Web.Live.Landing do
                 >
                   <%= gettext("Dashboard") %>
                 </.link>
-              <% else %>
-                <div id="sign-in-sidebar">
-                  <p class="mt-6 text-lg font-semibold leading-6 text-gray-900">Sign in with</p>
-                  <div class="mt-2 grid grid-cols-3 gap-3">
-                    <div>
-                      <.link
-                        href={~p"/auth/google"}
-                        id="sign-in-sidebar-google"
-                        class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
-                      >
-                        <span class="sr-only">Sign in with Google</span>
-                        <.icon name="phosphor-google-logo-bold" class="h-6 w-6" />
-                      </.link>
-                    </div>
-
-                    <div>
-                      <.link
-                        href={~p"/auth/github"}
-                        id="sign-in-sidebar-github"
-                        class="flex justify-center rounded-md bg-white px-3 py-2 text-moss border-2 border-moss shadow-sm focus:outline-offset-0"
-                      >
-                        <span class="sr-only">Sign in with GitHub</span>
-                        <.icon name="phosphor-github-logo-bold" class="h-6 w-6" />
-                      </.link>
-                    </div>
-                  </div>
-                </div>
               <% end %>
             </div>
           </div>
@@ -175,6 +106,9 @@ defmodule Template.Web.Live.Landing do
           </h1>
           <p class="mt-6 text-lg leading-8 text-moss/80">
             ... at least for now.
+          </p>
+          <p class="mt-6 text-lg leading-8 text-moss/80">
+            <%= Ory.Api.Frontend.create_browser_login_flow(Ory.Connection.new(base_url: "https://kratos.liveview-template.app")) %>
           </p>
           <p class="mt-6 text-sm leading-8 text-moss/60">
             Version <%= to_string(Application.spec(:template, :vsn)) %>

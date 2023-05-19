@@ -4,18 +4,6 @@ if System.get_env("ENABLE_SERVER") do
   config :template, Template.Web.Endpoint, server: true
 end
 
-# -----
-# OAuth
-# -----
-config :ueberauth, Ueberauth.Strategy.Github.OAuth,
-  client_id: System.get_env("GITHUB_CLIENT_ID"),
-  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
-
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
-  redirect_uri: System.get_env("GOOGLE_REDIRECT_URI")
-
 # ---------
 # Prod
 # ---------
@@ -39,11 +27,6 @@ if config_env() == :prod do
   config :opentelemetry_exporter,
     otlp_protocol: :http_protobuf,
     otlp_endpoint: System.fetch_env!("OTLP_ENDPOINT")
-
-  # -------------
-  # Feature Flags
-  # -------------
-  config :template, ConfigCat, sdk_key: System.fetch_env!("CONFIGCAT_SDK_KEY")
 
   # ----------
   # Clustering

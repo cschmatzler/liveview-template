@@ -15,7 +15,6 @@ defmodule Template.Application do
     OpentelemetryLiveView.setup()
 
     children = [
-      {ConfigCat, configcat_config()},
       {Cluster.Supervisor,
        [
          Application.fetch_env!(:libcluster, :topologies),
@@ -37,13 +36,5 @@ defmodule Template.Application do
   def config_change(changed, _new, removed) do
     Template.Web.Endpoint.config_change(changed, removed)
     :ok
-  end
-
-  defp configcat_config do
-    config = Application.fetch_env!(:template, ConfigCat)
-
-    local_datasource = ConfigCat.LocalMapDataSource.new(config[:flag_overrides], config[:flag_override_strategy])
-
-    Keyword.put(config, :flag_overrides, local_datasource)
   end
 end

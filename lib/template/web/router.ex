@@ -8,8 +8,6 @@ defmodule Template.Web.Router do
   import Plug.Conn
   import Template.Web.Plugs.Auth
 
-  alias Controllers.AuthController
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -23,6 +21,12 @@ defmodule Template.Web.Router do
     pipe_through :browser
 
     live "/", Live.Landing, :index
+  end
+
+  scope "/auth", Template.Web.Pages.Auth do
+    pipe_through :browser
+
+    live "/login", Login, :index, as: :login
   end
 
   scope "/app", Template.Web do
@@ -47,19 +51,6 @@ defmodule Template.Web.Router do
       ] do
       live "/users", Live.Admin.Users, :index
     end
-  end
-
-  scope "/auth", Template.Web do
-    pipe_through [:browser, :redirect_if_authenticated]
-
-    get "/:provider", AuthController, :request
-  end
-
-  scope "/auth", Template.Web do
-    pipe_through :browser
-
-    get "/:provider/callback", AuthController, :callback
-    delete "/session", AuthController, :logout
   end
 
   if Application.compile_env(:template, :dev_routes) do

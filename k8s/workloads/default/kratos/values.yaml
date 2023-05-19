@@ -64,6 +64,10 @@ kratos:
         }
       }
 deployment:
+  podMetaData:
+    labels:
+      grafana-agent/collect-metrics: "true"
+      grafana-agent/collect-logs: "true"
   extraEnv:
     - name: COURIER_SMTP_CONNECTION_URI
       valueFrom:

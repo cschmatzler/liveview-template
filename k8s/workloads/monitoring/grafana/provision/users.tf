@@ -7,5 +7,6 @@ resource "grafana_user" "christoph" {
   email    = "christoph@medium.place"
   name     = "Christoph Schmatzler"
   login    = "christoph"
+  is_admin = true
   password = random_string.password.result
 }

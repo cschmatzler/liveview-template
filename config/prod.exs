@@ -10,13 +10,6 @@ config :opentelemetry,
   exporter: :otlp,
   sampler: {:parent_based, %{root: {:trace_id_ratio_based, 0.1}}}
 
-# -------------
-# Feature Flags
-# -------------
-config :template, ConfigCat,
-  flag_overrides: %{},
-  flag_override_strategy: :remote_over_local
-
 # ---
 # Web
 # ---

@@ -5,16 +5,6 @@ import Config
 # -------
 config :logger, level: :warning
 
-# -------------
-# Feature Flags
-# -------------
-config :template, ConfigCat,
-  sdk_key: "local_only",
-  flag_overrides: %{
-    "enableLogin" => true
-  },
-  flag_override_strategy: :local_only
-
 # --------
 # Database
 # --------

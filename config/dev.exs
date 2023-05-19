@@ -6,16 +6,6 @@ import Config
 config :logger, :console, format: "[$level] $message\n", level: :debug
 config :opentelemetry, traces_exporter: :none
 
-# -------------
-# Feature Flags
-# -------------
-config :template, ConfigCat,
-  sdk_key: "local_only",
-  flag_overrides: %{
-    "enableLogin" => true
-  },
-  flag_override_strategy: :local_only
-
 # --------
 # Database
 # --------

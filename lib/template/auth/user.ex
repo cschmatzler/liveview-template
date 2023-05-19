@@ -62,14 +62,4 @@ defmodule Template.Auth.User do
       where: u.uid == ^uid
     )
   end
-
-  @doc "Converts a user to a ConfigCat user."
-  @spec to_configcat_user(User.t()) :: ConfigCat.User.t()
-  def to_configcat_user(%User{} = user) do
-    %ConfigCat.User{
-      identifier: user.id,
-      email: user.email,
-      custom: %{role: user.role}
-    }
-  end
 end
