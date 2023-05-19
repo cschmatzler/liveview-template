@@ -1,24 +1,64 @@
 version: '3.7'
 services:
+  nginx:
+    image: nginx:1.23.4-alpine
+    network_mode: host
+    volumes:
+      - ./dev/nginx.conf:/etc/nginx/nginx.conf
   postgres:
     image: postgres:15.3
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432/tcp
-
-  jaeger:
-    image: jaegertracing/all-in-one:1.45
+  kratos-migrate:
+    image: oryd/kratos:v0.13.0
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
     environment:
-      COLLECTOR_OTLP_ENABLED: "true"
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true&mode=rwc
+    volumes:
+      - type: volume
+        source: kratos-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      - type: bind
+        source: ./dev/kratos
+        target: /etc/config/kratos
+  kratos:
+    depends_on:
+      - kratos-migrate
+    image: oryd/kratos:v0.13.0
+    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    environment:
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+      - LOG_LEVEL=trace
+    volumes:
+      - type: volume
+        source: kratos-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      - type: bind
+        source: ./dev/kratos
+        target: /etc/config/kratos
     ports:
-      - 6831:6831/udp
-      - 6832:6832/udp
-      - 5778:5778
-      - 16686:16686
-      - 4317:4317
-      - 4318:4318
-      - 14250:14250
-      - 14268:14268
-      - 14269:14269
-      - 9411:9411
+      - '4433:4433' # public
+      - '4434:4434' # admin
+  # NOTE: do I need this?
+  mailslurper:
+    image: oryd/mailslurper:latest-smtps
+    ports:
+      - '4436:4436'
+      - '4437:4437'
+  # TODO: remove this
+  kratos-selfservice-ui-node:
+    image: oryd/kratos-selfservice-ui-node:v0.13.0
+    environment:
+      - PORT=4455
+      - SECURITY_MODE=
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/
+    ports:
+      - "4455:4455"
+
+volumes:
+  kratos-sqlite:
+

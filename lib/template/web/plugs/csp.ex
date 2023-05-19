@@ -1,4 +1,4 @@
-defmodule Template.Web.Plugs.ContentSecurityPolicy do
+defmodule Template.Web.Plugs.CSP do
   @moduledoc """
   Sets the Content-Security-Policy header.
   """
@@ -26,8 +26,8 @@ defmodule Template.Web.Plugs.ContentSecurityPolicy do
   end
 
   defp default_src_directive, do: "'none'"
-  defp style_src_directive, do: "'self' 'unsafe-inline' https://rsms.me"
-  defp font_src_directive, do: "'self' https://rsms.me"
+  defp style_src_directive, do: "'self' 'unsafe-inline'"
+  defp font_src_directive, do: "'self'"
   defp script_src_directive, do: "'self'"
   defp img_src_directive, do: "'self' data:"
   defp frame_src_directive, do: "'self'"

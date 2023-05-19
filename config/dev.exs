@@ -25,7 +25,7 @@ config :template, dev_routes: true
 
 config :template, Template.Web.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4000],
-  url: [host: "localhost"],
+  url: [host: "liveview-template.test"],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
@@ -42,6 +42,10 @@ config :template, Template.Web.Endpoint,
       ~r"lib/template/web/*/*.*ex$"
     ]
   ]
+
+# Kratos
+config :ory_kratos,
+  base_url: "http://liveview-template.test:8500/kratos"
 
 # ----
 # Mail

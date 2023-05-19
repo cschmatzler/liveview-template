@@ -41,7 +41,7 @@ defmodule Template.Web.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Template.Web.Plugs.ContentSecurityPolicy
+  plug Template.Web.Plugs.CSP
   plug Template.Web.Plugs.CORS
   plug Plug.Session, @session_options
   plug Template.Web.Router
