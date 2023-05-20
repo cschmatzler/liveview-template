@@ -1,1 +1,19 @@
 Hi :)
+<%= if @flow.ui.messages do %>
+  <%= for message <- @flow.ui.messages do %>
+    <%= message %>
+  <% end %>
+<% end %>
+<form action={@flow.ui.action} method={@flow.ui.method}>
+  <%= for field <- @flow.ui.nodes do %>
+    <label>
+      <%= if field.meta.label do %>
+        <%= field.meta.label.text %>
+      <% end %>
+    </label>
+    <.dynamic_tag
+      name={field.type}
+      {Enum.map(Map.from_struct(field.attributes), fn {k, v} -> {k, v} end) |> List.flatten}
+    />
+  <% end %>
+</form>

@@ -1,7 +1,6 @@
 import Config
 
-# Kratos
-config :tesla, Ory.Connection,
+config :tesla,
   adapter: {Tesla.Adapter.Finch, name: Template.Finch},
   json: Jason
 

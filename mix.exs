@@ -8,7 +8,8 @@ defmodule Template.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      compilers: [:boundary] ++ Mix.compilers(),
+      # compilers: [:boundary] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       releases: [
         template: [
           applications: [
@@ -64,7 +65,6 @@ defmodule Template.MixProject do
       {:opentelemetry_liveview, "~> 1.0-rc.4"},
       {:opentelemetry_oban, "~> 1.0"},
       {:opentelemetry_phoenix, "~> 1.1"},
-      {:ory_kratos, "~> 0.13"},
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 3.3"},
@@ -77,7 +77,9 @@ defmodule Template.MixProject do
       {:styler, "~> 0.7", only: [:dev, :test], runtime: false},
       {:swoosh, "~> 1.9"},
       {:tailwind, "~> 0.2"},
+      {:tesla, "~> 1.7"},
       {:unleash, "~> 1.9"},
+      {:nestru, "~> 0.3"}
     ]
   end
 

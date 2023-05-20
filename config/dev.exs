@@ -44,8 +44,8 @@ config :template, Template.Web.Endpoint,
   ]
 
 # Kratos
-config :ory_kratos,
-  base_url: "http://liveview-template.test:8500/kratos"
+config :tesla, Kratos.Client,
+  base_url: "http://liveview-template.test:8500/"
 
 # ----
 # Mail

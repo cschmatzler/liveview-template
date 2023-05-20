@@ -3,13 +3,6 @@ defmodule Template.Web.Pages.Landing do
   use Template.Web, :live_view
 
   @impl Phoenix.LiveView
-  def mount(params, session, socket) do
-    socket = assign(socket, :session, Map.get(session, "session", "lol"))
-
-    {:ok, socket}
-  end
-
-  @impl Phoenix.LiveView
   def render(assigns) do
     ~H"""
     <div class="h-full bg-vellum">
@@ -27,7 +20,6 @@ defmodule Template.Web.Pages.Landing do
           </div>
         </nav>
       </header>
-      <%= Jason.encode!(@session, pretty: true) %>
       <.main />
     </div>
     """

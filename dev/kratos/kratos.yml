@@ -4,14 +4,12 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://liveview-template.test:4433/kratos/
-    cors:
-      enabled: true
+    base_url: http://liveview-template.test:8500
   admin:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://liveview-template.test:8500/auth/
+  default_browser_return_url: http://liveview-template.test:8500/
   allowed_return_urls:
     - http://liveview-template.test:8500/auth
 
@@ -74,7 +72,7 @@ log:
 
 cookies:
   domain: liveview-template.test
-  same_site: None
+  path: /
 
 secrets:
   cookie:

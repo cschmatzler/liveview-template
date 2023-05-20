@@ -1,29 +1,40 @@
 defmodule Template.Web.Pages.Auth.Login do
+  @moduledoc false
   use Template.Web, :controller
 
   @flow_params [:aal, :refresh, :return_to]
 
-  def index(conn, params) do
-    cookie = get_session(conn, :cookie)
-    query =
-      Enum.map(@flow_params, fn param -> {param, Map.get(params, Atom.to_string(param))} end)
-      |> Enum.filter(fn {_, v} -> not is_nil(v) end)
-      |> URI.encode_query()
+  def index(conn, params), do: render_or_request_new_flow(conn, params)
 
-    case Map.get(params, "flow", "") do
-      "" ->
-        redirect(conn, external: "http://liveview-template.test:8500/kratos/self-service/login/browser?#{query}")
+  defp render_or_request_new_flow(conn, %{"flow" => flow} = params), do: render_flow_if_valid(conn, flow, params)
+  defp render_or_request_new_flow(conn, params), do: request_new_flow(conn, params)
 
-      id ->
-        render(conn, :index)
+  defp render_flow_if_valid(conn, flow, params) do
+    cookie_header = conn |> get_req_header("cookie") |> List.first()
+    flow = flow |> Kratos.Frontend.get_login_flow(cookie_header) |> IO.inspect()
+
+    case flow do
+      {:ok, %Kratos.Models.GenericErrorResponse{error: %Kratos.Models.GenericError{code: 404}}} ->
+        request_new_flow(conn, params)
+
+      {:ok, %Kratos.Models.GenericErrorResponse{error: %Kratos.Models.GenericError{code: 410}}} ->
+        request_new_flow(conn, params)
+
+      {:ok, %Kratos.Models.LoginFlow{} = flow} ->
+        render(conn, :index, flow: flow)
     end
   end
 
-  defp get_login_flow(flow_id, cookie) do
-    IO.inspect(cookie)
-    IO.inspect(Ory.Connection.new())
-    flow = Ory.Api.Frontend.get_login_flow(Ory.Connection.new(), flow_id, cookie: cookie)
-    IO.inspect(flow)
+  defp request_new_flow(conn, params) do
+    query =
+      @flow_params
+      |> Enum.map(fn param -> {param, Map.get(params, Atom.to_string(param))} end)
+      |> Enum.filter(fn {_, v} -> not is_nil(v) end)
+      |> URI.encode_query()
+
+    redirect(conn,
+      external: "http://liveview-template.test:8500/self-service/login/browser?#{query}"
+    )
   end
 end
 
