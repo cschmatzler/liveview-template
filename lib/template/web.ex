@@ -19,6 +19,7 @@ defmodule Template.Web do
         layouts: [html: Template.Web.Layouts]
 
       import Plug.Conn
+      import Template.Web, only: [cookie_header: 1]
 
       unquote(verified_routes())
     end
@@ -73,5 +74,9 @@ defmodule Template.Web do
 
       unquote(verified_routes())
     end
+  end
+
+  def cookie_header(conn) do
+    conn |> Plug.Conn.get_req_header("cookie") |> List.first()
   end
 end

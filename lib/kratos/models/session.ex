@@ -1,6 +1,6 @@
 defmodule Kratos.Models.Session do
   @moduledoc false
-  @derive {Nestru.Decoder, hint: %{authentication_methods: Kratos.Models.SessionAuthenticationMethod}}
+  @derive Nestru.Decoder
   defstruct [
     :active,
     :authenticated_at,

@@ -1,0 +1,23 @@
+Verification
+<%= if @flow.ui.messages do %>
+  <%= for message <- @flow.ui.messages do %>
+    <%= message.text %>
+  <% end %>
+<% end %>
+<.form :let={_f} for={:registraton} action={@flow.ui.action} method={@flow.ui.method}>
+  <%= for field <- @flow.ui.nodes do %>
+    <div>
+      <%= if field.meta.label do %>
+        <label for={field.attributes.name}>
+          <%= field.meta.label.text %>
+        </label>
+      <% end %>
+      <input
+        type={field.attributes.type}
+        name={field.attributes.name}
+        autocomplete={field.attributes.autocomplete}
+        required={field.attributes.required}
+      />
+    </div>
+  <% end %>
+</.form>

@@ -14,6 +14,17 @@ selfservice:
     - http://liveview-template.test:8500/auth
 
   methods:
+    oidc:
+      config:
+        providers:
+          - id: github # this is `<provider-id>` in the Authorization callback URL. DO NOT CHANGE IT ONCE SET!
+            provider: github # This defines the app type used for integration. Use 'github' for GitHub OAuth app. Use 'github-app' for GitHub App.
+            client_id: ddf37ea4e79717cd1c18 # Replace this with the OAuth2 Client ID provided by GitHub
+            client_secret: 651cd48f7a61e7af20197165693ffc992df82a96 # Replace this with the OAuth2 Client Secret provided by GitHub
+            mapper_url: file:///etc/config/kratos/oidc.github.jsonnet
+            scope:
+              - user:email
+      enabled: true
     password:
       enabled: true
     totp:

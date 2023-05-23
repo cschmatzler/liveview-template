@@ -4,9 +4,9 @@ defmodule Kratos.Frontend do
 
   require Logger
 
-  def to_session(cookie) do
+  def to_session(cookie_header) do
     Kratos.Client.new()
-    |> Tesla.get("/sessions/whoami", headers: [{"cookie", cookie}])
+    |> Tesla.get("/sessions/whoami", headers: [{"cookie", cookie_header}])
     |> map_response([
       {200, Kratos.Models.Session},
       {401, Kratos.Models.GenericErrorResponse},
@@ -15,11 +15,35 @@ defmodule Kratos.Frontend do
     ])
   end
 
-  def get_login_flow(id, cookie) do
+  def get_login_flow(id, cookie_header) do
     Kratos.Client.new()
-    |> Tesla.get("/self-service/login/flows", query: [id: id], headers: [{"cookie", cookie}])
+    |> Tesla.get("/self-service/login/flows", query: [id: id], headers: [{"cookie", cookie_header}])
     |> map_response([
       {200, Kratos.Models.LoginFlow},
+      {401, Kratos.Models.GenericErrorResponse},
+      {404, Kratos.Models.GenericErrorResponse},
+      {410, Kratos.Models.GenericErrorResponse},
+      {:default, Kratos.Models.GenericErrorResponse}
+    ])
+  end
+
+  def get_registration_flow(id, cookie_header) do
+    Kratos.Client.new()
+    |> Tesla.get("/self-service/registration/flows", query: [id: id], headers: [{"cookie", cookie_header}])
+    |> map_response([
+      {200, Kratos.Models.RegistrationFlow},
+      {401, Kratos.Models.GenericErrorResponse},
+      {404, Kratos.Models.GenericErrorResponse},
+      {410, Kratos.Models.GenericErrorResponse},
+      {:default, Kratos.Models.GenericErrorResponse}
+    ])
+  end
+
+  def get_verification_flow(id, cookie_header) do
+    Kratos.Client.new()
+    |> Tesla.get("/self-service/verification/flows", query: [id: id], headers: [{"cookie", cookie_header}])
+    |> map_response([
+      {200, Kratos.Models.VerificationFlow},
       {401, Kratos.Models.GenericErrorResponse},
       {404, Kratos.Models.GenericErrorResponse},
       {410, Kratos.Models.GenericErrorResponse},

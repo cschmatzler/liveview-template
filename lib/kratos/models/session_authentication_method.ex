@@ -1,6 +1,7 @@
 defmodule Kratos.Models.SessionAuthenticationMethod do
   @moduledoc false
-  @derive Jason.Encoder
+
+  @derive Nestru.Decoder
   defstruct [
     :aal,
     :completed_at,

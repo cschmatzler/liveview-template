@@ -26,6 +26,8 @@ defmodule Template.Web.Router do
   scope "/auth", Template.Web.Pages.Auth do
     pipe_through :browser
 
+    get "/registration", Registration, :index
+    get "/verification", Verification, :index
     get "/login", Login, :index
     get "/error", Error, :index
   end

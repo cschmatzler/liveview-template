@@ -1,0 +1,19 @@
+Registration
+
+<%= if @flow.ui.messages do %>
+  <%= for message <- @flow.ui.messages do %>
+    <%= message.text %>
+  <% end %>
+<% end %>
+<.form :let={_f} for={:registraton} action={@flow.ui.action} method={@flow.ui.method}>
+  <%= for field <- @flow.ui.nodes do %>
+    <%= if field.meta.label do %>
+      <label for={field.attributes.name}>
+        <%= field.meta.label.text %>
+      </label>
+    <% end %>
+    <input
+      {Enum.map(Map.from_struct(field.attributes), fn {k, v} -> {k, v} end) |> List.flatten}
+    />
+  <% end %>
+</.form>
