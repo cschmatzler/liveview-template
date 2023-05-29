@@ -1,19 +1,29 @@
-Registration
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      Create your account
+    </h2>
+  </div>
 
-<%= if @flow.ui.messages do %>
-  <%= for message <- @flow.ui.messages do %>
-    <%= message.text %>
-  <% end %>
-<% end %>
-<.form :let={_f} for={:registraton} action={@flow.ui.action} method={@flow.ui.method}>
-  <%= for field <- @flow.ui.nodes do %>
-    <%= if field.meta.label do %>
-      <label for={field.attributes.name}>
-        <%= field.meta.label.text %>
-      </label>
+  <%= if @flow.ui.messages do %>
+    <%= for message <- @flow.ui.messages do %>
+      <%= message.text %>
     <% end %>
-    <input
-      {Enum.map(Map.from_struct(field.attributes), fn {k, v} -> {k, v} end) |> List.flatten}
-    />
   <% end %>
-</.form>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <.flow_form flow={@flow} class="space-y-4">
+      <.oidc flow={@flow} />
+    </.flow_form>
+    <.flow_form flow={@flow}>
+      <.registration flow={@flow} />
+    </.flow_form>
+
+    <p class="mt-10 text-center text-sm text-gray-500">
+      Already a member?
+      <a href={Kratos.URI.getURIForFlow("login")} class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+        Log into your account
+      </a>
+    </p>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 defmodule Kratos.Models.SessionDevice do
   @moduledoc false
-  @derive Jason.Encoder
+
+  @derive Nestru.Decoder
   defstruct [
     :id,
     :ip_address,

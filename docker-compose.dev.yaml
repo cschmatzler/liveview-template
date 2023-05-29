@@ -45,7 +45,6 @@ services:
     ports:
       - '4433:4433' # public
       - '4434:4434' # admin
-  # NOTE: do I need this?
   mailslurper:
     image: oryd/mailslurper:latest-smtps
     ports:

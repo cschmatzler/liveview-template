@@ -10,11 +10,9 @@ defmodule Template.Web.Pages.Auth.Login do
   defp render_or_request_new_flow(conn, params), do: request_new_flow(conn, params)
 
   defp render_flow_if_valid(conn, flow_id, params) do
-
     case Kratos.Frontend.get_login_flow(flow_id, cookie_header(conn)) do
       {:ok, %Kratos.Models.LoginFlow{} = flow} ->
-        node_groups = Enum.group_by(flow.ui.nodes, &(&1.group)) |> IO.inspect
-        render(conn, :index, oidc: node_groups["oidc"], flow: flow)
+        render(conn, :index, flow: flow)
 
       _ ->
         request_new_flow(conn, params)
@@ -34,8 +32,12 @@ end
 
 defmodule Template.Web.Pages.Auth.LoginHTML do
   use Template.Web, :component
-
+  import Template.Web.Components.Kratos.FlowForm
   import Template.Web.Components.Kratos.UINodes
+  import Template.Web.Components.Kratos.Login
+  import Template.Web.Components.Kratos.OIDC
+  import Template.Web.Components.Kratos.TOTP
+  alias Template.Web.Components.Kratos.Helpers
 
   embed_templates("login/*")
 end

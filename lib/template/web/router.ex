@@ -3,10 +3,10 @@ defmodule Template.Web.Router do
 
   use Phoenix.Router, helpers: false
 
-  import Phoenix.Controller, only: [accepts: 2, protect_from_forgery: 2, put_root_layout: 2]
-  import Phoenix.LiveView.Router, only: [live: 4, fetch_live_flash: 2]
-  import Plug.Conn, only: [merge_private: 2, fetch_session: 2]
-  import Template.Web.Plugs.Auth, only: [verify_session: 2]
+  import Phoenix.Controller
+  import Phoenix.LiveView.Router
+  import Plug.Conn
+  import Template.Web.Plugs.Auth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,18 +18,26 @@ defmodule Template.Web.Router do
   end
 
   scope "/", Template.Web.Pages do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    live "/", Landing, :index, as: :landing
+    live_session :landing,
+      on_mount: [
+        {Template.Web.Pages.Auth, :mount_cookie_header}
+      ] do
+      live("/", Landing, :index, as: :landing)
+    end
   end
 
   scope "/auth", Template.Web.Pages.Auth do
-    pipe_through :browser
+    pipe_through(:browser)
 
-    get "/registration", Registration, :index
-    get "/verification", Verification, :index
-    get "/login", Login, :index
-    get "/error", Error, :index
+    get("/registration", Registration, :index)
+    get("/verification", Verification, :index)
+    get("/", Login, :index)
+    get("/login", Login, :index)
+    get("/recovery", Recovery, :index)
+    get "/settings", Settings, :index
+    get("/error", Error, :index)
   end
 
   # scope "/admin", Template.Web do
@@ -46,9 +54,9 @@ defmodule Template.Web.Router do
   #
   if Application.compile_env(:template, :dev_routes) do
     scope "/dev" do
-      pipe_through :browser
+      pipe_through(:browser)
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end

@@ -1,7 +1,7 @@
 defmodule Kratos.Models.Identity do
   @moduledoc false
 
-  @derive Jason.Encoder
+  @derive Nestru.Decoder
   defstruct [
     :created_at,
     :credentials,

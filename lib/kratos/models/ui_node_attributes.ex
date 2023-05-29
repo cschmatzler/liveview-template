@@ -24,7 +24,7 @@ defmodule Kratos.Models.UINodeAttributes do
     :title,
     :type,
     :value,
-    :width,
+    :width
   ]
 
   @type t :: %__MODULE__{
@@ -49,6 +49,6 @@ defmodule Kratos.Models.UINodeAttributes do
           :title => Kratos.Models.UIText.t(),
           :type => String.t(),
           :value => AnyType | nil,
-          :width => integer(),
+          :width => integer()
         }
 end

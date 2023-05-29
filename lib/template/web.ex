@@ -77,6 +77,6 @@ defmodule Template.Web do
   end
 
   def cookie_header(conn) do
-    conn |> Plug.Conn.get_req_header("cookie") |> List.first()
+    conn |> Plug.Conn.get_req_header("cookie") |> List.first() || ""
   end
 end

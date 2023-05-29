@@ -1,17 +1,19 @@
-defmodule Template.Web.Pages.Auth.Verification do
+defmodule Template.Web.Pages.Auth.Recovery do
   @moduledoc false
   use Template.Web, :controller
 
-  @flow_params ~w(flow return_to message)
+  @flow_params ~w(flow return_to)
 
   def index(conn, params), do: render_or_request_new_flow(conn, params)
 
-  defp render_or_request_new_flow(conn, %{"flow" => flow_id} = params), do: render_flow_if_valid(conn, flow_id, params)
+  defp render_or_request_new_flow(conn, %{"flow" => flow_id} = params),
+    do: render_flow_if_valid(conn, flow_id, params)
+
   defp render_or_request_new_flow(conn, params), do: request_new_flow(conn, params)
 
   defp render_flow_if_valid(conn, flow_id, params) do
-    case Kratos.Frontend.get_verification_flow(flow_id, cookie_header(conn)) do
-      {:ok, %Kratos.Models.VerificationFlow{} = flow} ->
+    case Kratos.Frontend.get_recovery_flow(flow_id, cookie_header(conn)) do
+      {:ok, %Kratos.Models.RecoveryFlow{} = flow} ->
         render(conn, :index, flow: flow)
 
       _ ->
@@ -26,15 +28,15 @@ defmodule Template.Web.Pages.Auth.Verification do
       |> Enum.filter(fn {_, v} -> not is_nil(v) end)
       |> URI.encode_query()
 
-    redirect(conn, external: Kratos.URI.getURIForFlow("verification", query))
+    redirect(conn, external: Kratos.URI.getURIForFlow("recovery", query))
   end
 end
 
-defmodule Template.Web.Pages.Auth.VerificationHTML do
+defmodule Template.Web.Pages.Auth.RecoveryHTML do
   use Template.Web, :component
 
   import Template.Web.Components.Kratos.Code
   import Template.Web.Components.Kratos.FlowForm
 
-  embed_templates("verification/*")
+  embed_templates("recovery/*")
 end

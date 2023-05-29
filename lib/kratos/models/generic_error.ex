@@ -1,4 +1,5 @@
 defmodule Kratos.Models.GenericError do
+  @moduledoc false
   @derive Nestru.Decoder
   defstruct [
     :code,
@@ -12,13 +13,13 @@ defmodule Kratos.Models.GenericError do
   ]
 
   @type t :: %__MODULE__{
-    :code => integer() | nil,
-    :debug => String.t | nil,
-    :details => %{optional(String.t) => AnyType} | nil,
-    :id => String.t | nil,
-    :message => String.t,
-    :reason => String.t | nil,
-    :request => String.t | nil,
-    :status => String.t | nil
-  }
+          :code => integer() | nil,
+          :debug => String.t() | nil,
+          :details => %{optional(String.t()) => AnyType} | nil,
+          :id => String.t() | nil,
+          :message => String.t(),
+          :reason => String.t() | nil,
+          :request => String.t() | nil,
+          :status => String.t() | nil
+        }
 end

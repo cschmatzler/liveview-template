@@ -1,0 +1,44 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+      Settings
+    </h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <.flow_form flow={@flow}>
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["profile"], exclude_attributes: ["submit"])
+      } />
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["profile"], attributes: ["submit"])
+      } />
+    </.flow_form>
+
+    <.flow_form flow={@flow}>
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["password"],
+          exclude_attributes: ["submit"]
+        )
+      } />
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["password"], attributes: ["submit"])
+      } />
+    </.flow_form>
+
+    <.flow_form flow={@flow}>
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["totp"], exclude_attributes: ["submit"])
+      } />
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["totp"], attributes: ["submit"])
+      } />
+    </.flow_form>
+
+    <.flow_form flow={@flow}>
+      <.ui_nodes nodes={
+        Helpers.filter_nodes_by_groups(@flow.ui.nodes, ["oidc"], without_default_group: true)
+      } />
+    </.flow_form>
+  </div>
+</div>

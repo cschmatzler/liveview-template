@@ -1,6 +1,12 @@
 defmodule Kratos.Models.Session do
   @moduledoc false
-  @derive Nestru.Decoder
+
+  @derive {Nestru.Decoder,
+           hint: %{
+             authentication_methods: [Kratos.Models.SessionAuthenticationMethod],
+             devices: [Kratos.Models.SessionDevice],
+             identity: Kratos.Models.Identity
+           }}
   defstruct [
     :active,
     :authenticated_at,

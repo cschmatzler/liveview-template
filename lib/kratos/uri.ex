@@ -5,7 +5,7 @@ defmodule Kratos.URI do
 
   @doc """
   """
-  def getURIForFlow(flow, query) do
+  def getURIForFlow(flow, query \\ "") do
     "#{String.trim_trailing(@base_url, "/")}/self-service/#{flow}/browser?#{query}"
   end
 end
