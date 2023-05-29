@@ -10,7 +10,7 @@ spec:
         name: fairwinds
         namespace: flux-system
       chart: goldilocks
-      version: 6.5.5
+      version: 6.5.6
   interval: 10m
   maxHistory: 3
   install:
