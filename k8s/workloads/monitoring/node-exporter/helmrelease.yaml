@@ -11,7 +11,7 @@ spec:
         name: prometheus-community
         namespace: flux-system
       chart: prometheus-node-exporter
-      version: 4.17.2
+      version: 4.17.3
   interval: 10m
   maxHistory: 3
   install:
