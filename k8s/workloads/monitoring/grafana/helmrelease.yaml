@@ -11,7 +11,7 @@ spec:
         name: grafana
         namespace: flux-system
       chart: grafana
-      version: 6.56.4
+      version: 6.56.6
   interval: 10m
   maxHistory: 3
   install:
