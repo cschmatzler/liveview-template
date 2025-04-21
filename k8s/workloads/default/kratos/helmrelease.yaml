@@ -10,7 +10,7 @@ spec:
         name: ory
         namespace: flux-system
       chart: kratos
-      version: 0.33.1
+      version: 0.33.5
   interval: 10m
   maxHistory: 3
   install:
