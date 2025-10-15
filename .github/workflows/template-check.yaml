@@ -15,7 +15,7 @@ jobs:
         with:
           otp-version: "26.0"
           elixir-version: "1.14.4-otp-26"
-      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+      - uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         id: deps-cache
         with:
           path: |
@@ -48,7 +48,7 @@ jobs:
         with:
           otp-version: "26.0"
           elixir-version: "1.14.4-otp-26"
-      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+      - uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: |
             deps
@@ -74,7 +74,7 @@ jobs:
         with:
           otp-version: "26.0"
           elixir-version: "1.14.4-otp-26"
-      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+      - uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: |
             deps
